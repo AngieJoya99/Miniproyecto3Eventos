@@ -103,13 +103,13 @@ public class GUICliente extends JFrame
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.SOUTH);
     
-       pNorteExamen.add(pTextArea);
+       pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
        //pNorteExamen.add(bResponder, BorderLayout.SOUTH);
        
         pSurExamen.add(lTempoRestante);pSurExamen.add(lPregRespondidas);
         pSurExamen.add(tfTempoRestante);pSurExamen.add(tfPregRes);
 
-        pExamen.add(pBotonesPreg, BorderLayout.WEST);
+        //pExamen.add(pBotonesPreg, BorderLayout.WEST);
         pExamen.add(pNorteExamen, BorderLayout.CENTER);
         pExamen.add(pSurExamen, BorderLayout.SOUTH);
 
