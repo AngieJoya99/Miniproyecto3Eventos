@@ -5,14 +5,16 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 public class GUICliente extends JFrame 
 
 {
     JTabbedPane tpPestanas;
-    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen;
+    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, 
+    pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion;
     JScrollPane jsExamen, jsResultado;
-    JButton bResponder, bVerResultado, bCancelarPreg, bOK, B1,B2,B3;
-    JToggleButton tbNumPregunta [];
+    JButton bResponder, bVerResultado, bCancelarPreg, bOK, B1,B2,B3,b4,b5,b6,b7,b8,b9,b10,b11;
+    ArrayList numeroPregunta [];
     JRadioButton rbOpc1, rbOpc2, rbOpc3, rbOpc4;
     JTextField tfTempoRestante, tfPregRes;
     ButtonGroup bgGrupoOpc;
@@ -50,16 +52,28 @@ public class GUICliente extends JFrame
         add(tpPestanas);
 
         pTextArea = new JPanel(new BorderLayout());
-        pNorteExamen = new JPanel();
-        
-        pSurExamen = new JPanel(new GridLayout(2,2));
-        pBotonesPreg = new JPanel(new GridLayout(3,1));
+        pInformacion = new JPanel(new GridLayout(2,2));
+        pBotonesPreg = new JPanel(new GridLayout(11,0));
+        pUsuarioConectado = new JPanel();
 
-    
+        pNorteExamen = new JPanel();
+        pSurExamen = new JPanel(new BorderLayout());
+
+
+
+        
 
         B1 = new JButton("1");
         B2 = new JButton("2");
         B3 = new JButton("3");
+        b4 = new JButton("3");
+        b5 = new JButton("3");
+        b6 = new JButton("3");
+        b7 = new JButton("3");
+        b8 = new JButton("3");
+        b9 = new JButton("3");
+        b10 = new JButton("3");
+        b11 = new JButton("3");
         
 
         areaExamen = new JTextArea(10, 28);
@@ -98,20 +112,37 @@ public class GUICliente extends JFrame
         pBotonesPreg.add(B1);
         pBotonesPreg.add(B2);
         pBotonesPreg.add(B3);
+        pBotonesPreg.add(b4);
+        pBotonesPreg.add(b5);
+        pBotonesPreg.add(b6);
+        pBotonesPreg.add(b7);
+        pBotonesPreg.add(b8);
+        pBotonesPreg.add(b9);
+        pBotonesPreg.add(b10);
+        pBotonesPreg.add(b11);
+
 
     
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
-        pTextArea.add(bResponder, BorderLayout.SOUTH);
-    
+        pTextArea.add(bResponder, BorderLayout.CENTER);
+
+        pInformacion.add(lTempoRestante);pInformacion.add(lPregRespondidas);
+        pInformacion.add(tfTempoRestante);pInformacion.add(tfPregRes);
+
+        pUsuarioConectado.add(lClienteConectado1);pUsuarioConectado.add(lClienteConectado2);pUsuarioConectado.add(lClienteConectado3);
+
        pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
-       //pNorteExamen.add(bResponder, BorderLayout.SOUTH);
+       pSurExamen.add(bVerResultado, BorderLayout.NORTH);
+       pSurExamen.add(pInformacion, BorderLayout.CENTER);
+       pSurExamen.add(pUsuarioConectado, BorderLayout.SOUTH);
+
        
-        pSurExamen.add(lTempoRestante);pSurExamen.add(lPregRespondidas);
-        pSurExamen.add(tfTempoRestante);pSurExamen.add(tfPregRes);
+        
+
 
         //pExamen.add(pBotonesPreg, BorderLayout.WEST);
-        pExamen.add(pNorteExamen, BorderLayout.CENTER);
-        pExamen.add(pSurExamen, BorderLayout.SOUTH);
+        pExamen.add(pNorteExamen, BorderLayout.NORTH);
+        pExamen.add(pSurExamen, BorderLayout.CENTER);
 
 
 
