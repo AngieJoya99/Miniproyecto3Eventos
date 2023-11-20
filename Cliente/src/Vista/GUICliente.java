@@ -9,14 +9,15 @@ public class GUICliente extends JFrame
 {
     private ArrayList <JToggleButton> numeroPregunta;
     JTabbedPane tpPestanas;
-    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, 
-    pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion;
     JScrollPane jsPestanaExamen, jsResultado, jsExamen;
     JButton bResponder, bVerResultado, bCancelarPreg, bOK;
     JRadioButton rbOpc1, rbOpc2, rbOpc3, rbOpc4;
     JTextField tfTempoRestante, tfPregRes;
     ButtonGroup bgGrupoOpc;
     JTextArea areaExamen, areaResultado;
+
+    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, 
+    pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion;
 
     JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, 
     lClienteConectado2, lClienteConectado3,lNumPreg, lEnunciadoPreg, 
@@ -44,7 +45,7 @@ public class GUICliente extends JFrame
         pExamen = new JPanel(new BorderLayout());
         pResultado = new JPanel();
         pPregunta = new JPanel();
-        
+
         numeroPregunta = new ArrayList<>();
         jsPestanaExamen = new JScrollPane(pExamen);
         
@@ -115,10 +116,7 @@ public class GUICliente extends JFrame
         
         pExamen.add(pNorteExamen, BorderLayout.NORTH);
         pExamen.add(pSurExamen, BorderLayout.CENTER);
-        
-
-
-
+    
     }
 
     public void crearBotones(int numPreguntas)
@@ -127,8 +125,6 @@ public class GUICliente extends JFrame
         {
             JToggleButton botonPreg = new JToggleButton(Integer.toString(i+1));
             numeroPregunta.add(botonPreg);
-            
-
         }
     }
 
@@ -145,10 +141,7 @@ public class GUICliente extends JFrame
         {
              pBotonesPreg.add(numeroPregunta.get(i));
         }
-    }
-
-
-    
+    } 
 }
 
 
