@@ -96,5 +96,5 @@ public class Pregunta
     {
         return this.opciones[i];
     }
-
+//Hola
 }
