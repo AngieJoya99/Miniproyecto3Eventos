@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Examen 
 {
     private ArrayList<Pregunta> preguntas;
-    private String nombre, informe;
+    private String nombre, informe, textoPreguntas;
     private int[] tiempo; 
     private int correctas, incorrectas;  
 
@@ -28,11 +28,97 @@ public class Examen
         this.tiempo[0] = horas;
         this.tiempo[1] = minutos;
         this.tiempo[2] = segundos;
+        this.textoPreguntas="";
     }
 
+    /**
+     * A partir de una cadena de texto que recibe como parámetro,
+     * la adiciona al contenido actual de la variable textoPreguntas,
+     * Crea un objeto de la clase Pregunta con ella 
+     * y se lo adiciona a la colección preguntas
+     * @param texto Cadena de texto a procesar
+     */
     public void addPregunta(String texto)
     {
         this.preguntas.add(new Pregunta(texto));
+        this.textoPreguntas+=(texto+"\n");
     }
+
+    /**
+     * Retorna el texto almacenado en la variable textoPreguntas
+     * @return Valor almacenado en la variable
+     */
+    public String getTextoPreguntas()
+    {
+        return this.textoPreguntas;
+    }
+
+    /**
+     * Retorna el una cadena de texto con los valores del arreglo tiempo
+     * Separados por ":"
+     * @return Cadeana de texto
+     */
+    public String getDuracion()
+    {
+        String duracion = ""+tiempo[0]+":"+tiempo[1]+":"+tiempo[2];
+        return duracion;
+    }
+
+    /**
+     * Retorna el texto almacenado en la variable nombre
+     * @return Valor almacenado en la variable
+     */
+    public String getNombre()
+    {
+        return this.nombre;
+    }
+
+    /**
+     * Retorna el texto almacenado en la variable informe
+     * @return Valor almacenado en la variable
+     */
+    public String getInforme()
+    {
+        return this.informe;
+    }
+
+    /**
+     * Le asigna a la variable correctas un valor que recibe como 
+     * parámetro
+     * @param cantidad valor a asignar
+     */
+    public void setCorrectas(int cantidad)
+    {
+        this.correctas = cantidad;
+    }
+
+    /**
+     * Le asigna a la variable incorrectas un valor que recibe como 
+     * parámetro
+     * @param cantidad valor a asignar
+     */
+    public void setIncorrectas(int cantidad)
+    {
+        this.incorrectas = cantidad;
+    }
+
+    /**
+     * Retorna el valor almacenado en la variable correctas
+     * @return Valor almacenado en la variable
+     */
+    public int getCorrectas()
+    {
+        return this.correctas;
+    }
+
+    /**
+     * Retorna el valor almacenado en la variable incorrectas
+     * @return Valor almacenado en la variable
+     */
+    public int getIncorrectas()
+    {
+        return this.incorrectas;
+    }
+
 
 }
