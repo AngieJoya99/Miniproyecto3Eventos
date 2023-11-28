@@ -6,8 +6,9 @@ import java.awt.*;
 public class GUIServidor extends JFrame 
 {
     JTabbedPane pestanas;   
-    JPanel pCrear, pVisualizar, pInformes, pHacer, pCrearNombre,
-        pCrearTiempo, pHoras, pVerSeleccionar, pInformeSeleccionar;
+    JPanel pCrear, pVisualizar, pInformes, pIniciar, pCrearNombre,
+        pCrearTiempo, pHoras, pVerSeleccionar, pInformeSeleccionar,
+        pClientes;
 
     JScrollPane spVisualizar, spInforme;
 
@@ -23,6 +24,7 @@ public class GUIServidor extends JFrame
     JTextArea taVisualizar, taInforme;
     JComboBox cbVisualizar, cbInforme, cbIniciar;
     JSpinner horas, minutos, segundos;
+    Font fuente1, fuente2;
 
     /**
      * Constructor de la clase GUIServidor
@@ -30,7 +32,7 @@ public class GUIServidor extends JFrame
     public GUIServidor()
     {
         setTitle("Servidor");
-        setSize(480, 560);
+        setSize(500, 500);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,13 +50,14 @@ public class GUIServidor extends JFrame
         lCrearDuracion = new JLabel("Duración del examen");
 
         lIniciarCantidad = new JLabel("Cantidad de preguntas");
-        lIniciarCliente1 = new JLabel();
-        lIniciarCliente2 = new JLabel();
-        lIniciarCliente3 = new JLabel();
+        lIniciarCliente1 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        lIniciarCliente2 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        lIniciarCliente3 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
         lIniciarPreguntas = new JLabel("Cantidad de preguntas");
         lIniciarTiempo = new JLabel("Tiempo");
         lIniciarTiempoRestante = new JLabel("Tiempo restante");
         lIniciarRespondidas = new JLabel("Preguntas respondidas");
+        lIniciarTimer = new JLabel();
         lDosPuntos1 = new JLabel(":");
         lDosPuntos2 = new JLabel(":");
 
@@ -85,7 +88,7 @@ public class GUIServidor extends JFrame
         spVisualizar= new JScrollPane();
 
         pCrear = new JPanel();
-        pHacer = new JPanel();
+        pIniciar = new JPanel();
         pInformes = new JPanel(new BorderLayout());
         pVisualizar = new JPanel(new BorderLayout());
 
@@ -96,7 +99,18 @@ public class GUIServidor extends JFrame
         pVerSeleccionar = new JPanel();
         pInformeSeleccionar = new JPanel();
 
+        pClientes = new JPanel(new GridLayout(1,3));
+
         pestanas = new JTabbedPane();
+
+
+        fuente1 = new Font("Lato", Font.BOLD, 24);
+        fuente2 = new Font("Lato", Font.PLAIN, 20);
+
+        //Dar formato a elementos
+        lCrearNombre.setFont(fuente1);
+        tfCrearNombre.setFont(fuente2);
+
 
         // Posicionar elementos del panel Crear
         pCrearNombre.add(lCrearNombre);
@@ -130,14 +144,24 @@ public class GUIServidor extends JFrame
         pInformes.add(spInforme, BorderLayout.CENTER);
         pInformes.add(bInformeLimpiar, BorderLayout.SOUTH);
 
-
-
-
+        //Posicionar elementos del panel Informe
+        pIniciar.add(cbIniciar);
+        pClientes.add(lIniciarCliente1);
+        pClientes.add(lIniciarCliente2);
+        pClientes.add(lIniciarCliente3);
+        pIniciar.add(pClientes);
+        pIniciar.add(lIniciarCantidad);
+        pIniciar.add(lIniciarTiempo);
+        pIniciar.add(bIniciarIniciar);
+        pIniciar.add(lIniciarTiempoRestante);
+        pIniciar.add(lIniciarTimer);
+        pIniciar.add(lIniciarPreguntas);
+        pIniciar.add(lIniciarRespondidas);
 
         pestanas.addTab("Crear examen",pCrear);
         pestanas.addTab("Visualizar examen",pVisualizar);
         pestanas.addTab("Ver informes",pInformes);
-        pestanas.addTab("Realizar examen",pHacer);
+        pestanas.addTab("Realizar examen",pIniciar);
 
         add(pestanas);
         //Hola
