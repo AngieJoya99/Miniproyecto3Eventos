@@ -1,17 +1,20 @@
 package Vista;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GUIServidor extends JFrame 
 {
     JTabbedPane pestanas;   
-    JPanel pCrear, pVisualizar, pInformes, pHacer;
+    JPanel pCrear, pVisualizar, pInformes, pHacer, pCrearNombre,
+        pCrearTiempo, pHoras, pVerSeleccionar, pInformeSeleccionar;
+
     JScrollPane spVisualizar, spInforme;
 
     JLabel lCrearNombre, lCrearArchivo, lCrearDuracion, 
         lIniciarCantidad, lIniciarTiempo, lIniciarTiempoRestante, 
         lIniciarTimer, lIniciarPreguntas, lIniciarRespondidas, 
-        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3;
+        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos1, lDosPuntos2;
 
     JButton bCrearCargar, bCrearCrear, bVerVer, bVerLimpiar, 
         bInformeVer, bInformeLimpiar, bIniciarIniciar;
@@ -52,10 +55,12 @@ public class GUIServidor extends JFrame
         lIniciarTiempo = new JLabel("Tiempo");
         lIniciarTiempoRestante = new JLabel("Tiempo restante");
         lIniciarRespondidas = new JLabel("Preguntas respondidas");
+        lDosPuntos1 = new JLabel(":");
+        lDosPuntos2 = new JLabel(":");
 
         tfCrearNombre = new JTextField();
         
-        bCrearCargar = new JButton("Cargar archivo");
+        bCrearCargar = new JButton("Cargar Preguntas");
         bCrearCrear = new JButton("Crear");
 
         bVerVer = new JButton("Ver");
@@ -81,10 +86,53 @@ public class GUIServidor extends JFrame
 
         pCrear = new JPanel();
         pHacer = new JPanel();
-        pInformes = new JPanel();
-        pVisualizar = new JPanel();
+        pInformes = new JPanel(new BorderLayout());
+        pVisualizar = new JPanel(new BorderLayout());
+
+        pCrearNombre = new JPanel(new GridLayout(1,2));
+        pCrearTiempo = new JPanel(new GridLayout(1,2));
+        pHoras = new JPanel();
+
+        pVerSeleccionar = new JPanel();
+        pInformeSeleccionar = new JPanel();
 
         pestanas = new JTabbedPane();
+
+        // Posicionar elementos del panel Crear
+        pCrearNombre.add(lCrearNombre);
+        pCrearNombre.add(tfCrearNombre);
+        pCrear.add(pCrearNombre);
+        pCrear.add(bCrearCargar);
+        pCrear.add(lCrearArchivo);
+        pCrearTiempo.add(lCrearDuracion);
+        pHoras.add(horas);
+        pHoras.add(lDosPuntos1);
+        pHoras.add(minutos);
+        pHoras.add(lDosPuntos2);
+        pHoras.add(segundos);
+        pCrearTiempo.add(pHoras);
+        pCrear.add(pCrearTiempo);
+        pCrear.add(bCrearCrear);
+
+        //Posicionar elementos del panel Visualizar
+        pVerSeleccionar.add(cbVisualizar);
+        pVerSeleccionar.add(bVerVer);
+        pVisualizar.add(pVerSeleccionar, BorderLayout.NORTH);
+        spVisualizar.add(taVisualizar);
+        pVisualizar.add(spVisualizar, BorderLayout.CENTER);
+        pVisualizar.add(bVerLimpiar, BorderLayout.SOUTH);
+
+        //Posicionar elementos del panel Informe
+        pInformeSeleccionar.add(cbInforme);
+        pInformeSeleccionar.add(bInformeVer);
+        pInformes.add(pInformeSeleccionar, BorderLayout.NORTH);
+        spInforme.add(taInforme);
+        pInformes.add(spInforme, BorderLayout.CENTER);
+        pInformes.add(bInformeLimpiar, BorderLayout.SOUTH);
+
+
+
+
 
         pestanas.addTab("Crear examen",pCrear);
         pestanas.addTab("Visualizar examen",pVisualizar);
