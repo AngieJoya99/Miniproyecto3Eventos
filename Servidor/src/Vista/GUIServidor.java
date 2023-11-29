@@ -2,6 +2,7 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class GUIServidor extends JFrame 
 {
@@ -25,6 +26,7 @@ public class GUIServidor extends JFrame
     JComboBox cbVisualizar, cbInforme, cbIniciar;
     JSpinner horas, minutos, segundos;
     Font fuente1, fuente2;
+    SpinnerListModel modeloHora, modeloMin, modeloSeg; 
 
     /**
      * Constructor de la clase GUIServidor
@@ -32,11 +34,12 @@ public class GUIServidor extends JFrame
     public GUIServidor()
     {
         setTitle("Servidor");
-        setSize(500, 500);
+        setSize(440, 500);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -80,19 +83,23 @@ public class GUIServidor extends JFrame
         cbIniciar = new JComboBox<>();
         cbVisualizar = new JComboBox<>();
 
-        horas = new JSpinner();
-        minutos = new JSpinner();
-        segundos = new JSpinner();
+        modeloHora = new SpinnerListModel(listaHoras());
+        modeloMin = new SpinnerListModel(listaMinSeg());
+        modeloSeg= new SpinnerListModel(listaMinSeg());
+
+        horas = new JSpinner(modeloHora);
+        minutos = new JSpinner(modeloMin);
+        segundos = new JSpinner(modeloSeg);
 
         spInforme = new JScrollPane();
         spVisualizar= new JScrollPane();
 
-        pCrear = new JPanel();
+        pCrear = new JPanel(new FlowLayout(FlowLayout.CENTER,1,15));
         pIniciar = new JPanel();
         pInformes = new JPanel(new BorderLayout());
         pVisualizar = new JPanel(new BorderLayout());
 
-        pCrearNombre = new JPanel(new GridLayout(1,2));
+        pCrearNombre = new JPanel(new GridLayout(1,2,20,10));
         pCrearTiempo = new JPanel(new GridLayout(1,2));
         pHoras = new JPanel();
 
@@ -104,12 +111,27 @@ public class GUIServidor extends JFrame
         pestanas = new JTabbedPane();
 
 
-        fuente1 = new Font("Lato", Font.BOLD, 24);
-        fuente2 = new Font("Lato", Font.PLAIN, 20);
+        fuente1 = new Font("Lato", Font.BOLD, 20);
+        fuente2 = new Font("Lato", Font.PLAIN, 16);
 
         //Dar formato a elementos
         lCrearNombre.setFont(fuente1);
         tfCrearNombre.setFont(fuente2);
+        bCrearCargar.setFont(fuente1);
+        lCrearArchivo.setFont(fuente1);
+        lCrearDuracion.setFont(fuente1);
+        horas.setFont(fuente2);
+        minutos.setFont(fuente2);
+        segundos.setFont(fuente2);
+        bCrearCrear.setFont(fuente1);
+
+        horas.setPreferredSize(new Dimension(40,30));
+        minutos.setPreferredSize(new Dimension(40,30));
+        segundos.setPreferredSize(new Dimension(40,30));
+
+        taInforme.setText("Prueba del area de texto");
+
+          
 
 
         // Posicionar elementos del panel Crear
@@ -141,6 +163,7 @@ public class GUIServidor extends JFrame
         pInformeSeleccionar.add(bInformeVer);
         pInformes.add(pInformeSeleccionar, BorderLayout.NORTH);
         spInforme.add(taInforme);
+        spInforme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         pInformes.add(spInforme, BorderLayout.CENTER);
         pInformes.add(bInformeLimpiar, BorderLayout.SOUTH);
 
@@ -165,5 +188,35 @@ public class GUIServidor extends JFrame
 
         add(pestanas);
         //Hola
+    }
+
+    /**
+     * Crea una arreglo de String y lo llena con los números
+     * del 0 al 24
+     * @return Arreglo de números
+     */
+    public String[] listaHoras()
+    {
+        String[] arreglo = new String[25];  
+        for (int i=0; i<=24; i++)
+        {
+            arreglo[i] = ""+i;
+        }
+        return arreglo; 
+    }
+
+    /**
+     * Crea una arreglo de String y lo llena con los números
+     * del 0 al 60
+     * @return Arreglo de números
+     */
+    public String[] listaMinSeg()
+    {
+        String[] arreglo = new String[61];  
+        for (int i=0; i<=60; i++)
+        {
+            arreglo[i] = ""+i;
+        }
+        return arreglo; 
     }
 }
