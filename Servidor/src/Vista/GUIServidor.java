@@ -50,7 +50,7 @@ public class GUIServidor extends JFrame
         //Crear componentes
         lCrearNombre = new JLabel("Nombre del examen");
         lCrearArchivo= new JLabel("El archivo seleccionado fue: ");
-        lCrearDuracion = new JLabel("Duración del examen");
+        lCrearDuracion = new JLabel("Duración del examen ");
 
         lIniciarCantidad = new JLabel("Cantidad de preguntas");
         lIniciarCliente1 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
@@ -218,5 +218,62 @@ public class GUIServidor extends JFrame
             arreglo[i] = ""+i;
         }
         return arreglo; 
+    }
+
+    /**
+     * Cambia el ícono del label que representa la conexión
+     * del cliente 1 dependiendo de un valor booleano que recibe
+     * como parámetro
+     * @param color Icono rojo si es false, icono verde
+     * si es true
+     */
+    public void cambiarIcono1( boolean color)
+    {
+        if (!color)
+        {
+            lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        }
+        else
+        {
+            lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
+        }
+    }
+
+    /**
+     * Cambia el ícono del label que representa la conexión
+     * del cliente 2 dependiendo de un valor booleano que recibe
+     * como parámetro
+     * @param color Icono rojo si es false, icono verde
+     * si es true
+     */
+    public void cambiarIcono2( boolean color)
+    {
+        if (!color)
+        {
+            lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        }
+        else
+        {
+            lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
+        }
+    }
+
+    /**
+     * Cambia el ícono del label que representa la conexión
+     * del cliente 3 dependiendo de un valor booleano que recibe
+     * como parámetro
+     * @param color Icono rojo si es false, icono verde
+     * si es true
+     */
+    public void cambiarIcono3( boolean color)
+    {
+        if (!color)
+        {
+            lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        }
+        else
+        {
+            lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
+        }
     }
 }
