@@ -86,6 +86,8 @@ public class HiloCliente extends Thread
     }
 
     public byte[] convertirExamen(Examen examen) {
+
+        
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try (ObjectOutputStream salir = new ObjectOutputStream(byteStream)) {
             salir.writeObject(examen);
