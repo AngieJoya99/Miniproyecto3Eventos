@@ -5,23 +5,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+
+
 public class GUICliente extends JFrame 
 {
     private ArrayList <JToggleButton> numeroPregunta;
     JTabbedPane tpPestanas;
     JScrollPane jsPestanaExamen, jsResultado, jsExamen;
-    JButton bResponder, bVerResultado, bCancelarPreg, bOK;
-    JRadioButton rbOpc1, rbOpc2, rbOpc3, rbOpc4;
+    JButton bResponder, bVerResultado, bCancelarPreg, bOK, bResponderPreg;
+    JRadioButton rbOpcA, rbOpcB, rbOpcC, rbOpcD;
     JTextField tfTempoRestante, tfPregRes;
     ButtonGroup bgGrupoOpc;
-    JTextArea areaExamen, areaResultado;
+    JTextArea areaExamen, areaResultado, areaPregunta;
 
-    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, 
-    pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion;
+    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2;
 
-    JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, 
-    lClienteConectado2, lClienteConectado3,lNumPreg, lEnunciadoPreg, 
-    lInforme, lPregCorrecta, lCalificacion; 
+    JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lEnunciadoPreg, lInforme, lPregCorrecta, lCalificacion; 
 
     /**
      *Constructor de la clase GUIServidor
@@ -39,6 +38,9 @@ public class GUICliente extends JFrame
     
     public void crearGUI()
     {
+
+        //----------------pestaña previsualizacion examen----------------
+        
         //Crear componentes
         tpPestanas = new JTabbedPane();
 
@@ -48,7 +50,7 @@ public class GUICliente extends JFrame
 
         numeroPregunta = new ArrayList<>();
         jsPestanaExamen = new JScrollPane(pExamen);
-        
+    
 
         tpPestanas.addTab("Examen",pExamen);
         tpPestanas.addTab("Pregunta",pPregunta);
@@ -86,19 +88,12 @@ public class GUICliente extends JFrame
         tfTempoRestante = new JTextField();
 
         bVerResultado = new JButton("Ver Resultado");
-        bCancelarPreg = new JButton("Cancelar");
         bResponder = new JButton("Responder");
         bOK = new JButton();
 
-        rbOpc1 = new JRadioButton("Opción A");
-        rbOpc2 = new JRadioButton("Opción B");
-        rbOpc3 = new JRadioButton("Opción C");
-        rbOpc4 = new JRadioButton("Opción D");
-        bgGrupoOpc = new ButtonGroup();
-        bgGrupoOpc.add(rbOpc1);bgGrupoOpc.add(rbOpc2);
-        bgGrupoOpc.add(rbOpc3);bgGrupoOpc.add(rbOpc4);
-    
 
+    
+        //panel 
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.CENTER);
 
@@ -112,10 +107,52 @@ public class GUICliente extends JFrame
        pSurExamen.add(pInformacion, BorderLayout.CENTER);
        pSurExamen.add(pUsuarioConectado, BorderLayout.SOUTH);
 
-        //pExamen.add(pBotonesPreg, BorderLayout.WEST);
         
+        //Se añaden los paneles a la pestaña examen
         pExamen.add(pNorteExamen, BorderLayout.NORTH);
         pExamen.add(pSurExamen, BorderLayout.CENTER);
+
+        //---------pestaña pregunta-----------------
+
+        //Crear componentes
+        
+        areaPregunta = new JTextArea(15, 35);
+        areaPregunta.setEditable(false);
+        bCancelarPreg = new JButton("Cancelar");
+        bResponderPreg = new JButton("Responder");
+
+        rbOpcA = new JRadioButton("Opción A");
+        rbOpcB = new JRadioButton("Opción B");
+        rbOpcC = new JRadioButton("Opción C");
+        rbOpcD = new JRadioButton("Opción D");
+        bgGrupoOpc = new ButtonGroup();
+        bgGrupoOpc.add(rbOpcA);bgGrupoOpc.add(rbOpcB);
+        bgGrupoOpc.add(rbOpcC);bgGrupoOpc.add(rbOpcD);
+
+
+
+        pBotones = new JPanel();
+        pBotones.add(bCancelarPreg); pBotones.add(bResponderPreg);
+
+        pOpc1 = new JPanel();
+        pOpc2 = new JPanel();
+        pOpc1.add(rbOpcA);  pOpc1.add(rbOpcB); 
+        pOpc2.add(rbOpcC); pOpc2.add(rbOpcD); 
+
+        pOpcMultiple = new JPanel(new GridLayout(3,0));
+        pOpcMultiple.add(pOpc1);
+        pOpcMultiple.add(pOpc2);
+        pOpcMultiple.add(pBotones);
+
+        pPregunta.add(areaPregunta, BorderLayout.CENTER);
+        pPregunta.add(pOpcMultiple, BorderLayout.SOUTH);
+        
+       
+
+
+
+
+
     
     }
 
