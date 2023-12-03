@@ -25,7 +25,7 @@ public class GUICliente extends JFrame
     ButtonGroup bgGrupoOpc;
     JTextArea areaExamen, areaResultado, areaPregunta;
 
-    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2, pInfoResultado;
+    JPanel pExamen,pWestResultado, pEastResultado, pSouthResultado, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2, pInfoResultado;
 
     JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
 
@@ -177,15 +177,16 @@ public class GUICliente extends JFrame
         lInforme = new JLabel("Resultado");
         bOK = new JButton("OK");
 
-        JPanel pWestResultado = new JPanel(new BorderLayout());
+        pWestResultado = new JPanel(new BorderLayout());
+        
         pWestResultado.add(lCalificacion, BorderLayout.NORTH); 
         pWestResultado.add(lPregCorrecta, BorderLayout.SOUTH); 
 
-       JPanel pEastResultado = new JPanel(new BorderLayout());
+        pEastResultado = new JPanel(new BorderLayout());
         pEastResultado.add(lCalificacionNum, BorderLayout.NORTH);
         pEastResultado.add(lPregCorrectaNum, BorderLayout.SOUTH);
 
-        JPanel pSouthResultado = new JPanel(new BorderLayout());
+        pSouthResultado = new JPanel(new BorderLayout());
         pSouthResultado.add(pEastResultado, BorderLayout.EAST);
         pSouthResultado.add(pWestResultado, BorderLayout.WEST);
         pSouthResultado.add(bOK, BorderLayout.SOUTH);
