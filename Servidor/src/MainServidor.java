@@ -1,6 +1,4 @@
-import Modelo.Archivo;
-import Modelo.Examen;
-import Modelo.Pregunta;
+import Controlador.ControladorServidor;
 import Vista.GUIServidor;
 
 public class MainServidor {
@@ -10,6 +8,7 @@ public class MainServidor {
      */
     public static void main(String[] args) 
     {
+        //ControladorServidor.iniciar();
         GUIServidor gui = new GUIServidor();
     }
     
