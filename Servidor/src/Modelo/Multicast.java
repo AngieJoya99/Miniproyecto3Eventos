@@ -83,10 +83,9 @@ public class Multicast
         datos.add("2");
         datos.add("3");
         byte[] cadena2 = new byte[datos.size()];
-        datos.
         for (int i=0; i<datos.size(); i++)
         {
-            cadena2[i] = ((String) datos.get(i)).getBytes();
+            //cadena2[i] = ((String) datos.get(i)).getBytes();
         }
 
         try {
