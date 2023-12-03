@@ -11,7 +11,6 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 /**
  * Clase que permite enviar información a todos los 
@@ -66,35 +65,6 @@ public class Multicast
         } catch (IOException e) {
             System.out.println("Error al enviar información a todos los usuarios");
             return false;
-        }
-    }
-
-    /**
-     * Envía a todos los usuarios conectados al servidor un examen en forma
-     * de cadena de bytes que recibe como parámetro
-     * @param cadena Examen a enviar
-     */
-    public void enviarExamen (byte[] cadena)
-    {
-        
-        Examen examen = new Examen("examen1", 2, 4,3);
-        ArrayList datos = new ArrayList<String>();
-        datos.add("1");
-        datos.add("2");
-        datos.add("3");
-        byte[] cadena2 = new byte[datos.size()];
-        for (int i=0; i<datos.size(); i++)
-        {
-            //cadena2[i] = ((String) datos.get(i)).getBytes();
-        }
-
-        try {
-            
-            datagrama.setData(cadena);
-            datagrama.setLength(cadena.length);
-            socketMulticast.send(datagrama);
-        } catch (IOException e) {
-            System.out.println("Error al enviar información a todos los usuarios");
         }
     }
 }
