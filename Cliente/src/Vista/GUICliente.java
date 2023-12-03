@@ -60,6 +60,8 @@ public class GUICliente extends JFrame
         tpPestanas.addTab("Pregunta",pPregunta);
         tpPestanas.addTab("Resultado",pResultado);
         add(tpPestanas);
+        tpPestanas.setEnabledAt(1, false);
+        tpPestanas.setEnabledAt(2, false);
         
         pTextArea = new JPanel(new BorderLayout());
         pInformacion = new JPanel(new GridLayout(2,2));
@@ -256,12 +258,12 @@ public class GUICliente extends JFrame
         System.out.println("tamaño arreglo de botones de pregunta: "+Integer.toString(numeroPregunta.size()));
     } 
 
-    public void labelNumeroPregunta (int numPregunta)
+    public void labelNumeroPregunta (String numPregunta)
     {
-        lNumPreg.setText("Pregunta "+ Integer.toString(numPregunta));
+        lNumPreg.setText("Pregunta "+ numPregunta);
     }
 
-    public void bloquearBotones(String indiceBotonSinBloquear)
+    /*public void bloquearBotones(String indiceBotonSinBloquear)
     {
         if(indiceBotonSinBloquear != "nulo")
         {
@@ -278,6 +280,15 @@ public class GUICliente extends JFrame
             System.out.println("Los botones han sido deseleccionado");
         
 
+    }*/
+
+    public void bloquarPregunta(int numPregunta)
+    {
+        for(JButton boton : numeroPregunta)
+        {
+            if(boton == numeroPregunta.get(numPregunta))
+                boton.setEnabled(false);
+        }
     }
 
     class ManejadoraEvento implements ActionListener,KeyListener
@@ -310,7 +321,8 @@ public class GUICliente extends JFrame
             for(JButton boton : numeroPregunta) {
                 if(e.getSource()== boton)
                 {
-                    areaExamen.setText("Esta es la pregunta "+boton.getText());;
+                    areaExamen.setText("Esta es la pregunta "+boton.getText());
+                    labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
                 }
 
@@ -329,9 +341,11 @@ public class GUICliente extends JFrame
             if(e.getSource() == bResponder)
             {
 
-                lNumPreg.setText("PREGUNTA "+ Integer.toString(2));
+                tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
-                bloquearBotones("2");
+                tpPestanas.setEnabledAt(0,false);
+                
+                //bloquearBotones("2");
 
             }
 
