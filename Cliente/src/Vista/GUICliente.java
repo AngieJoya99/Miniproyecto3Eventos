@@ -331,6 +331,7 @@ public class GUICliente extends JFrame
 
                 lNumPreg.setText("PREGUNTA "+ Integer.toString(2));
                 tpPestanas.setSelectedIndex(1);
+                bloquearBotones("2");
 
             }
 
