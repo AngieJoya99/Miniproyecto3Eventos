@@ -1,9 +1,16 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.BorderUIResource;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 
@@ -11,16 +18,16 @@ public class GUICliente extends JFrame
 {
     private ArrayList <JToggleButton> numeroPregunta;
     JTabbedPane tpPestanas;
-    JScrollPane jsPestanaExamen, jsResultado, jsExamen;
+    JScrollPane jsPestanaExamen, jsResultado, jsExamen, jsEnunciadoPregunta;
     JButton bResponder, bVerResultado, bCancelarPreg, bOK, bResponderPreg;
     JRadioButton rbOpcA, rbOpcB, rbOpcC, rbOpcD;
     JTextField tfTempoRestante, tfPregRes;
     ButtonGroup bgGrupoOpc;
     JTextArea areaExamen, areaResultado, areaPregunta;
 
-    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2;
+    JPanel pExamen, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2, pInfoResultado;
 
-    JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lEnunciadoPreg, lInforme, lPregCorrecta, lCalificacion; 
+    JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
 
     /**
      *Constructor de la clase GUIServidor
@@ -68,6 +75,7 @@ public class GUICliente extends JFrame
         
 
         areaExamen = new JTextArea(10, 28);
+        areaExamen.setEditable(false);
         jsExamen = new JScrollPane(areaExamen);
         jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY, 5),""));
         
@@ -75,11 +83,11 @@ public class GUICliente extends JFrame
         jsResultado = new JScrollPane(areaResultado);
 
         lExamen = new JLabel();
-        lCalificacion = new JLabel("Calificacion");
+        
         lTempoRestante = new JLabel("Tiempo Restante");
         lPregRespondidas = new JLabel("Preguntas Respondidas");
-        lNumPreg = new JLabel();
-        lEnunciadoPreg = new JLabel();
+        
+        
         lClienteConectado1 = new JLabel();
         lClienteConectado2 = new JLabel();
         lClienteConectado3 = new JLabel();
@@ -89,7 +97,7 @@ public class GUICliente extends JFrame
 
         bVerResultado = new JButton("Ver Resultado");
         bResponder = new JButton("Responder");
-        bOK = new JButton();
+        
 
 
     
@@ -117,9 +125,12 @@ public class GUICliente extends JFrame
         //Crear componentes
         
         areaPregunta = new JTextArea(15, 35);
+        jsEnunciadoPregunta = new JScrollPane(areaPregunta);
         areaPregunta.setEditable(false);
         bCancelarPreg = new JButton("Cancelar");
         bResponderPreg = new JButton("Responder");
+        lNumPreg = new JLabel("Preguna 1");
+        
 
         rbOpcA = new JRadioButton("Opción A");
         rbOpcB = new JRadioButton("Opción B");
@@ -143,17 +154,75 @@ public class GUICliente extends JFrame
         pOpcMultiple.add(pOpc1);
         pOpcMultiple.add(pOpc2);
         pOpcMultiple.add(pBotones);
-
-        pPregunta.add(areaPregunta, BorderLayout.CENTER);
-        pPregunta.add(pOpcMultiple, BorderLayout.SOUTH);
         
-       
+        pPregunta.add(lNumPreg);
+        pPregunta.add(jsEnunciadoPregunta);
+        pPregunta.add(pOpcMultiple);
+
+        //ponerle orejas a los botones
+        escuchaToggleButton();
+
+    
+        
+        
+       //-------- Pestaña Resultado ---------------
+
+        areaResultado = new JTextArea(15, 35);
+        areaResultado.setEditable(false);
+        jsResultado = new JScrollPane(areaResultado);
+        lCalificacion = new JLabel("Calificacion");
+        lPregCorrecta = new JLabel("Preguntas Correctas");
+        lCalificacionNum = new JLabel("10");
+        lPregCorrectaNum = new JLabel("20");
+        lInforme = new JLabel("Resultado");
+        bOK = new JButton("OK");
+
+        JPanel pWestResultado = new JPanel(new BorderLayout());
+        pWestResultado.add(lCalificacion, BorderLayout.NORTH); 
+        pWestResultado.add(lPregCorrecta, BorderLayout.SOUTH); 
+
+       JPanel pEastResultado = new JPanel(new BorderLayout());
+        pEastResultado.add(lCalificacionNum, BorderLayout.NORTH);
+        pEastResultado.add(lPregCorrectaNum, BorderLayout.SOUTH);
+
+        JPanel pSouthResultado = new JPanel(new BorderLayout());
+        pSouthResultado.add(pEastResultado, BorderLayout.EAST);
+        pSouthResultado.add(pWestResultado, BorderLayout.WEST);
+        pSouthResultado.add(bOK, BorderLayout.SOUTH);
+
+
+
+
+        pResultado.add(lInforme);
+        pResultado.add(jsResultado);
+        pResultado.add(pSouthResultado);
+        
+
+
+
+        
+    
+
+        
+
+
 
 
 
 
 
     
+    }
+
+    public void escuchaToggleButton()
+    {
+        ManejadoraEvento evento = new ManejadoraEvento();
+        for (int i=0; i<numeroPregunta.size();i++)
+        {
+            JToggleButton toggleButton = numeroPregunta.get(i);
+
+            toggleButton.addItemListener(evento);
+        }
     }
 
     public void crearBotones(int numPreguntas)
@@ -179,6 +248,40 @@ public class GUICliente extends JFrame
              pBotonesPreg.add(numeroPregunta.get(i));
         }
     } 
+
+    public void labelNumeroPregunta (int numPregunta)
+    {
+        lNumPreg.setText("Pregunta "+ Integer.toString(numPregunta));
+    }
+
+    class ManejadoraEvento implements ActionListener, ItemListener
+    {
+        @Override
+        public void itemStateChanged (ItemEvent e) 
+        {
+            if(e.getStateChange() == ItemEvent.SELECTED)
+            {
+                for (int i=0; i<numeroPregunta.size(); i++)
+                {
+                    JToggleButton toggleButton = numeroPregunta.get(i);
+
+                    if(e.getItemSelectable() == toggleButton)
+                    {
+                        lNumPreg.setText("PREGUNTA "+ Integer.toString(i+1));;
+                    }
+
+                }
+            }
+        
+        
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        }
+    }
 }
 
 
