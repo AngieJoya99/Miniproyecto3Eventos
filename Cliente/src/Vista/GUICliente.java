@@ -1,22 +1,19 @@
 package Vista;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 
 public class GUICliente extends JFrame 
 {
-    private ArrayList <JToggleButton> numeroPregunta;
+    private ArrayList <JButton> numeroPregunta;
     JTabbedPane tpPestanas;
     JScrollPane jsPestanaExamen, jsResultado, jsExamen, jsEnunciadoPregunta;
     JButton bResponder, bVerResultado, bCancelarPreg, bOK, bResponderPreg;
@@ -159,8 +156,28 @@ public class GUICliente extends JFrame
         pPregunta.add(jsEnunciadoPregunta);
         pPregunta.add(pOpcMultiple);
 
-        //ponerle orejas a los botones
-        escuchaToggleButton();
+        //Objeto Eventos
+       /*  ManejadoraEvento evento = new ManejadoraEvento();
+        
+        //Añadir escuchas
+        // Añadiendo KeyListener a la ventana
+        this.addKeyListener(evento);
+        
+        System.out.println("Funciona");
+        System.out.println(Integer.toString(numeroPregunta.size()));
+
+        ciclo();
+        for(int i=0; i<numeroPregunta.size();i++ )
+        {
+            
+            //retornarBoton(i).addActionListener(evento);
+            System.out.println("se añadio correctamente la escucha");
+                 
+            
+        }*/
+        System.out.println("sisiisi");
+        ManejadoraEvento evento = new ManejadoraEvento();
+        bResponder.addActionListener(evento);
 
     
         
@@ -199,39 +216,26 @@ public class GUICliente extends JFrame
         pResultado.add(pSouthResultado);
         
 
-
-
-        
-    
-
-        
-
-
-
-
-
-
-
     
     }
 
-    public void escuchaToggleButton()
-    {
-        ManejadoraEvento evento = new ManejadoraEvento();
-        for (int i=0; i<numeroPregunta.size();i++)
-        {
-            JToggleButton toggleButton = numeroPregunta.get(i);
 
-            toggleButton.addItemListener(evento);
-        }
-    }
+
+
+
+
 
     public void crearBotones(int numPreguntas)
     {
+        ManejadoraEvento evento = new ManejadoraEvento();
         for (int i=0; i < numPreguntas ; i++ )
         {
-            JToggleButton botonPreg = new JToggleButton(Integer.toString(i+1));
+            
+            JButton botonPreg = new JButton( Integer.toString(i+1));
+            
             numeroPregunta.add(botonPreg);
+            System.out.println("el boton "+numeroPregunta.get(i).getText()+"ha sido creado");
+            numeroPregunta.get(i).addActionListener(evento);
         }
     }
 
@@ -248,6 +252,8 @@ public class GUICliente extends JFrame
         {
              pBotonesPreg.add(numeroPregunta.get(i));
         }
+        //escuchaToggleButton(numeroPregunta.size());
+        System.out.println("tamaño arreglo de botones de pregunta: "+Integer.toString(numeroPregunta.size()));
     } 
 
     public void labelNumeroPregunta (int numPregunta)
@@ -255,8 +261,28 @@ public class GUICliente extends JFrame
         lNumPreg.setText("Pregunta "+ Integer.toString(numPregunta));
     }
 
-    class ManejadoraEvento implements ActionListener, ItemListener
+    public void bloquearBotones(String indiceBotonSinBloquear)
     {
+        if(indiceBotonSinBloquear != "nulo")
+        {
+            for (int i=0; i<numeroPregunta.size();i++)
+            {
+                if(i == Integer.parseInt(indiceBotonSinBloquear))
+                numeroPregunta.get(i).setEnabled(true);
+            
+                else
+                numeroPregunta.get(i).setEnabled(false);
+            }
+        }
+        else
+            System.out.println("Los botones han sido deseleccionado");
+        
+
+    }
+
+    class ManejadoraEvento implements ActionListener,KeyListener
+    {
+        /* 
         @Override
         public void itemStateChanged (ItemEvent e) 
         {
@@ -264,24 +290,69 @@ public class GUICliente extends JFrame
             {
                 for (int i=0; i<numeroPregunta.size(); i++)
                 {
-                    JToggleButton toggleButton = numeroPregunta.get(i);
+
+                    JButton toggleButton = numeroPregunta.get(i);
 
                     if(e.getItemSelectable() == toggleButton)
                     {
-                        lNumPreg.setText("PREGUNTA "+ Integer.toString(i+1));;
+                        lNumPreg.setText("PREGUNTA "+ Integer.toString(i+1));
+                        tpPestanas.setSelectedIndex(1);
                     }
 
                 }
             }
         
         
-        }
+        }*/
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+            for(JButton boton : numeroPregunta) {
+                if(e.getSource()== boton)
+                {
+                    areaExamen.setText("Esta es la pregunta "+boton.getText());;
+                    System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+                }
+
+               /*  if(e.getSource() == numeroPregunta.get(1))
+                {
+                    tpPestanas.setSelectedIndex(1);
+                    System.out.println("El boton '2' ha sido seleccionado");
+                }
+                if(e.getSource() == retornarBoton(2))
+                {
+                    tpPestanas.setSelectedIndex(1);
+                    System.out.println("El boton '2' ha sido seleccionado");
+                }*/
+            }
+
+            if(e.getSource() == bResponder)
+            {
+
+                lNumPreg.setText("PREGUNTA "+ Integer.toString(2));
+                tpPestanas.setSelectedIndex(1);
+                bloquearBotones("2");
+
+            }
+
         }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }
+
+    
     }
 }
 

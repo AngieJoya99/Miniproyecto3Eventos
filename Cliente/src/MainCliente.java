@@ -8,7 +8,8 @@ public class MainCliente {
     public static void main(String[] args) 
     {
         GUICliente gui = new GUICliente();
-        gui.establecerBotones(5);
+        
+        gui.establecerBotones(10);
     }
     
 }
