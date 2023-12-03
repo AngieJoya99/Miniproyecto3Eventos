@@ -6,7 +6,6 @@
 
 package Modelo;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,22 +21,19 @@ public class HiloCliente extends Thread
     ObjectOutputStream salida;
     Socket socket;
     Multicast multicast;
-    Examen examen;
     
     int idCliente;
-    String nombreCliente;
 
     /**
      * Constructor de la clase HiloServidor
      * @param socket
      * @param id
      */
-    public HiloCliente(Socket socket, int idCliente, Multicast multicast, String nombre)
+    public HiloCliente(Socket socket, int idCliente, Multicast multicast)
     {
         this.socket = socket;
         this.idCliente = idCliente;
         this.multicast = multicast;
-        this.nombreCliente = nombre;
     }
 
     @Override
@@ -71,7 +67,12 @@ public class HiloCliente extends Thread
 
     public void procesarConexion()
     {
-        
+        String mensaje = "Conexion exitosa";
+        enviarTexto(mensaje);
+        do
+        {
+            //No sé que debe ir aquí :(
+        }while(!mensaje.equals("cerrar"));
     }
 
     public void enviarTexto (String texto)
@@ -85,28 +86,9 @@ public class HiloCliente extends Thread
         }
     }
 
-    public byte[] convertirExamen(Examen examen) {
-
-        
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try (ObjectOutputStream salir = new ObjectOutputStream(byteStream)) {
-            salir.writeObject(examen);
-            return byteStream.toByteArray();
-        } catch (IOException e) {
-            System.out.println("Error al serializar el examen");
-        }
-        throw new RuntimeException();
-    }
-
     public void enviarTextoMulti (String texto)
     {
         multicast.enviarTextoMulti(texto);   
-    }
-
-    public void enviarExamen(Examen examen)
-    {
-        byte[] cadena = convertirExamen(examen);
-        multicast.enviarExamen(cadena);
     }
 
     /**
@@ -118,7 +100,7 @@ public class HiloCliente extends Thread
             entrada.close();
             salida.close();
             socket.close();
-            System.out.println("La conexión con el estudiante "+nombreCliente+" ha terminado");
+            System.out.println("La conexión con el estudiante "+idCliente+" ha terminado");
         } catch (IOException e) {
             System.out.println("Error al cerrar la conexion");
         }
@@ -128,10 +110,4 @@ public class HiloCliente extends Thread
     {
         return idCliente;
     }
-
-    public String getNombreCliente()
-    {
-        return nombreCliente;
-    }
-
 }

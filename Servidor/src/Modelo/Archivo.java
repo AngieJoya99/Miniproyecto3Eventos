@@ -7,7 +7,6 @@ package Modelo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Scanner;
 public class Archivo 
 {
     private File archivo;
-    private ArrayList<String> preguntas;
+    private String preguntas;
     String nombreArchivo;
 
     /**
@@ -24,7 +23,7 @@ public class Archivo
      */
     public Archivo(String nombreArchivo)
     {
-        this.preguntas = new ArrayList<String>();
+        this.preguntas = "";
         this.nombreArchivo = nombreArchivo;
         boolean existe =cargarArchivo();
         if(existe)
@@ -48,13 +47,12 @@ public class Archivo
             System.out.println("El archivo no pudo ser cargado");
             return false;
         }
-            
     }
 
     /**
      * Método que escanea un archivo,
      * lee el texto separado por un delimitador, 
-     * y lo guarda en un arreglo
+     * y lo guarda en un String
      */
     public void generarPreguntas()
     {
@@ -63,7 +61,7 @@ public class Archivo
             buscador.useDelimiter("}");
             while(buscador.hasNext())
             {
-                preguntas.add(buscador.next().trim());
+                preguntas+=buscador.next().trim();
                 //buscador.nextLine();
             }
             buscador.close();
@@ -74,22 +72,13 @@ public class Archivo
     }
 
     /**
-     * Método que retorna el tamaño del arreglo de preguntas
-     * @return tamaño del arreglo
+     * Método que obtiene el valor de la variable preguntas y lo
+     * retorna
+     * @return valor de la variable
      */
-    public int cantidadPreguntas()
+    public String getPreguntas()
     {
-        return this.preguntas.size();
-    }
-
-    /**
-     * Retorna la pregunta almacenada en el arreglo preguntas
-     * @param pos Posicion del arreglo a consultar
-     * @return Texto almacenado en la posición del arreglo
-     */
-    public String getPregunta(int pos)
-    {
-        return this.preguntas.get(pos);
+        return this.preguntas;
     }
 
 }
