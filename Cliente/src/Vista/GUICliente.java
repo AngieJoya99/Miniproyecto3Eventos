@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -238,7 +240,7 @@ public class GUICliente extends JFrame
             
             numeroPregunta.add(botonPreg);
             System.out.println("el boton "+numeroPregunta.get(i).getText()+"ha sido creado");
-            numeroPregunta.get(i).addActionListener(evento);
+            numeroPregunta.get(i).addActionListener( evento);
         }
     }
 
@@ -316,8 +318,10 @@ public class GUICliente extends JFrame
         for(JToggleButton boton : numeroPregunta)
         {
             if(boton.isSelected())
+            {
                 boton.setEnabled(false);
-
+                System.out.println("El boton "+boton.getText());
+            }
             
         }
 
@@ -359,22 +363,7 @@ public class GUICliente extends JFrame
                     
 
                 }
-            
-
-               
-
-               /*  if(e.getSource() == numeroPregunta.get(1))
-                {
-                    tpPestanas.setSelectedIndex(1);
-                    System.out.println("El boton '2' ha sido seleccionado");
-                }
-                if(e.getSource() == retornarBoton(2))
-                {
-                    tpPestanas.setSelectedIndex(1);
-                    System.out.println("El boton '2' ha sido seleccionado");
-                }*/
             }
-
             if(e.getSource() == bResponder)
             {
 
@@ -394,7 +383,25 @@ public class GUICliente extends JFrame
 
             }
 
+               
+
+               /*  if(e.getSource() == numeroPregunta.get(1))
+                {
+                    tpPestanas.setSelectedIndex(1);
+                    System.out.println("El boton '2' ha sido seleccionado");
+                }
+                if(e.getSource() == retornarBoton(2))
+                {
+                    tpPestanas.setSelectedIndex(1);
+                    System.out.println("El boton '2' ha sido seleccionado");
+                }*/
+            
+
+
+
         }
+
+       
 
         @Override
         public void keyTyped(KeyEvent e) {
