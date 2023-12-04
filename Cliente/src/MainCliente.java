@@ -1,4 +1,4 @@
-import Vista.GUICliente;
+import Controlador.ControladorCliente;
 
 public class MainCliente {
 
@@ -7,9 +7,7 @@ public class MainCliente {
      **/
     public static void main(String[] args) 
     {
-        GUICliente gui = new GUICliente();
-        
-        gui.establecerBotones(10);
+        ControladorCliente.iniciar();
     }
     
 }
