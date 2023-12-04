@@ -58,5 +58,10 @@ public class ConexionServidor extends Thread{
             return false;
         }
     }
+
+    public void enviarTextoMulti (String texto)
+    {
+        multicast.enviarTextoMulti(texto);   
+    }
     
 }

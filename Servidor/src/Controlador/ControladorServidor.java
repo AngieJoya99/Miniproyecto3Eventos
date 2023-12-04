@@ -29,17 +29,16 @@ public class ControladorServidor {
         archivo = new Archivo(nombre);        
     }
 
-    //¿Cómo envia algo por multicast? D:
     public static void enviarExamen()
     {
-        String mensaje = "Examen\n";
+        String mensaje = "Examen";
         mensaje+="\n"+gui.leerNombreExamen();
         mensaje+="\n"+gui.leerHoras();
         mensaje+="\n"+gui.leerMinutos();
         mensaje+="\n"+gui.leerSegundos();
         mensaje+="\n"+archivo.getPreguntas();
-        
-
+        conexionServidor.enviarTextoMulti(mensaje);
+        System.out.println("Examen enviado exitosamente");
     }
     
 }
