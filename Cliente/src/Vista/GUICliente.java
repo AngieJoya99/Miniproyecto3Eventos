@@ -161,28 +161,10 @@ public class GUICliente extends JFrame
         pPregunta.add(jsEnunciadoPregunta);
         pPregunta.add(pOpcMultiple);
 
-        //Objeto Eventos
-       /*  ManejadoraEvento evento = new ManejadoraEvento();
-        
-        //Añadir escuchas
-        // Añadiendo KeyListener a la ventana
-        this.addKeyListener(evento);
-        
-        System.out.println("Funciona");
-        System.out.println(Integer.toString(numeroPregunta.size()));
-
-        ciclo();
-        for(int i=0; i<numeroPregunta.size();i++ )
-        {
-            
-            //retornarBoton(i).addActionListener(evento);
-            System.out.println("se añadio correctamente la escucha");
-                 
-            
-        }*/
-        System.out.println("sisiisi");
+    
         ManejadoraEvento evento = new ManejadoraEvento();
         bResponder.addActionListener(evento);
+        bCancelarPreg.addActionListener(evento);
 
     
         
@@ -232,6 +214,7 @@ public class GUICliente extends JFrame
 
     public void crearBotones(int numPreguntas)
     {
+        ButtonGroup grupoBotonPreg = new ButtonGroup();
         ManejadoraEvento evento = new ManejadoraEvento();
         for (int i=0; i < numPreguntas ; i++ )
         {
@@ -239,6 +222,7 @@ public class GUICliente extends JFrame
             JToggleButton botonPreg = new JToggleButton( Integer.toString(i+1));
             
             numeroPregunta.add(botonPreg);
+            grupoBotonPreg.add(botonPreg);
             System.out.println("el boton "+numeroPregunta.get(i).getText()+"ha sido creado");
             numeroPregunta.get(i).addActionListener( evento);
         }
@@ -257,7 +241,6 @@ public class GUICliente extends JFrame
         {
              pBotonesPreg.add(numeroPregunta.get(i));
         }
-        //escuchaToggleButton(numeroPregunta.size());
         System.out.println("tamaño arreglo de botones de pregunta: "+Integer.toString(numeroPregunta.size()));
     } 
 
@@ -320,7 +303,7 @@ public class GUICliente extends JFrame
             if(boton.isSelected())
             {
                 boton.setEnabled(false);
-                System.out.println("El boton "+boton.getText());
+                System.out.println("El boton "+boton.getText()+ "ha sido bloqueado");
             }
             
         }
@@ -369,6 +352,7 @@ public class GUICliente extends JFrame
 
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
+                tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(); 
                 /*for(int i=0; i<numeroPregunta.size(); i++)
                 {
@@ -382,6 +366,9 @@ public class GUICliente extends JFrame
                 //bloquearBotones("2");
 
             }
+
+            if(e.getSource() == bCancelarPreg)
+            {}
 
                
 
