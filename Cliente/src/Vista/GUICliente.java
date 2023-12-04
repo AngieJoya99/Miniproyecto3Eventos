@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 public class GUICliente extends JFrame 
 {
-    private ArrayList <JButton> numeroPregunta;
+    private ArrayList <JToggleButton> numeroPregunta;
+    private ArrayList <Integer> preguntaSeleccionada;
     JTabbedPane tpPestanas;
     JScrollPane jsPestanaExamen, jsResultado, jsExamen, jsEnunciadoPregunta;
     JButton bResponder, bVerResultado, bCancelarPreg, bOK, bResponderPreg;
@@ -233,7 +234,7 @@ public class GUICliente extends JFrame
         for (int i=0; i < numPreguntas ; i++ )
         {
             
-            JButton botonPreg = new JButton( Integer.toString(i+1));
+            JToggleButton botonPreg = new JToggleButton( Integer.toString(i+1));
             
             numeroPregunta.add(botonPreg);
             System.out.println("el boton "+numeroPregunta.get(i).getText()+"ha sido creado");
@@ -260,9 +261,21 @@ public class GUICliente extends JFrame
 
     public void labelNumeroPregunta (String numPregunta)
     {
-        lNumPreg.setText("Pregunta "+ numPregunta);
+        
+            lNumPreg.setText("Pregunta "+ numPregunta);
+
     }
 
+    /*public void bloquearPregunta()
+    {
+        for(int i=0;i<numeroPregunta.size();i++)
+        {
+            if(numeroPregunta.get(i).isSelected())
+                //numeroPregunta.get(i).setEnabled(false);
+                System.out.println("El boton "+numeroPregunta.get(i).getText()+ " ha sido bloqueado");
+        }
+
+    }*/
     /*public void bloquearBotones(String indiceBotonSinBloquear)
     {
         if(indiceBotonSinBloquear != "nulo")
@@ -282,13 +295,32 @@ public class GUICliente extends JFrame
 
     }*/
 
-    public void bloquarPregunta(int numPregunta)
+   
+
+   /*public void bloquearPregunta(int numPregunta)
     {
-        for(JButton boton : numeroPregunta)
+        System.out.println(numeroPregunta.size());
+        for(int i=0; i<numeroPregunta.size(); i++)
         {
-            if(boton == numeroPregunta.get(numPregunta))
+            JToggleButton boton = numeroPregunta.get(i);
+            if(boton.getText() == Integer.toString(numPregunta))
+            { 
                 boton.setEnabled(false);
+                System.out.println("boton "+ Integer.toString(numPregunta)+"ha sido bloqueado");
+            }
         }
+    }*/
+
+    public void bloquearPregunta()
+    {
+        for(JToggleButton boton : numeroPregunta)
+        {
+            if(boton.isSelected())
+                boton.setEnabled(false);
+
+            
+        }
+
     }
 
     class ManejadoraEvento implements ActionListener,KeyListener
@@ -318,13 +350,18 @@ public class GUICliente extends JFrame
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for(JButton boton : numeroPregunta) {
+            for(JToggleButton boton : numeroPregunta) {
                 if(e.getSource()== boton)
                 {
                     areaExamen.setText("Esta es la pregunta "+boton.getText());
                     labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+                    
+
                 }
+            
+
+               
 
                /*  if(e.getSource() == numeroPregunta.get(1))
                 {
@@ -343,7 +380,15 @@ public class GUICliente extends JFrame
 
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
-                tpPestanas.setEnabledAt(0,false);
+                bloquearPregunta(); 
+                /*for(int i=0; i<numeroPregunta.size(); i++)
+                {
+                    numeroPregunta.get(i).setEnabled(false);
+                    System.out.println("se ha bloqueado el boton " + Integer.toString(i+1));
+                }*/
+                
+                //bloquearPregunta(2);
+                //tpPestanas.setEnabledAt(0,false);
                 
                 //bloquearBotones("2");
 
