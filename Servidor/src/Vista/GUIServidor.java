@@ -276,4 +276,25 @@ public class GUIServidor extends JFrame
             lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
         }
     }
+
+    public String leerNombreExamen()
+    {
+        return tfCrearNombre.getText();
+    }
+
+    public String leerHoras()
+    {
+        return ""+horas.getValue();
+    }
+
+    public String leerMinutos()
+    {
+        return ""+minutos.getValue();
+    }
+
+    public String leerSegundos()
+    {
+        return ""+segundos.getValue();
+    }
+
 }

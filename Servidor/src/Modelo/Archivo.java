@@ -61,7 +61,7 @@ public class Archivo
             buscador.useDelimiter("}");
             while(buscador.hasNext())
             {
-                preguntas+=buscador.next().trim();
+                preguntas+=buscador.next().trim()+"\n";
                 //buscador.nextLine();
             }
             buscador.close();
