@@ -20,7 +20,6 @@ public class HiloCliente extends Thread
     ObjectInputStream entrada;
     ObjectOutputStream salida;
     Socket socket;
-    Multicast multicast;
     
     int idCliente;
 
@@ -33,7 +32,6 @@ public class HiloCliente extends Thread
     {
         this.socket = socket;
         this.idCliente = idCliente;
-        this.multicast = multicast;
     }
 
     @Override
@@ -84,11 +82,6 @@ public class HiloCliente extends Thread
         } catch (IOException e) {
             System.out.println("Error al enviar La información");
         }
-    }
-
-    public void enviarTextoMulti (String texto)
-    {
-        multicast.enviarTextoMulti(texto);   
     }
 
     /**

@@ -1,4 +1,0 @@
-Pregunta 1-;Opcion 1;Opcion 2;Opcion 3;Opcion 4;+Opcion 2+}
-Pregunta 2-;Opcion 1;Opcion 2;Opcion 3;Opcion 4;+Opcion 1+}
-Pregunta 3-;Opcion 1;Opcion 2;Opcion 3;Opcion 4;+Opcion 3+}
-Pregunta 4-;Opcion 1;Opcion 2;Opcion 3;Opcion 4;+Opcion 4+}
