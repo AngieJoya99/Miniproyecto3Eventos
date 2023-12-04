@@ -2,6 +2,7 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
 public class GUIServidor extends JFrame 
@@ -18,12 +19,12 @@ public class GUIServidor extends JFrame
         lIniciarTimer, lIniciarPreguntas, lIniciarRespondidas, 
         lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos1, lDosPuntos2;
 
-    JButton bCrearCargar, bCrearCrear, bVerVer, bVerLimpiar, 
+    JButton  bCrearCrear, bVerVer, bVerLimpiar, 
         bInformeVer, bInformeLimpiar, bIniciarIniciar;
 
     JTextField tfCrearNombre;
     JTextArea taVisualizar, taInforme;
-    JComboBox cbVisualizar, cbInforme, cbIniciar;
+    JComboBox<String> cbVisualizar, cbInforme, cbIniciar, cbCrear;
     JSpinner horas, minutos, segundos;
     Font fuente1, fuente2;
     SpinnerListModel modeloHora, modeloMin, modeloSeg; 
@@ -49,7 +50,7 @@ public class GUIServidor extends JFrame
     {
         //Crear componentes
         lCrearNombre = new JLabel("Nombre del examen");
-        lCrearArchivo= new JLabel("El archivo seleccionado fue: ");
+        lCrearArchivo= new JLabel("Seleccione el archivo a cargar");
         lCrearDuracion = new JLabel("Duración del examen ");
 
         lIniciarCantidad = new JLabel("Cantidad de preguntas");
@@ -66,7 +67,6 @@ public class GUIServidor extends JFrame
 
         tfCrearNombre = new JTextField();
         
-        bCrearCargar = new JButton("Cargar Preguntas");
         bCrearCrear = new JButton("Crear");
 
         bVerVer = new JButton("Ver");
@@ -79,6 +79,8 @@ public class GUIServidor extends JFrame
         taInforme = new JTextArea();
         taVisualizar = new JTextArea();
 
+        cbCrear = new JComboBox<String>();        
+        cualesArchivos();
         cbInforme = new JComboBox<>();
         cbIniciar = new JComboBox<>();
         cbVisualizar = new JComboBox<>();
@@ -117,7 +119,6 @@ public class GUIServidor extends JFrame
         //Dar formato a elementos
         lCrearNombre.setFont(fuente1);
         tfCrearNombre.setFont(fuente2);
-        bCrearCargar.setFont(fuente1);
         lCrearArchivo.setFont(fuente1);
         lCrearDuracion.setFont(fuente1);
         horas.setFont(fuente2);
@@ -138,8 +139,8 @@ public class GUIServidor extends JFrame
         pCrearNombre.add(lCrearNombre);
         pCrearNombre.add(tfCrearNombre);
         pCrear.add(pCrearNombre);
-        pCrear.add(bCrearCargar);
         pCrear.add(lCrearArchivo);
+        pCrear.add(cbCrear);
         pCrearTiempo.add(lCrearDuracion);
         pHoras.add(horas);
         pHoras.add(lDosPuntos1);
@@ -295,6 +296,22 @@ public class GUIServidor extends JFrame
     public String leerSegundos()
     {
         return ""+segundos.getValue();
+    }
+
+    /**
+     * Método que lee el nombre de los archivos guardados en el paquete Archivos
+     * Y los añade al Combo Box cbCrear
+     */
+    public void cualesArchivos()
+    {
+        File carpeta = new File("Servidor"+File.separator+"src"+File.separator+"Archivos");
+        File[] archivos = carpeta.listFiles();
+
+        for (int i = 0; i < archivos.length; i++) {
+            if (archivos[i].isFile()) {
+                cbCrear.addItem(archivos[i].getName());
+            }
+        }   
     }
 
 }

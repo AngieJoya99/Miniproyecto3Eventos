@@ -17,6 +17,7 @@ public class Archivo
     private File archivo;
     private String preguntas;
     String nombreArchivo;
+    int cantidadPreguntas;
 
     /**
      * Constructor de la clase Archivo
@@ -62,6 +63,7 @@ public class Archivo
             while(buscador.hasNext())
             {
                 preguntas+=buscador.next().trim()+"\n";
+                cantidadPreguntas++;
                 //buscador.nextLine();
             }
             buscador.close();
@@ -79,6 +81,11 @@ public class Archivo
     public String getPreguntas()
     {
         return this.preguntas;
+    }
+
+    public int getCantidadPreguntas()
+    {
+        return this.cantidadPreguntas;
     }
 
 }
