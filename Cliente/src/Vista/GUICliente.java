@@ -1,9 +1,13 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -16,18 +20,17 @@ import java.util.ArrayList;
 public class GUICliente extends JFrame 
 {
     private ArrayList <JToggleButton> numeroPregunta;
-    private ArrayList <Integer> preguntaSeleccionada;
+    
     JTabbedPane tpPestanas;
     JScrollPane jsPestanaExamen, jsResultado, jsExamen, jsEnunciadoPregunta;
     JButton bResponder, bVerResultado, bCancelarPreg, bOK, bResponderPreg;
     JRadioButton rbOpcA, rbOpcB, rbOpcC, rbOpcD;
-    JTextField tfTempoRestante, tfPregRes;
     ButtonGroup bgGrupoOpc;
     JTextArea areaExamen, areaResultado, areaPregunta;
 
     JPanel pExamen,pWestResultado, pEastResultado, pSouthResultado, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2, pInfoResultado;
 
-    JLabel lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
+    JLabel lTRestante, lPregRes, lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
 
     /**
      *Constructor de la clase GUIServidor
@@ -54,6 +57,7 @@ public class GUICliente extends JFrame
         pExamen = new JPanel(new BorderLayout());
         pResultado = new JPanel();
         pPregunta = new JPanel();
+        pUsuarioConectado = new JPanel();
 
         numeroPregunta = new ArrayList<>();
         jsPestanaExamen = new JScrollPane(pExamen);
@@ -79,23 +83,27 @@ public class GUICliente extends JFrame
         areaExamen = new JTextArea(10, 28);
         areaExamen.setEditable(false);
         jsExamen = new JScrollPane(areaExamen);
-        jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY, 5),""));
+        jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE, 5),""));
+        jsExamen.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        areaResultado = new JTextArea();
-        jsResultado = new JScrollPane(areaResultado);
 
         lExamen = new JLabel();
         
-        lTempoRestante = new JLabel("Tiempo Restante");
-        lPregRespondidas = new JLabel("Preguntas Respondidas");
+        lTempoRestante = new JLabel("\t\t\t\tTiempo Restante   ");
+        lPregRespondidas = new JLabel("\t\t\t\tPreguntas Respondidas  ");
         
         
-        lClienteConectado1 = new JLabel();
-        lClienteConectado2 = new JLabel();
-        lClienteConectado3 = new JLabel();
+        lClienteConectado1 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
+        lClienteConectado2 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
+        lClienteConectado3 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
+        pUsuarioConectado.add(lClienteConectado1);  pUsuarioConectado.add(lClienteConectado2);  pUsuarioConectado.add(lClienteConectado3);
 
-        tfPregRes = new JTextField();
-        tfTempoRestante = new JTextField();
+        lPregRes = new JLabel("\t \t--");
+        lTRestante = new JLabel("\t \t-- : --");
+        lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        lTRestante.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        
+        
 
         bVerResultado = new JButton("Ver Resultado");
         bResponder = new JButton("Responder");
@@ -108,7 +116,7 @@ public class GUICliente extends JFrame
         pTextArea.add(bResponder, BorderLayout.CENTER);
 
         pInformacion.add(lTempoRestante);pInformacion.add(lPregRespondidas);
-        pInformacion.add(tfTempoRestante);pInformacion.add(tfPregRes);
+        pInformacion.add(lTRestante);pInformacion.add(lPregRes);
 
         pUsuarioConectado.add(lClienteConectado1);pUsuarioConectado.add(lClienteConectado2);pUsuarioConectado.add(lClienteConectado3);
 
@@ -121,6 +129,7 @@ public class GUICliente extends JFrame
         //Se añaden los paneles a la pestaña examen
         pExamen.add(pNorteExamen, BorderLayout.NORTH);
         pExamen.add(pSurExamen, BorderLayout.CENTER);
+        pExamen.add(pUsuarioConectado, BorderLayout.SOUTH);
 
         //---------pestaña pregunta-----------------
 
@@ -128,6 +137,7 @@ public class GUICliente extends JFrame
         
         areaPregunta = new JTextArea(15, 35);
         jsEnunciadoPregunta = new JScrollPane(areaPregunta);
+        jsEnunciadoPregunta.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         areaPregunta.setEditable(false);
         bCancelarPreg = new JButton("Cancelar");
         bResponderPreg = new JButton("Responder");
@@ -174,6 +184,7 @@ public class GUICliente extends JFrame
         areaResultado = new JTextArea(15, 35);
         areaResultado.setEditable(false);
         jsResultado = new JScrollPane(areaResultado);
+        jsResultado.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         lCalificacion = new JLabel("Calificacion");
         lPregCorrecta = new JLabel("Preguntas Correctas");
         lCalificacionNum = new JLabel("10");
@@ -206,11 +217,28 @@ public class GUICliente extends JFrame
     
     }
 
-
-
-
-
-
+    public void clienteConectado(int numCliente)
+    {
+        int opcion = numCliente;
+        switch (opcion) 
+        {
+            case 1:
+                lClienteConectado1.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
+                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
+                break;
+            case 2:
+                lClienteConectado2.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
+                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
+                break;
+            case 3:
+                lClienteConectado3.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
+                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
+                break;
+            default:
+                System.out.println("No se ha conectado ningun cliente");
+                break;
+            }     
+    }
 
     public void crearBotones(int numPreguntas)
     {
@@ -251,59 +279,27 @@ public class GUICliente extends JFrame
 
     }
 
-    /*public void bloquearPregunta()
-    {
-        for(int i=0;i<numeroPregunta.size();i++)
-        {
-            if(numeroPregunta.get(i).isSelected())
-                //numeroPregunta.get(i).setEnabled(false);
-                System.out.println("El boton "+numeroPregunta.get(i).getText()+ " ha sido bloqueado");
-        }
-
-    }*/
-    /*public void bloquearBotones(String indiceBotonSinBloquear)
-    {
-        if(indiceBotonSinBloquear != "nulo")
-        {
-            for (int i=0; i<numeroPregunta.size();i++)
-            {
-                if(i == Integer.parseInt(indiceBotonSinBloquear))
-                numeroPregunta.get(i).setEnabled(true);
-            
-                else
-                numeroPregunta.get(i).setEnabled(false);
-            }
-        }
-        else
-            System.out.println("Los botones han sido deseleccionado");
-        
-
-    }*/
-
-   
-
-   /*public void bloquearPregunta(int numPregunta)
-    {
-        System.out.println(numeroPregunta.size());
-        for(int i=0; i<numeroPregunta.size(); i++)
-        {
-            JToggleButton boton = numeroPregunta.get(i);
-            if(boton.getText() == Integer.toString(numPregunta))
-            { 
-                boton.setEnabled(false);
-                System.out.println("boton "+ Integer.toString(numPregunta)+"ha sido bloqueado");
-            }
-        }
-    }*/
-
-    public void bloquearPregunta()
+    /**
+     * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
+     * @param valor
+     */
+    public void bloquearPregunta(boolean valor)
     {
         for(JToggleButton boton : numeroPregunta)
         {
-            if(boton.isSelected())
+            if(valor)
             {
-                boton.setEnabled(false);
-                System.out.println("El boton "+boton.getText()+ "ha sido bloqueado");
+                if(boton.isSelected())
+                {
+                    boton.setEnabled(false);
+                    System.out.println("El boton "+boton.getText()+ " ha sido bloqueado");
+                 }
+            }
+            else
+            {
+                if(boton.isEnabled() == false)
+                    boton.setEnabled(true);
+                    System.out.println("la boton "+ boton.getText()+ "ha sido desbloqueado");
             }
             
         }
@@ -312,37 +308,18 @@ public class GUICliente extends JFrame
 
     class ManejadoraEvento implements ActionListener,KeyListener
     {
-        /* 
-        @Override
-        public void itemStateChanged (ItemEvent e) 
-        {
-            if(e.getStateChange() == ItemEvent.SELECTED)
-            {
-                for (int i=0; i<numeroPregunta.size(); i++)
-                {
-
-                    JButton toggleButton = numeroPregunta.get(i);
-
-                    if(e.getItemSelectable() == toggleButton)
-                    {
-                        lNumPreg.setText("PREGUNTA "+ Integer.toString(i+1));
-                        tpPestanas.setSelectedIndex(1);
-                    }
-
-                }
-            }
-        
-        
-        }*/
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for(JToggleButton boton : numeroPregunta) {
+
+            for(JToggleButton boton : numeroPregunta)
+             {
                 if(e.getSource()== boton)
                 {
                     areaExamen.setText("Esta es la pregunta "+boton.getText());
                     labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+                    clienteConectado(2);
                     
 
                 }
@@ -352,43 +329,19 @@ public class GUICliente extends JFrame
 
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
-                tpPestanas.setEnabledAt(0, false);
-                bloquearPregunta(); 
-                /*for(int i=0; i<numeroPregunta.size(); i++)
-                {
-                    numeroPregunta.get(i).setEnabled(false);
-                    System.out.println("se ha bloqueado el boton " + Integer.toString(i+1));
-                }*/
-                
-                //bloquearPregunta(2);
-                //tpPestanas.setEnabledAt(0,false);
-                
-                //bloquearBotones("2");
+                //tpPestanas.setEnabledAt(0, false);
+                bloquearPregunta(true); 
+                clienteConectado(1);
 
             }
-
             if(e.getSource() == bCancelarPreg)
-            {}
-
-               
-
-               /*  if(e.getSource() == numeroPregunta.get(1))
-                {
-                    tpPestanas.setSelectedIndex(1);
-                    System.out.println("El boton '2' ha sido seleccionado");
-                }
-                if(e.getSource() == retornarBoton(2))
-                {
-                    tpPestanas.setSelectedIndex(1);
-                    System.out.println("El boton '2' ha sido seleccionado");
-                }*/
-            
-
-
-
+            {
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                bloquearPregunta(false);
+            }
         }
-
-       
 
         @Override
         public void keyTyped(KeyEvent e) {
