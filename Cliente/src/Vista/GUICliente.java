@@ -318,8 +318,6 @@ public class GUICliente extends JFrame
                     areaExamen.setText("Esta es la pregunta "+boton.getText());
                     labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-                    clienteConectado(2);
-                    
 
                 }
             }
@@ -330,7 +328,6 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
-                clienteConectado(1);
 
             }
             if(e.getSource() == bCancelarPreg)
