@@ -4,6 +4,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import Controlador.ControladorCliente;
+
 /**
  * Clase que escucha el multicast
  */
@@ -12,7 +14,7 @@ public class MulticastCliente extends Thread
     MulticastSocket socketMulticast;
     InetAddress grupoVincular;
 
-    ConexionCliente miCliente; //Cambiar, esto lo debe hacer el controlador, esto es para que se puedan visualizar los mensajes
+    ConexionCliente miCliente; 
     
     /**
      * Constructor de la clase
@@ -46,7 +48,7 @@ public class MulticastCliente extends Thread
             {
                 socketMulticast.receive(dataCliente); //El mensaje que llega
                 salida = new String(dataCliente.getData()); //Aqui tengo el dato que llega
-                //miCliente.escribirPregunta(salida); //Cambiar, esto va en el controlador
+                ControladorCliente.escucharMensaje(salida); //Cambiar, esto va en el controlador
             } catch (IOException ex) 
             {
                 System.out.println("Problema al recir el mensaje");

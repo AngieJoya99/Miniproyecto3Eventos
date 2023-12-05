@@ -18,6 +18,7 @@ public class ControladorCliente
         gui.establecerBotones(10);
         try 
         {
+            clienteConectadoC();
             conexionCliente = new ConexionCliente(12345);
             conexionCliente.obtenerFlujos();
             conexionCliente.procesarConexion();
@@ -26,5 +27,15 @@ public class ControladorCliente
         }finally{
             conexionCliente.cerrarConexion();
         }
+    }
+
+    public static void clienteConectadoC()
+    {
+        gui.clienteConectado(1); //No se como obener el numero de cliente
+    }
+
+    public static void escucharMensaje(String mensaje)
+    {
+        //Aqui van las funciones que necesitan los mensajes
     }
 }
