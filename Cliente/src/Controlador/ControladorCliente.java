@@ -23,10 +23,10 @@ public class ControladorCliente
     {
         gui = new GUICliente();
        
-        gui.establecerBotones(13);
+        gui.establecerBotones(10);
         try 
         {
-            clienteConectadoC();
+            //clienteConectadoC();
             conexionCliente = new ConexionCliente(12345);
             conexionCliente.obtenerFlujos();
             conexionCliente.procesarConexion();
@@ -37,7 +37,6 @@ public class ControladorCliente
         }
     }
 
-<<<<<<< HEAD
     
     /**
      * Recibe un String, lo divide por cada linea que contenga y establece un objeto de la clase Examen
@@ -62,23 +61,20 @@ public class ControladorCliente
     public static void mostrarPregunta(int numPregunta)
     {  
         gui.setTextAreaPreg(examen.getPreguntas(numPregunta));
+        gui.labelNumeroPregunta(Integer.toString(numPregunta));
+        gui.setTextAreaPreg(examen.getPreguntas(numPregunta));
     }
 
-    public static void responderPregunta()
+    public static void responderPregunta(String respuesta)
     {
-        
+        String mensaje = "RESPONDIDA||"+gui.getNumPreg()+"||"+conexionCliente.getNombreCliente()+"||"+respuesta;
+        conexionCliente.enviarDatos(mensaje);
     }
-        
     
-=======
-    public static void clienteConectadoC()
+    public static boolean respuestaCorrecta()
     {
-        gui.clienteConectado(1); //No se como obener el numero de cliente
+        
+        return false;
     }
-
-    public static void escucharMensaje(String mensaje)
-    {
-        //Aqui van las funciones que necesitan los mensajes
-    }
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
+    
 }

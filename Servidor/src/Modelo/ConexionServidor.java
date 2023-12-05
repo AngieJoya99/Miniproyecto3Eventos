@@ -22,7 +22,7 @@ public class ConexionServidor extends Thread{
     {
         try {
             System.out.println("\nConcectando por el puerto "+puerto+". Por favor espere");
-            servidor = new ServerSocket(12345);
+            servidor = new ServerSocket(puerto);
             System.out.println("\nServidor iniciado "+servidor);
             start();
         } catch (IOException e) {
@@ -32,8 +32,7 @@ public class ConexionServidor extends Thread{
 
     @Override
     public void run() {
-        while(true)
-        {
+        Multicast multicast = new Multicast();
             try {
                 System.out.println("\nEsperando un cliente");
                 addCliente(servidor.accept());
@@ -41,24 +40,26 @@ public class ConexionServidor extends Thread{
             } catch (IOException e) {
                 System.out.println("Error al aceptar cliente");
             }
-        }
     }
 
     public boolean addCliente(Socket socket)
     {
-        if (canticadClientes <3)
+        while(true)
         {
-            canticadClientes++;
-            System.out.println("\nCliente número "+canticadClientes+" conectado");
-            cliente.enviarTexto("CLIENTE"+canticadClientes);
-            cliente = new HiloCliente(socket, canticadClientes, multicast);
-            cliente.obtenerFlujos();
-            cliente.start();
-            return true;
-        }
-        else
-        {
-            return false;
+            if (canticadClientes <3)
+            {
+                canticadClientes++;
+                System.out.println("\nCliente número "+canticadClientes+" conectado");
+                cliente.enviarTexto("CLIENTE"+canticadClientes);
+                cliente = new HiloCliente(socket, canticadClientes, multicast);
+                cliente.obtenerFlujos();
+                cliente.start();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

@@ -15,6 +15,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import Controlador.ControladorCliente;
 
 
 public class GUICliente extends JFrame 
@@ -38,7 +39,7 @@ public class GUICliente extends JFrame
     public GUICliente()
     {
         setTitle("Cliente");
-        setSize(480, 560);
+        setSize(480, 620);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -278,11 +279,22 @@ public class GUICliente extends JFrame
 
     }
 
+    public String getNumPreg()
+    {
+        String[] palabras = lNumPreg.getText().split(" ");
+        
+        return palabras[1];
+    }
+
     public void setTextAreaPreg(String pregunta)
     {
         areaExamen.setText(pregunta);
     }
 
+    public void setTextPestPreg(String pregunta)
+    {
+        areaPregunta.setText(pregunta);
+    }
     /**
      * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
      * @param valor
@@ -305,14 +317,20 @@ public class GUICliente extends JFrame
                 if(boton.isEnabled() == false)
                     boton.setEnabled(true);
                     System.out.println("la boton "+ boton.getText()+ "ha sido desbloqueado");
-            }
-            
+            } 
         }
+    }
+
+    public void setEnabled(int indice, boolean bol)
+    {
+        tpPestanas.setEnabledAt(indice, bol);
 
     }
 
-    class ManejadoraEvento implements ActionListener,KeyListener
+
+    class ManejadoraEvento implements ActionListener,KeyListener, ItemListener
     {
+        String answerSelected;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -321,29 +339,17 @@ public class GUICliente extends JFrame
              {
                 if(e.getSource()== boton)
                 {
-                    
-                    labelNumeroPregunta(boton.getText());
+                    ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
+                    //labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-<<<<<<< HEAD
-                    
-                    
-=======
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
-
                 }
             }
             if(e.getSource() == bResponder)
             {
-
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
-<<<<<<< HEAD
-                
-=======
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
-
             }
             if(e.getSource() == bCancelarPreg)
             {
@@ -359,6 +365,10 @@ public class GUICliente extends JFrame
                 tpPestanas.setEnabledAt(0, false);
                 tpPestanas.setEnabledAt(1, false);
 
+            }
+            if(e.getSource() == bResponderPreg)
+            {
+                ControladorCliente.responderPregunta(answerSelected);
             }
         }
 
@@ -376,6 +386,30 @@ public class GUICliente extends JFrame
         public void keyReleased(KeyEvent e) {
             
         }
+
+		@Override
+		public void itemStateChanged(ItemEvent e) 
+        {
+            if(e.getStateChange() == e.SELECTED)
+            {
+                if(e.getItemSelectable()==rbOpcA)
+                {
+                    answerSelected = rbOpcA.getText();
+                }
+                if(e.getItemSelectable()==rbOpcB)
+                {
+                    answerSelected = rbOpcB.getText();
+                }
+                if(e.getItemSelectable()==rbOpcC)
+                {
+                    answerSelected = rbOpcC.getText();
+                }
+                if(e.getItemSelectable()==rbOpcD)
+                {
+                    answerSelected = rbOpcD.getText();
+                }
+            }
+		}
 
     
     }

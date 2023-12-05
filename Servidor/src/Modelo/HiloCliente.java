@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 /**
  * Clase que procesa la conexión con el usuario, procesa los flujos
@@ -20,6 +21,7 @@ public class HiloCliente extends Thread
 {
     ObjectInputStream entrada;
     ObjectOutputStream salida;
+    ArrayList<String> preguntas,cliente,respuesta;
     Socket socket;
     
     int idCliente;
@@ -33,6 +35,9 @@ public class HiloCliente extends Thread
     {
         this.socket = socket;
         this.idCliente = idCliente;
+        ArrayList <String> preguntas = new ArrayList<>();
+        ArrayList <String> cliente = new ArrayList<>();
+        ArrayList <String> respuesta = new ArrayList<>();
     }
 
     @Override
@@ -76,7 +81,14 @@ public class HiloCliente extends Thread
         {
             try
             {
-             mensaje = (String) entrada.readObject();     
+             mensaje = (String) entrada.readObject(); 
+             if(mensaje.contains("RESPONDIDA"))
+             {
+                System.out.println(mensaje);
+                String[] respuesta = mensaje.trim().split("||");
+                
+
+             }    
             }
             catch(ClassNotFoundException e)
             {
