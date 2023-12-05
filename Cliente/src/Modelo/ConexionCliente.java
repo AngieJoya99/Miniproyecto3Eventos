@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import Controlador.ControladorCliente;
 
 public class ConexionCliente 
 {
@@ -41,6 +42,7 @@ public class ConexionCliente
                 mensaje = (String) entrada.readObject();
                 //mostrarMensaje("\n"+mensaje);
                 System.out.println(mensaje);
+                ControladorCliente.establecerPreguntas(mensaje);
                 if(mensaje.contains("CLIENTE"))
                 {
                     this.nombreCliente=mensaje;

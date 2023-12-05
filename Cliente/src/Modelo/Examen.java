@@ -131,6 +131,31 @@ public class Examen
 
     }
 
+    /**
+     * funcion que cambia el estado de la pregunta a true (contestada)
+     */
+    /*public void preguntaContestada(int numPreg)
+    {
+
+       preguntas.get(numPreg-1).setEstadoPregunta();
+    }
+
+    public boolean respuestaCompletas()
+    {
+        int preguntasContestadas = 0;
+        for(int i=0; i<preguntas.size();i++)
+        {
+            if(preguntas.get(i).getEstadoPregunta() == true)
+                preguntasContestadas+=1;
+        }
+       if(preguntas.size() == preguntasContestadas)
+        return true;
+        else
+            return false;
+    }
+    */
+
+
     
 
 

@@ -5,11 +5,13 @@
  */
 package Controlador;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import Modelo.Archivo;
 import Modelo.ConexionServidor;
+import Modelo.ExamenServidor;
 import Modelo.HiloCliente;
 import Modelo.Multicast;
 import Vista.GUIServidor;
@@ -20,6 +22,7 @@ import Vista.GUIServidor;
 public class ControladorServidor {
     static GUIServidor gui;
     static Archivo archivo;
+    static ArrayList<ExamenServidor> examen;
     static ConexionServidor conexionServidor;
     static HiloCliente hiloCliente;
     static Multicast multicast;
@@ -33,10 +36,17 @@ public class ControladorServidor {
     public static void iniciar()
     {
         gui = new GUIServidor();
+        examen = new ArrayList<ExamenServidor>();
         conexionServidor = new ConexionServidor(12345);
         tiempoHoras = Integer.parseInt(gui.leerHoras());
         tiempoMin = Integer.parseInt(gui.leerMinutos());
+        multicast = new Multicast();
 
+    }
+
+    public static Multicast getMulticast()
+    {
+        return multicast;
     }
 
     /**
@@ -55,24 +65,21 @@ public class ControladorServidor {
     public static void crearExamen()
     {
         String mensaje="";
-        mensaje+="\n"+gui.leerNombreExamen();
-        mensaje+="\n"+gui.leerHoras();
-        mensaje+="\n"+gui.leerMinutos();
-        mensaje+="\n"+archivo.getPreguntas();
+        String nombreExamen = gui.leerNombreExamen();
+        int horas = Integer.parseInt(gui.leerHoras());
+        int minutos = Integer.parseInt(gui.leerMinutos());
+        String preguntasArchivo = archivo.getPreguntas();
+        mensaje+="\n"+nombreExamen+"\n"+horas+"\n"+minutos+"\n"+preguntasArchivo;
         gui.agregarExamen(mensaje);
         gui.agregarNombreExamen(gui.leerNombreExamen());
         gui.agregarExamenLista(gui.leerNombreExamen());
         gui.agregarInforme("El examen no ha sido respondido. No es posible generar un informe");
         String preguntas = separarPreguntas(mensaje);
         gui.agregarVisualizar(preguntas);
+        examen.add(new ExamenServidor(nombreExamen ,horas ,minutos , preguntasArchivo));
     }
 
-    /**
-     * Método que separa una cadena de texto que recibe como parámetro
-     * De acuerdo a delimitadores y los organiza 
-     * @param texto Cadena de texto a separar
-     * @return Texto organizado
-     */
+    
     public static String separarPreguntas(String texto)
     {
         String mensaje="";
@@ -86,16 +93,6 @@ public class ControladorServidor {
             mensaje+=preguntas[0]+"\n";    
         }
         return mensaje;
-    }
-
-    public static void enviarExamen()
-    {
-        if(conexionServidor.getCantClientes()==3)
-        {
-            multicast.enviarTextoMulti(archivo.getPreguntas());
-            System.out.println("Se enviaron las preguntas");
-        }
-        
     }
 
     public static void tiempoRestanteHoras() 
@@ -134,6 +131,68 @@ public class ControladorServidor {
             }
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
+    }
+
+    public static void mostrarVisualizar()
+    {
+        String texto = gui.cualVisualizar();
+        gui.escribirVisualizar(texto);
+    }
+
+    public static void mostrarInforme()
+    {
+        String texto = gui.cualInforme();
+        gui.escribirInforme(texto);
+    }
+
+    public static void limpiarVisualizar()
+    {
+        gui.escribirVisualizar("");   
+    }
+
+    public static void limpiarInforme()
+    {
+        gui.escribirInforme("");   
+    }
+
+    public static void cargarExamenIniciar()
+    {
+        if(gui.getExamenIniciar() != null)
+        {
+            String seleccion = gui.getExamenIniciar(), nombreEx, tiempo="";
+            int cantPreg=0;
+            for(int i=0; i<examen.size();i++)
+            {
+                nombreEx = examen.get(i).getNombre();
+                if(nombreEx.trim().equals(seleccion.trim()))
+                {
+                    System.out.println("Encontrado");
+                    cantPreg=examen.get(i).cantidadPreguntas();
+                    tiempo = examen.get(i).getHoras()+" : "+examen.get(i).getMinutos();
+                }
+            }
+            gui.setIniciarPreguntas("Cantidad de preguntas:     "+cantPreg);
+            gui.setIniciarTiempo("Tiempo (hh:mm):     "+tiempo);
+        }
+    }
+
+    public static void enviarExamen()
+    {
+        /*if(conexionServidor.getCantClientes()==3)
+        {
+            multicast.enviarTextoMulti(archivo.getPreguntas());
+            System.out.println("Se enviaron las preguntas");
+        }*/
+        
+        
+    }
+    
+    
+    public void verificarPregunta(String respuesta, int numRespuesta, int examenIndice)
+    {
+        
+        if(examen.get(examenIndice).getResCorrecta(numRespuesta) == respuesta)
+            examen.get(examenIndice).setCorrectas();
     }
 
     

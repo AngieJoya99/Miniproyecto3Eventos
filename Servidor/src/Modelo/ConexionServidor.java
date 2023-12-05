@@ -11,9 +11,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import Controlador.ControladorServidor;
+
 public class ConexionServidor extends Thread{
     ServerSocket servidor;
     HiloCliente cliente;
+    ArrayList<HiloCliente> arregloClientes;
     int canticadClientes;
     Multicast multicast;
     boolean sendExam;
@@ -21,10 +24,12 @@ public class ConexionServidor extends Thread{
 
     public ConexionServidor(int puerto)
     {
+        canticadClientes=0;
         try {
             System.out.println("\nConcectando por el puerto "+puerto+". Por favor espere");
             servidor = new ServerSocket(puerto);
             System.out.println("\nServidor iniciado "+servidor);
+            this.multicast = ControladorServidor.getMulticast();
             start();
         } catch (IOException e) {
             System.out.println("Error al crear socket del servidor");
@@ -33,10 +38,11 @@ public class ConexionServidor extends Thread{
 
     @Override
     public void run() {
-        Multicast multicast = new Multicast();
+        //Multicast multicast = new Multicast();
+        System.out.println("Creo el multicast\n");
             try {
                 System.out.println("\nEsperando un cliente");
-                addCliente(servidor.accept());
+                Boolean aceptado = addCliente(servidor.accept());
                 System.out.println("Cliente conectado");
             } catch (IOException e) {
                 System.out.println("Error al aceptar cliente");
@@ -51,7 +57,8 @@ public class ConexionServidor extends Thread{
             {
                 canticadClientes++;
                 System.out.println("\nCliente número "+canticadClientes+" conectado");
-                cliente.enviarTexto("CLIENTE"+canticadClientes);
+                //cliente.enviarTexto("CLIENTE"+canticadClientes);
+                //cliente.enviarTexto("CLIENTE");
                 cliente = new HiloCliente(socket, canticadClientes, multicast);
                 cliente.obtenerFlujos();
                 cliente.start();

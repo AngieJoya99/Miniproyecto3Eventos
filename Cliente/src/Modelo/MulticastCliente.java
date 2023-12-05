@@ -26,7 +26,7 @@ public class MulticastCliente extends Thread
         try 
         {
             //Mismo puerto del servidor
-            socketMulticast = new MulticastSocket(12345); //Se debe cambiar, para que el puerto llegue como parametro?
+            socketMulticast = new MulticastSocket(10000); //Se debe cambiar, para que el puerto llegue como parametro?
             grupoVincular = InetAddress.getByName("231.0.0.1");
             socketMulticast.joinGroup(grupoVincular); //Todo lo que se suba por este grupo lo va a escuchar el cliente
             run();

@@ -9,17 +9,17 @@ package Modelo;
  * Clase que selecciona el enunciado, las opciones y la respuesta correcta de una
  * pregunta que recibe como parámetro
  */
-public class Pregunta 
+public class PreguntaServidor 
 {
     private String enunciado;
     private String[] opciones;
     private String respuesta;
-    //private boolean estadoPregunta;
+    private boolean estadoPregunta;
 
     /**
      * Constructor de la clase pregunta
      */
-    public Pregunta(String texto)
+    public PreguntaServidor(String texto)
     {
         this.opciones = new String[]{"","","",""};
         setEnunciado(texto);       
@@ -37,7 +37,7 @@ public class Pregunta
         String[] datos; 
         datos = texto.trim().split("-");
         this.enunciado = datos[0];
-        System.out.println("El enunciado es: "+enunciado);
+        //System.out.println("El enunciado es: "+enunciado);
     }
 
     /**
@@ -50,7 +50,14 @@ public class Pregunta
         String[] datos; 
         datos = texto.trim().split("\\+");
         this.respuesta = datos[1];
-        System.out.println("La respuesta correcta es: "+respuesta);
+        //System.out.println("La respuesta correcta es: "+respuesta);
+    }
+    /**
+     * 
+     */
+    public String getRespuestaCorrecta()
+    {
+        return this.respuesta;
     }
 
     /**
@@ -65,7 +72,7 @@ public class Pregunta
         for (int i=1; i<=4; i++)
         {
             this.opciones[i-1] = datos[i];
-            System.out.println("La opción "+(i-1)+" es: "+this.opciones[i-1]);
+            //System.out.println("La opción "+(i-1)+" es: "+this.opciones[i-1]);
         }        
     }
 
@@ -98,11 +105,11 @@ public class Pregunta
         return this.opciones[i];
     }
 
-    /**
+     /**
      * 
      * @return true si la pregunta ya ha sido contestada, en caso contrario false
      */
-    /*public boolean getEstadoPregunta()
+    public boolean getEstadoPregunta()
     {
         return this.estadoPregunta;
     }
@@ -110,6 +117,6 @@ public class Pregunta
     public void setEstadoPregunta()
     {
         this.estadoPregunta = true;
-    }*/
+    }
 
 }

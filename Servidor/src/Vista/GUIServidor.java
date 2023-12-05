@@ -28,13 +28,13 @@ public class GUIServidor extends JFrame
         lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos, lDosPuntosR;
 
     JButton  bCrearCrear, bVerVer, bVerLimpiar, 
-        bInformeVer, bInformeLimpiar, bIniciarIniciar;
+        bInformeVer, bInformeLimpiar, bIniciarIniciar, bIniciarCargar;
 
     JTextField tfCrearNombre;
     JTextArea taVisualizar, taInforme;
     JComboBox<String> cbVisualizar, cbInforme, cbIniciar, cbCrear;
     JSpinner horas, minutos;
-    Font fuente1, fuente2;
+    Font fuente1, fuente2, fuente3;
     SpinnerListModel modeloHora, modeloMin; 
 
     ArrayList<String> examenes, nombresExamen, informes, visualizar;
@@ -92,6 +92,8 @@ public class GUIServidor extends JFrame
         bInformeVer = new JButton("Ver");
         bInformeLimpiar = new JButton("Limpiar");
         bIniciarIniciar = new JButton("Iniciar");
+        bIniciarCargar = new JButton("Cargar");
+        bIniciarIniciar.setEnabled(false);
 
         taInforme = new JTextArea();
         taVisualizar = new JTextArea();
@@ -108,8 +110,8 @@ public class GUIServidor extends JFrame
         horas = new JSpinner(modeloHora);
         minutos = new JSpinner(modeloMin);
 
-        spInforme = new JScrollPane();
-        spVisualizar= new JScrollPane();
+        spInforme = new JScrollPane(taInforme);
+        spVisualizar= new JScrollPane(taVisualizar);
 
         pCrear = new JPanel(new FlowLayout(FlowLayout.CENTER,1,15));
         pIniciar = new JPanel();
@@ -131,6 +133,8 @@ public class GUIServidor extends JFrame
 
         fuente1 = new Font("Lato", Font.BOLD, 20);
         fuente2 = new Font("Lato", Font.PLAIN, 16);
+        fuente3 = new Font("Open Sans", Font.BOLD, 13);
+
 
         //Dar formato a elementos
         lCrearNombre.setFont(fuente1);
@@ -143,6 +147,17 @@ public class GUIServidor extends JFrame
 
         horas.setPreferredSize(new Dimension(40,30));
         minutos.setPreferredSize(new Dimension(40,30));
+        cbIniciar.setPreferredSize(new Dimension(250,30));
+        bIniciarCargar.setPreferredSize(new Dimension(100,30));
+        pClientes.setPreferredSize(new Dimension(350,70));
+        lIniciarCantidad.setPreferredSize(new Dimension(350,40));
+        lIniciarTiempo.setPreferredSize(new Dimension(350,40));
+        bIniciarIniciar.setPreferredSize(new Dimension(350,30));
+        lIniciarTiempoRestante.setPreferredSize(new Dimension(180,30));
+        lHorasRestantes.setPreferredSize(new Dimension(40,30));
+        lMinutosRestantes.setPreferredSize(new Dimension(40,30));
+        lIniciarRespondidas.setPreferredSize(new Dimension(350,40));
+        pestanas.setFont(fuente3);
 
         
         // Posicionar elementos del panel Crear
@@ -164,21 +179,19 @@ public class GUIServidor extends JFrame
         pVerSeleccionar.add(cbVisualizar);
         pVerSeleccionar.add(bVerVer);
         pVisualizar.add(pVerSeleccionar, BorderLayout.NORTH);
-        //spVisualizar.add(taVisualizar);
-        pVisualizar.add(taVisualizar, BorderLayout.CENTER);
+        pVisualizar.add(spVisualizar, BorderLayout.CENTER);
         pVisualizar.add(bVerLimpiar, BorderLayout.SOUTH);
 
         //Posicionar elementos del panel Informe
         pInformeSeleccionar.add(cbInforme);
         pInformeSeleccionar.add(bInformeVer);
         pInformes.add(pInformeSeleccionar, BorderLayout.NORTH);
-        //spInforme.add(taInforme);
-        //spInforme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        pInformes.add(taInforme, BorderLayout.CENTER);
+        pInformes.add(spInforme, BorderLayout.CENTER);
         pInformes.add(bInformeLimpiar, BorderLayout.SOUTH);
 
-        //Posicionar elementos del panel Informe
+        //Posicionar elementos del panel Iniciar
         pIniciar.add(cbIniciar);
+        pIniciar.add(bIniciarCargar);
         pClientes.add(lIniciarCliente1);
         pClientes.add(lIniciarCliente2);
         pClientes.add(lIniciarCliente3);
@@ -190,7 +203,6 @@ public class GUIServidor extends JFrame
         pIniciar.add(lHorasRestantes);
         pIniciar.add(lDosPuntosR);
         pIniciar.add(lMinutosRestantes);
-        pIniciar.add(lIniciarPreguntas);
         pIniciar.add(lIniciarRespondidas);
 
         //Añadir páneles a pestañas
@@ -206,8 +218,12 @@ public class GUIServidor extends JFrame
         ManejarEventos evento = new ManejarEventos();
         bCrearCrear.addActionListener(evento);
         bInformeVer.addActionListener(evento);
+        bInformeLimpiar.addActionListener(evento);
         bVerVer.addActionListener(evento);
+        bVerLimpiar.addActionListener(evento);
         bIniciarIniciar.addActionListener(evento);
+        bIniciarCargar.addActionListener(evento);
+
     }
 
     /**
@@ -227,12 +243,27 @@ public class GUIServidor extends JFrame
 
             if (e.getSource() == bVerVer)
             {
-                escribirVisualizar(0);   
+                ControladorServidor.mostrarVisualizar();
             }
 
             if (e.getSource() == bInformeVer)
             {
-                escribirInforme(0);   
+                ControladorServidor.mostrarInforme();
+            }
+
+            if (e.getSource() == bVerLimpiar)
+            {
+                ControladorServidor.limpiarVisualizar();
+            }
+
+            if (e.getSource() == bInformeLimpiar)
+            {
+                ControladorServidor.limpiarInforme();
+            }
+
+            if(e.getSource()== bIniciarCargar)
+            {
+                ControladorServidor.cargarExamenIniciar();
             }
 
             if(e.getSource()== bIniciarIniciar)
@@ -241,6 +272,8 @@ public class GUIServidor extends JFrame
                 ControladorServidor.tiempoRestanteHoras();
                 ControladorServidor.tiempoRestanteMinutos();
             }
+
+            
         }
         
     }
@@ -376,13 +409,14 @@ public class GUIServidor extends JFrame
     }
 
     /**
-     * Agrega un ítem al combo box cbInforme y cbVisualizar
+     * Agrega un ítem al combo box cbInforme, cbVisualizar y cbIniciar
      * @param texto Texto a agregar
      */
     public void agregarExamenLista(String texto)
     {
         cbInforme.addItem(texto);
         cbVisualizar.addItem(texto);
+        cbIniciar.addItem(texto);
         pestanas.updateUI();
     }
 
@@ -501,25 +535,87 @@ public class GUIServidor extends JFrame
     }
 
     /**
-     * Método que le asigna al area de texto taVisualizar
-     * el contenido del arreglo visualizar en una posición que
-     * recibe como parámetro
-     * @param pos Posición del arreglo
+     * Método que lee el elemento seleccionado del combo box cbVisualizar,
+     * busca que posicion del arreglo nombresExamen contiene lo mismo
+     * Y retorna el contenido del arreglo visualizar en esa posición
+     * @return Contenido del arreglo
      */
-    public void escribirVisualizar(int pos)
+    public String cualVisualizar()
     {
-        taVisualizar.setText(visualizar.get(pos));
+        int posicion=0;
+        if(cbVisualizar.getSelectedItem() != null)
+        {
+            String examen = cbVisualizar.getSelectedItem().toString();
+            for (int i=0; i<nombresExamen.size();i++)
+            {
+                if (nombresExamen.get(i).equals(examen))
+                    posicion = i;  
+            }
+            return visualizar.get(posicion);
+        }
+        else
+            return ("No hay examenes creados");
     }
 
     /**
-     * Método que le asigna al area de texto taInforme
-     * el contenido del arreglo informes en una posición que
-     * recibe como parámetro
-     * @param pos Posición del arreglo
+     * Método que le asigna al area de texto taVisualizar 
+     * un texto que recibe como parámetro
+     * @param texto Texto a asignar
      */
-    public void escribirInforme(int pos)
+    public void escribirVisualizar(String texto)
     {
-        taInforme.setText(informes.get(pos));
+        taVisualizar.setText(texto);
     }
+
+    /**
+     * Método que lee el elemento seleccionado del combo box cbInforme
+     * busca que posicion del arreglo nombresExamen contiene lo mismo
+     * Y retorna el contenido del arreglo informes en esa posición
+     * @return Contenido del arreglo
+     */
+    public String cualInforme()
+    {
+        int posicion=0;
+        if(cbInforme.getSelectedItem() != null)
+        {
+            String examen = cbInforme.getSelectedItem().toString();
+            for (int i=0; i<nombresExamen.size();i++)
+            {
+                if (nombresExamen.get(i).equals(examen))
+                    posicion = i;  
+            }
+            return informes.get(posicion);
+        }
+        else
+            return ("No hay examenes creados");
+        
+    }
+
+    /**
+     * Método que le asigna al area de texto taVisualizar 
+     * un texto que recibe como parámetro
+     * @param texto Texto a asignar
+     */
+    public void escribirInforme(String texto)
+    {
+        taInforme.setText(texto);
+    }
+
+    public String getExamenIniciar()
+    {
+        return ""+cbIniciar.getSelectedItem();
+    }
+
+    public void setIniciarPreguntas(String texto)
+    {
+        lIniciarCantidad.setText(texto);
+    }
+
+    public void setIniciarTiempo(String texto)
+    {
+        lIniciarTiempo.setText(texto);
+    }
+
+    
 
 }

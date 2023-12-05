@@ -25,6 +25,8 @@ public class HiloCliente extends Thread
     Socket socket;
     
     int idCliente;
+    Multicast multicast;
+    
 
     /**
      * Constructor de la clase HiloServidor
@@ -38,6 +40,7 @@ public class HiloCliente extends Thread
         this.preguntas = new ArrayList<>();
         this.cliente = new ArrayList<>();
         this.respuesta = new ArrayList<>();
+        this.multicast = multicast;
     }
 
     @Override
@@ -148,4 +151,6 @@ public class HiloCliente extends Thread
     {
         return this.respuesta;
     }
+
+    public boolean isConnected()
 }

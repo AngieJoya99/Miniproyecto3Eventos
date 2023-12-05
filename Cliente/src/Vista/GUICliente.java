@@ -251,7 +251,7 @@ public class GUICliente extends JFrame
             
             numeroPregunta.add(botonPreg);
             grupoBotonPreg.add(botonPreg);
-            System.out.println("el boton "+numeroPregunta.get(i).getText()+"ha sido creado");
+            System.out.println("el boton "+numeroPregunta.get(i).getText()+" ha sido creado");
             numeroPregunta.get(i).addActionListener( evento);
         }
     }
@@ -315,8 +315,10 @@ public class GUICliente extends JFrame
             else
             {
                 if(boton.isEnabled() == false)
+                {
                     boton.setEnabled(true);
-                    System.out.println("la boton "+ boton.getText()+ "ha sido desbloqueado");
+                    System.out.println("la boton "+ boton.getText()+ " ha sido desbloqueado");
+                }
             } 
         }
     }
@@ -342,12 +344,7 @@ public class GUICliente extends JFrame
                     ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
                     //labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-<<<<<<< HEAD
-=======
-                    
-                    
 
->>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
                 }
             }
             if(e.getSource() == bResponder)
@@ -356,11 +353,7 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
-<<<<<<< HEAD
-=======
-                
 
->>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
             }
             if(e.getSource() == bCancelarPreg)
             {
@@ -379,6 +372,9 @@ public class GUICliente extends JFrame
             }
             if(e.getSource() == bResponderPreg)
             {
+                /*ControladorCliente.preguntaRespondida(getNumPreg());
+                if(Controlador.examenCompleto() == true)*/
+
                 ControladorCliente.responderPregunta(answerSelected);
             }
         }

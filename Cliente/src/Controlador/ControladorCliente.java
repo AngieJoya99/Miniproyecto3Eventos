@@ -12,6 +12,7 @@ import Modelo.MulticastCliente;
 import Vista.GUICliente;
 import Modelo.Examen;
 
+
 public class ControladorCliente 
 {
     static GUICliente gui;
@@ -36,10 +37,6 @@ public class ControladorCliente
             conexionCliente.cerrarConexion();
         }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
     
     /**
      * Recibe un String, lo divide por cada linea que contenga y establece un objeto de la clase Examen
@@ -67,26 +64,29 @@ public class ControladorCliente
         gui.labelNumeroPregunta(Integer.toString(numPregunta));
         gui.setTextAreaPreg(examen.getPreguntas(numPregunta));
     }
-
+    //manda info al servidor
     public static void responderPregunta(String respuesta)
     {
         String mensaje = "RESPONDIDA||"+gui.getNumPreg()+"||"+conexionCliente.getNombreCliente()+"||"+respuesta;
         conexionCliente.enviarDatos(mensaje);
     }
-    
-<<<<<<< HEAD
-    public static boolean respuestaCorrecta()
-=======
+    /*
+    //cambia el estado de la pregunta a contestada
+    public static void preguntaRespondida(int numPreg)
+    {
+        examen.preguntaContestada(numPreg);
+    }*/
 
-    public static void clienteConectadoC()
->>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
+    /*
+    public static boolean examenCompleto()
+    {
+        return examen.respuestaCompletas();
+    }
+    public static boolean respuestaCorrecta()
     {
         
         return false;
     }
-<<<<<<< HEAD
-    
-=======
+    */
 
->>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
 }
