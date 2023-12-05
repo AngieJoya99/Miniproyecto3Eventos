@@ -48,7 +48,11 @@ public class MulticastCliente extends Thread
             {
                 socketMulticast.receive(dataCliente); //El mensaje que llega
                 salida = new String(dataCliente.getData()); //Aqui tengo el dato que llega
+<<<<<<< HEAD
                 ControladorCliente.establecerPreguntas(salida); //Cambiar, esto va en el controlador
+=======
+                ControladorCliente.escucharMensaje(salida); //Cambiar, esto va en el controlador
+>>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
             } catch (IOException ex) 
             {
                 System.out.println("Problema al recir el mensaje");
