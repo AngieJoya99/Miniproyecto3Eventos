@@ -1,5 +1,8 @@
 package Controlador;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Modelo.Archivo;
 import Modelo.ConexionServidor;
 import Modelo.HiloCliente;
@@ -12,6 +15,9 @@ public class ControladorServidor {
     static ConexionServidor conexionServidor;
     static HiloCliente hiloCliente;
     static Multicast multicast;
+    private static int tiempoHoras = Integer.parseInt(gui.leerHoras());
+    private static int tiempoMin = Integer.parseInt(gui.leerMinutos());
+    
 
     public static void iniciar()
     {
@@ -37,9 +43,25 @@ public class ControladorServidor {
         mensaje+="\n"+archivo.getPreguntas();
         gui.agregarExamen(mensaje);
         gui.agregarNombreExamen(gui.leerNombreExamen());
-        System.out.println(mensaje);
-        //conexionServidor.enviarTextoMulti(mensaje);
-        //System.out.println("Examen creado exitosamente");
+        gui.agregarExamenLista(gui.leerNombreExamen());
+        separarPreguntas(mensaje);
+        gui.agregarInforme("El examen no ha sido respondido. No es posible generar un informe");
+        gui.agregarVisualizar(separarPreguntas(mensaje));
+    }
+
+    public static String separarPreguntas(String texto)
+    {
+        String mensaje="";
+        String[] datos, preguntas; 
+        datos = texto.trim().split("\n");
+        mensaje+="Nombre del examen: "+datos[0]+"\n"+
+        "Duración del examen: "+datos[1]+"horas "+datos[2]+" minutos\n\n";
+        for (int i=3; i<=datos.length; i++)
+        {
+            preguntas = datos[i].split("\n");
+            mensaje+=preguntas[0];
+        }
+        return mensaje;
     }
 
     public static void enviarExamen()
@@ -50,6 +72,44 @@ public class ControladorServidor {
             System.out.println("Se enviaron las preguntas");
         }
         
+    }
+
+    public static void tiempoRestanteHoras() 
+    {
+        Timer cuentaAtras = new Timer();
+        TimerTask tarea = new TimerTask()
+        {
+            @Override
+            public void run()
+            { 
+                tiempoHoras = tiempoHoras -1;
+                gui.setHorasRestantes(Integer.toString(tiempoHoras));
+                if (tiempoHoras == 0)
+                {
+                    this.cancel();
+                }   
+            }
+        };
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000*3600, 1000*3600);
+    }
+
+    public static void tiempoRestanteMinutos() 
+    {
+        Timer cuentaAtras = new Timer();
+        TimerTask tarea = new TimerTask()
+        {
+            @Override
+            public void run()
+            { 
+                tiempoMin = tiempoMin -1;
+                gui.setMinRestantes(Integer.toString(tiempoMin));
+                if (tiempoMin == 0)
+                {
+                    this.cancel();
+                }   
+            }
+        };
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
     }
        
 }

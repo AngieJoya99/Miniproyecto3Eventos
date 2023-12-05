@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GUIServidor extends JFrame 
 {
@@ -22,8 +21,8 @@ public class GUIServidor extends JFrame
 
     JLabel lCrearNombre, lCrearArchivo, lCrearDuracion, 
         lIniciarCantidad, lIniciarTiempo, lIniciarTiempoRestante, 
-        lIniciarTimer, lIniciarPreguntas, lIniciarRespondidas, 
-        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos;
+        lHorasRestantes, lMinutosRestantes, lIniciarPreguntas, lIniciarRespondidas, 
+        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos, lDosPuntosR;
 
     JButton  bCrearCrear, bVerVer, bVerLimpiar, 
         bInformeVer, bInformeLimpiar, bIniciarIniciar;
@@ -35,7 +34,7 @@ public class GUIServidor extends JFrame
     Font fuente1, fuente2;
     SpinnerListModel modeloHora, modeloMin; 
 
-    ArrayList<String> examenes, nombresExamen;
+    ArrayList<String> examenes, nombresExamen, informes, visualizar;
 
     /**
      * Constructor de la clase GUIServidor
@@ -60,6 +59,8 @@ public class GUIServidor extends JFrame
 
         examenes = new ArrayList<String>();
         nombresExamen = new ArrayList<String>();
+         informes = new ArrayList<String>();
+         visualizar = new ArrayList<String>();
 
         lCrearNombre = new JLabel("Nombre del examen");
         lCrearArchivo= new JLabel("Seleccione el archivo a cargar");
@@ -73,8 +74,10 @@ public class GUIServidor extends JFrame
         lIniciarTiempo = new JLabel("Tiempo");
         lIniciarTiempoRestante = new JLabel("Tiempo restante");
         lIniciarRespondidas = new JLabel("Preguntas respondidas");
-        lIniciarTimer = new JLabel();
+        lHorasRestantes = new JLabel();
+        lMinutosRestantes = new JLabel();
         lDosPuntos = new JLabel(":");
+        lDosPuntosR = new JLabel(":");
 
         tfCrearNombre = new JTextField();
         
@@ -185,7 +188,9 @@ public class GUIServidor extends JFrame
         pIniciar.add(lIniciarTiempo);
         pIniciar.add(bIniciarIniciar);
         pIniciar.add(lIniciarTiempoRestante);
-        pIniciar.add(lIniciarTimer);
+        pIniciar.add(lHorasRestantes);
+        pIniciar.add(lDosPuntosR);
+        pIniciar.add(lMinutosRestantes);
         pIniciar.add(lIniciarPreguntas);
         pIniciar.add(lIniciarRespondidas);
 
@@ -344,6 +349,17 @@ public class GUIServidor extends JFrame
         }   
     }
 
+    /**
+     * Agrega un ítem al combo box cbInforme y cbVisualizar
+     * @param texto Texto a agregar
+     */
+    public void agregarExamenLista(String texto)
+    {
+        cbInforme.addItem(texto);
+        cbVisualizar.addItem(texto);
+        pestanas.updateUI();
+    }
+
     public void agregarExamen(String texto)
     {
         examenes.add(texto);
@@ -354,9 +370,29 @@ public class GUIServidor extends JFrame
         nombresExamen.add(texto);
     }
 
+    public void agregarInforme(String texto)
+    {
+        informes.add(texto);
+    }
+
+    public void agregarVisualizar(String texto)
+    {
+        examenes.add(texto);
+    }
+
     public String getExamen(int pos)
     {
         return examenes.get(pos);
+    }
+    
+    public String getInforme(int pos)
+    {
+        return informes.get(pos);
+    }
+    
+    public String getVisualizar(int pos)
+    {
+        return visualizar.get(pos);
     }
 
     public String getNombreExamen(int pos)
@@ -367,6 +403,16 @@ public class GUIServidor extends JFrame
     public String leerNombreArchivo()
     {
         return cbCrear.getSelectedItem().toString();
+    }
+
+    public void setHorasRestantes(String horas)
+    {
+        lHorasRestantes.setText(horas);
+    }
+
+    public void setMinRestantes(String minutos)
+    {
+        lMinutosRestantes.setText(minutos);
     }
 
 }
