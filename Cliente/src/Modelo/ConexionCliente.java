@@ -39,6 +39,7 @@ public class ConexionCliente
             {
                 mensaje = (String) entrada.readObject();
                 //mostrarMensaje("\n"+mensaje);
+                
             } catch (ClassNotFoundException ex) {
                 System.out.println("error tipo de dato incorrecto");
             }

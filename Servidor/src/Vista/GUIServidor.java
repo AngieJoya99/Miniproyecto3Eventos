@@ -225,7 +225,8 @@ public class GUIServidor extends JFrame
             if(e.getSource()== bIniciarIniciar)
             {
                 ControladorServidor.enviarExamen();
-                //Iniciar timer
+                ControladorServidor.tiempoRestanteHoras();
+                ControladorServidor.tiempoRestanteMinutos();
             }
         }
         

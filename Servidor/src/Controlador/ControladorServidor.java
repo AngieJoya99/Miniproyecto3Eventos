@@ -15,14 +15,17 @@ public class ControladorServidor {
     static ConexionServidor conexionServidor;
     static HiloCliente hiloCliente;
     static Multicast multicast;
-    private static int tiempoHoras = Integer.parseInt(gui.leerHoras());
-    private static int tiempoMin = Integer.parseInt(gui.leerMinutos());
+    private static int tiempoHoras;
+    private static int tiempoMin;
     
 
     public static void iniciar()
     {
         gui = new GUIServidor();
         conexionServidor = new ConexionServidor(12345);
+        tiempoHoras = Integer.parseInt(gui.leerHoras());
+        tiempoMin = Integer.parseInt(gui.leerMinutos());
+
     }
 
     /**
