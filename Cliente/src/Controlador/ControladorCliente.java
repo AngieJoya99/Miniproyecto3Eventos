@@ -36,7 +36,10 @@ public class ControladorCliente
             conexionCliente.cerrarConexion();
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
     
     /**
      * Recibe un String, lo divide por cada linea que contenga y establece un objeto de la clase Examen
@@ -71,10 +74,19 @@ public class ControladorCliente
         conexionCliente.enviarDatos(mensaje);
     }
     
+<<<<<<< HEAD
     public static boolean respuestaCorrecta()
+=======
+
+    public static void clienteConectadoC()
+>>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
     {
         
         return false;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
 }

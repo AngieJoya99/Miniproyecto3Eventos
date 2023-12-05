@@ -342,6 +342,12 @@ public class GUICliente extends JFrame
                     ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
                     //labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+<<<<<<< HEAD
+=======
+                    
+                    
+
+>>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
                 }
             }
             if(e.getSource() == bResponder)
@@ -350,6 +356,11 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
+<<<<<<< HEAD
+=======
+                
+
+>>>>>>> 2f434bedb0fac9e768c5ce91acd2a9ae402e30b8
             }
             if(e.getSource() == bCancelarPreg)
             {
