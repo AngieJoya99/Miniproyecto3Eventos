@@ -9,6 +9,7 @@ package Modelo;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ConexionServidor extends Thread{
     ServerSocket servidor;
@@ -71,5 +72,20 @@ public class ConexionServidor extends Thread{
     public int getCantClientes()
     {
         return this.canticadClientes;
+    }
+
+    public ArrayList<String> preguntasRes()
+    {
+        return cliente.getPreguntas();
+    }
+
+    public ArrayList<String> clientesRes()
+    {
+        return cliente.getClientes();
+    }
+
+    public ArrayList<String> respuestaRes()
+    {
+        return cliente.getRespuestas();
     }
 }
