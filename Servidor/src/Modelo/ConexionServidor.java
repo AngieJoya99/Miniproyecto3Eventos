@@ -38,11 +38,6 @@ public class ConexionServidor extends Thread{
                 System.out.println("\nEsperando un cliente");
                 addCliente(servidor.accept());
                 System.out.println("Cliente conectado");
-                if((canticadClientes==3)&&(!sendExam))
-                {
-                    enviarExamenMulti();
-                    sendExam=true;
-                }
             } catch (IOException e) {
                 System.out.println("Error al aceptar cliente");
             }
@@ -66,9 +61,13 @@ public class ConexionServidor extends Thread{
         }
     }
 
-    public void enviarExamenMulti ()
+    public void enviarExamenMulti (String mensaje)
     {
-        multicast.enviarTextoMulti(archivo.getPreguntas());   
+        multicast.enviarTextoMulti(mensaje);   
     }
     
+    public int getCantClientes()
+    {
+        return this.canticadClientes;
+    }
 }
