@@ -43,8 +43,10 @@ public class ConexionCliente
                 //mostrarMensaje("\n"+mensaje);
                 System.out.println(mensaje);
                 ControladorCliente.establecerPreguntas(mensaje);
+                //ControladorCliente.mostrarPregunta(2);
                 if(mensaje.contains("CLIENTE"))
                 {
+                    System.out.println("mensaje recibido" + mensaje );
                     this.nombreCliente=mensaje;
                 }
                 

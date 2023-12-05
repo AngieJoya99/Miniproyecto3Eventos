@@ -29,7 +29,7 @@ public class MulticastCliente extends Thread
             socketMulticast = new MulticastSocket(10000); //Se debe cambiar, para que el puerto llegue como parametro?
             grupoVincular = InetAddress.getByName("231.0.0.1");
             socketMulticast.joinGroup(grupoVincular); //Todo lo que se suba por este grupo lo va a escuchar el cliente
-            run();
+            start();
         } catch (IOException ex) 
         {
             System.out.println("Error al crear el multicast del cliente");
@@ -39,7 +39,7 @@ public class MulticastCliente extends Thread
     @Override
     public void run()
     {
-        byte [] mensajeRecibir = new byte[300];
+        byte [] mensajeRecibir = new byte[3000];
         DatagramPacket dataCliente = new DatagramPacket(mensajeRecibir, mensajeRecibir.length);
         String salida;
         while(true)

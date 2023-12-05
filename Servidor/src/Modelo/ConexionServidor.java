@@ -30,6 +30,7 @@ public class ConexionServidor extends Thread{
             servidor = new ServerSocket(puerto);
             System.out.println("\nServidor iniciado "+servidor);
             this.multicast = ControladorServidor.getMulticast();
+            this.arregloClientes = new ArrayList<>();
             start();
         } catch (IOException e) {
             System.out.println("Error al crear socket del servidor");
@@ -37,38 +38,39 @@ public class ConexionServidor extends Thread{
     }
 
     @Override
-    public void run() {
-        //Multicast multicast = new Multicast();
-        System.out.println("Creo el multicast\n");
+    public void run() 
+    {
+        while (true)
+        {
             try {
                 System.out.println("\nEsperando un cliente");
-                Boolean aceptado = addCliente(servidor.accept());
+                if(canticadClientes<3)
+                {   
+                    addCliente(servidor.accept());
+                }
+                else
+                {
+                    break;
+                }
                 System.out.println("Cliente conectado");
             } catch (IOException e) {
                 System.out.println("Error al aceptar cliente");
             }
+        }
     }
 
-    public boolean addCliente(Socket socket)
+    public void addCliente(Socket socket)
     {
-        while(true)
-        {
-            if (canticadClientes <3)
-            {
-                canticadClientes++;
-                System.out.println("\nCliente número "+canticadClientes+" conectado");
-                //cliente.enviarTexto("CLIENTE"+canticadClientes);
-                //cliente.enviarTexto("CLIENTE");
-                cliente = new HiloCliente(socket, canticadClientes, multicast);
-                cliente.obtenerFlujos();
-                cliente.start();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        this.canticadClientes++;
+        System.out.println("\nCliente número "+this.canticadClientes+" conectado");
+        cliente = new HiloCliente(socket, this.canticadClientes, multicast);
+        arregloClientes.add(cliente);
+        //cliente.enviarTexto("CLIENTE"+canticadClientes);
+        //cliente.enviarTexto("CLIENTE");
+
+        
+        cliente.obtenerFlujos();
+        cliente.start();
     }
 
     public void enviarExamenMulti (String mensaje)

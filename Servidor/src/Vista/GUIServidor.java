@@ -93,7 +93,7 @@ public class GUIServidor extends JFrame
         bInformeLimpiar = new JButton("Limpiar");
         bIniciarIniciar = new JButton("Iniciar");
         bIniciarCargar = new JButton("Cargar");
-        bIniciarIniciar.setEnabled(false);
+        //bIniciarIniciar.setEnabled(false);
 
         taInforme = new JTextArea();
         taVisualizar = new JTextArea();
@@ -269,9 +269,11 @@ public class GUIServidor extends JFrame
             if(e.getSource()== bIniciarIniciar)
             {
                 ControladorServidor.enviarExamen();
-                ControladorServidor.tiempoRestanteHoras();
-                ControladorServidor.tiempoRestanteMinutos();
+                //ControladorServidor.tiempoRestanteHoras();
+                //ControladorServidor.tiempoRestanteMinutos();
             }
+
+
 
             
         }

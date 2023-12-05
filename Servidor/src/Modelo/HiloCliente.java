@@ -76,36 +76,6 @@ public class HiloCliente extends Thread
         }
     }
 
-    public void procesarConexion() throws IOException
-    {
-        String mensaje = "Conexion exitosa";
-        enviarTexto(mensaje);
-        do
-        {
-            try
-            {
-             mensaje = (String) entrada.readObject(); 
-             if(mensaje.contains("RESPONDIDA"))
-             {
-                System.out.println(mensaje);
-                String[] texto = mensaje.trim().split("||");
-                preguntas.add(texto[1]);
-                cliente.add(texto[2]);
-                respuesta.add(texto[3]);
-
-             }    
-            }
-            catch(ClassNotFoundException e)
-            {
-
-            }catch(SocketException ex)
-            {
-                
-            }
-            
-        }while(!mensaje.equals("cerrar"));
-    }
-
     public void enviarTexto (String texto)
     {
         try {
@@ -134,7 +104,7 @@ public class HiloCliente extends Thread
 
     public int getIdCliente()
     {
-        return idCliente;
+        return this.idCliente;
     }
 
     public ArrayList<String> getPreguntas()
@@ -153,4 +123,38 @@ public class HiloCliente extends Thread
     }
 
     public boolean isConnected()
+    {
+        return socket.isClosed();
+    }
+
+    public void procesarConexion() throws IOException
+    {
+        String mensaje = "Conexion exitosa";
+        enviarTexto(mensaje);
+        do
+        {
+            try
+            {
+             mensaje = (String) entrada.readObject(); 
+             if(mensaje.contains("RESPONDIDA"))
+             {
+                System.out.println(mensaje);
+                String[] texto = mensaje.trim().split("||");
+                preguntas.add(texto[1]);
+                cliente.add(texto[2]);
+                respuesta.add(texto[3]);
+                //ControladorServidor.verificarPregunta(preguntas.get(1))
+
+             }    
+            }
+            catch(ClassNotFoundException e)
+            {
+                break;
+            }catch(SocketException ex)
+            {
+                System.out.println("El cliente "+Integer.toString(getIdCliente())+" se fue");
+            }
+            
+        }while(socket.isConnected());
+    }
 }

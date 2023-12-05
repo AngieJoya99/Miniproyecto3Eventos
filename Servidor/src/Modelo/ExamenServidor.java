@@ -33,6 +33,11 @@ public class ExamenServidor
         this.incorrectas=0;
     }
 
+    public String examenEnviar()
+    {
+        return nombre+"\n"+tiempo[0]+"\n"+tiempo[1]+"\n"+stringPreguntas;
+    }
+
     public void generarPreguntas()
     {
         String[] datos; 

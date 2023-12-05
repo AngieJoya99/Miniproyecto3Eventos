@@ -11,7 +11,7 @@ import Modelo.ConexionCliente;
 import Modelo.MulticastCliente;
 import Vista.GUICliente;
 import Modelo.Examen;
-
+import Controlador.ControladorCliente;
 
 public class ControladorCliente 
 {
@@ -43,11 +43,12 @@ public class ControladorCliente
      * que a su vez establece un objeto de la clase pregunta
      * @param examenString
      */
-    public static  void establecerPreguntas(String examenString )
+    public static  void establecerPreguntas(String examenString)
     {  
             String[] cadena = examenString.trim().split("\n");
 
-            if (cadena.length >= 4) {
+            if (cadena.length >= 4) 
+            {
                 Examen examen = new Examen(cadena[0], Integer.parseInt(cadena[1]), Integer.parseInt(cadena[2]), Integer.parseInt(cadena[3]));
                 for(int i=4; i<cadena.length; i++)
                 {

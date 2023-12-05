@@ -178,20 +178,28 @@ public class ControladorServidor {
 
     public static void enviarExamen()
     {
-        /*if(conexionServidor.getCantClientes()==3)
+        if(gui.getExamenIniciar() != null)
         {
-            multicast.enviarTextoMulti(archivo.getPreguntas());
-            System.out.println("Se enviaron las preguntas");
-        }*/
-        
-        
+            String seleccion = gui.getExamenIniciar(), enviar = "Examen\n", nombreEx="";
+            for(int i=0; i<examen.size();i++)
+            {
+                nombreEx = examen.get(i).getNombre();
+                if(nombreEx.trim().equals(seleccion.trim()))
+                {
+                    enviar+=examen.get(i).examenEnviar();
+                }
+            }
+            multicast.enviarTextoMulti(enviar);
+            System.out.println(enviar);
+        }
     }
+
     
     
-    public void verificarPregunta(String respuesta, int numRespuesta, int examenIndice)
+    
+    public void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
     {
-        
-        if(examen.get(examenIndice).getResCorrecta(numRespuesta) == respuesta)
+        if(examen.get(examenIndice).getResCorrecta(numPregunta) == respuesta)
             examen.get(examenIndice).setCorrectas();
     }
 
