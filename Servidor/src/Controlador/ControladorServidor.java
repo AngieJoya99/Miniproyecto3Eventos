@@ -133,7 +133,6 @@ public class ControladorServidor {
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
     }
 
-<<<<<<< Updated upstream
     public static void mostrarVisualizar()
     {
         String texto = gui.cualVisualizar();
@@ -203,9 +202,6 @@ public class ControladorServidor {
         if(examen.get(examenIndice).getResCorrecta(numPregunta) == respuesta)
             examen.get(examenIndice).setCorrectas();
     }
-=======
-    public static void respuestaCorrecta()
->>>>>>> Stashed changes
 
     
        

@@ -71,7 +71,6 @@ public class ControladorCliente
         String mensaje = "RESPONDIDA||"+gui.getNumPreg()+"||"+conexionCliente.getNombreCliente()+"||"+respuesta;
         conexionCliente.enviarDatos(mensaje);
     }
-<<<<<<< Updated upstream
     /*
     //cambia el estado de la pregunta a contestada
     public static void preguntaRespondida(int numPreg)
@@ -84,18 +83,11 @@ public class ControladorCliente
     {
         return examen.respuestaCompletas();
     }
-=======
-    
->>>>>>> Stashed changes
     public static boolean respuestaCorrecta()
     {
         
         return false;
     }
-<<<<<<< Updated upstream
     */
 
-=======
-    
->>>>>>> Stashed changes
 }
