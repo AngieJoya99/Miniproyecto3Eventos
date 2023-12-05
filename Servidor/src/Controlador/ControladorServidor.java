@@ -1,3 +1,8 @@
+/* Angie Joya - 2322609
+ * Emily Nuñez - 2240156
+ * Sheila Valencia - 2243011
+ * Victoria Volveras - 2241874
+ */
 package Controlador;
 
 import java.util.Timer;
@@ -9,6 +14,9 @@ import Modelo.HiloCliente;
 import Modelo.Multicast;
 import Vista.GUIServidor;
 
+/**
+ * Clase que enlaza la GUI y el backend
+ */
 public class ControladorServidor {
     static GUIServidor gui;
     static Archivo archivo;
@@ -19,6 +27,9 @@ public class ControladorServidor {
     private static int tiempoMin;
     
 
+    /**
+     * Constructor de la clase ControladorServidor
+     */
     public static void iniciar()
     {
         gui = new GUIServidor();
@@ -29,16 +40,20 @@ public class ControladorServidor {
     }
 
     /**
-     * Método que lee el archivo del nombre indicado
+     * Método que lee el archivo del nombre indicado por la GUI
      */
     public static void leerArchivo()
     {
         archivo = new Archivo(gui.leerNombreArchivo());  
     }
 
+    /**
+     * Método que lee información respecto a un examen de la GUI
+     * Lo almacena en una cadena de texto
+     * e inicialzia valores de la GUI al respecto
+     */
     public static void crearExamen()
     {
-        //String mensaje = "Examen";
         String mensaje="";
         mensaje+="\n"+gui.leerNombreExamen();
         mensaje+="\n"+gui.leerHoras();
@@ -47,22 +62,28 @@ public class ControladorServidor {
         gui.agregarExamen(mensaje);
         gui.agregarNombreExamen(gui.leerNombreExamen());
         gui.agregarExamenLista(gui.leerNombreExamen());
-        separarPreguntas(mensaje);
         gui.agregarInforme("El examen no ha sido respondido. No es posible generar un informe");
-        gui.agregarVisualizar(separarPreguntas(mensaje));
+        String preguntas = separarPreguntas(mensaje);
+        gui.agregarVisualizar(preguntas);
     }
 
+    /**
+     * Método que separa una cadena de texto que recibe como parámetro
+     * De acuerdo a delimitadores y los organiza 
+     * @param texto Cadena de texto a separar
+     * @return Texto organizado
+     */
     public static String separarPreguntas(String texto)
     {
         String mensaje="";
         String[] datos, preguntas; 
         datos = texto.trim().split("\n");
         mensaje+="Nombre del examen: "+datos[0]+"\n"+
-        "Duración del examen: "+datos[1]+"horas "+datos[2]+" minutos\n\n";
-        for (int i=3; i<=datos.length; i++)
+        "Duración del examen: "+datos[1]+" horas "+datos[2]+" minutos\n\n";
+        for (int i=3; i<datos.length; i++)
         {
-            preguntas = datos[i].split("\n");
-            mensaje+=preguntas[0];
+            preguntas = datos[i].split("-");
+            mensaje+=preguntas[0]+"\n";    
         }
         return mensaje;
     }

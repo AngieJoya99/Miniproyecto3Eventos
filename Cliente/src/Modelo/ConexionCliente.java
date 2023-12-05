@@ -12,6 +12,7 @@ public class ConexionCliente
     Socket cliente;
     ObjectOutputStream salida;
     ObjectInputStream entrada;
+    String nombreCliente;
    
     public ConexionCliente(int puerto) throws IOException
     {
@@ -39,6 +40,11 @@ public class ConexionCliente
             {
                 mensaje = (String) entrada.readObject();
                 //mostrarMensaje("\n"+mensaje);
+                System.out.println(mensaje);
+                if(mensaje.contains("CLIENTE"))
+                {
+                    this.nombreCliente=mensaje;
+                }
                 
             } catch (ClassNotFoundException ex) {
                 System.out.println("error tipo de dato incorrecto");
@@ -70,5 +76,10 @@ public class ConexionCliente
             System.out.println("Error al mandar daatos al servidor");
         }
         
+    }
+
+    public String getNombreCliente()
+    {
+        return this.nombreCliente;
     }
 }

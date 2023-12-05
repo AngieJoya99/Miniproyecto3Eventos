@@ -278,6 +278,11 @@ public class GUICliente extends JFrame
 
     }
 
+    public void setTextAreaPreg(String pregunta)
+    {
+        areaExamen.setText(pregunta);
+    }
+
     /**
      * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
      * @param valor
@@ -290,6 +295,7 @@ public class GUICliente extends JFrame
             {
                 if(boton.isSelected())
                 {
+                    
                     boton.setEnabled(false);
                     System.out.println("El boton "+boton.getText()+ " ha sido bloqueado");
                  }
@@ -315,10 +321,10 @@ public class GUICliente extends JFrame
              {
                 if(e.getSource()== boton)
                 {
-                    areaExamen.setText("Esta es la pregunta "+boton.getText());
+                    
                     labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-                    clienteConectado(2);
+                    
                     
 
                 }
@@ -330,7 +336,7 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
-                clienteConectado(1);
+                
 
             }
             if(e.getSource() == bCancelarPreg)

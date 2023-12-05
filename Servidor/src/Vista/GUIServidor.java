@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Clase que contiene la interfaz gráfica du usuario
+ */
 public class GUIServidor extends JFrame 
 {
     JTabbedPane pestanas;   
@@ -51,7 +54,7 @@ public class GUIServidor extends JFrame
     }
 
     /**
-     * Crea e inicializa los elementos de la GUI
+     * Método que crea e inicializa los elementos de la GUI
      */
     public void crearGUI()
     {
@@ -59,8 +62,8 @@ public class GUIServidor extends JFrame
 
         examenes = new ArrayList<String>();
         nombresExamen = new ArrayList<String>();
-         informes = new ArrayList<String>();
-         visualizar = new ArrayList<String>();
+        informes = new ArrayList<String>();
+        visualizar = new ArrayList<String>();
 
         lCrearNombre = new JLabel("Nombre del examen");
         lCrearArchivo= new JLabel("Seleccione el archivo a cargar");
@@ -141,11 +144,7 @@ public class GUIServidor extends JFrame
         horas.setPreferredSize(new Dimension(40,30));
         minutos.setPreferredSize(new Dimension(40,30));
 
-        taInforme.setText("Prueba del area de texto");
-
-          
-
-
+        
         // Posicionar elementos del panel Crear
         pCrearNombre.add(lCrearNombre);
         pCrearNombre.add(tfCrearNombre);
@@ -165,17 +164,17 @@ public class GUIServidor extends JFrame
         pVerSeleccionar.add(cbVisualizar);
         pVerSeleccionar.add(bVerVer);
         pVisualizar.add(pVerSeleccionar, BorderLayout.NORTH);
-        spVisualizar.add(taVisualizar);
-        pVisualizar.add(spVisualizar, BorderLayout.CENTER);
+        //spVisualizar.add(taVisualizar);
+        pVisualizar.add(taVisualizar, BorderLayout.CENTER);
         pVisualizar.add(bVerLimpiar, BorderLayout.SOUTH);
 
         //Posicionar elementos del panel Informe
         pInformeSeleccionar.add(cbInforme);
         pInformeSeleccionar.add(bInformeVer);
         pInformes.add(pInformeSeleccionar, BorderLayout.NORTH);
-        spInforme.add(taInforme);
-        spInforme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        pInformes.add(spInforme, BorderLayout.CENTER);
+        //spInforme.add(taInforme);
+        //spInforme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        pInformes.add(taInforme, BorderLayout.CENTER);
         pInformes.add(bInformeLimpiar, BorderLayout.SOUTH);
 
         //Posicionar elementos del panel Informe
@@ -206,6 +205,9 @@ public class GUIServidor extends JFrame
         //Escuchas de Botones
         ManejarEventos evento = new ManejarEventos();
         bCrearCrear.addActionListener(evento);
+        bInformeVer.addActionListener(evento);
+        bVerVer.addActionListener(evento);
+        bIniciarIniciar.addActionListener(evento);
     }
 
     /**
@@ -222,6 +224,17 @@ public class GUIServidor extends JFrame
                 ControladorServidor.leerArchivo();
                 ControladorServidor.crearExamen();
             }
+
+            if (e.getSource() == bVerVer)
+            {
+                escribirVisualizar(0);   
+            }
+
+            if (e.getSource() == bInformeVer)
+            {
+                escribirInforme(0);   
+            }
+
             if(e.getSource()== bIniciarIniciar)
             {
                 ControladorServidor.enviarExamen();
@@ -319,16 +332,28 @@ public class GUIServidor extends JFrame
         }
     }
 
+    /**
+     * Método que lee el contenido del campo de texto tfCrearNombre
+     * @return Texto almacenado
+     */
     public String leerNombreExamen()
     {
         return tfCrearNombre.getText();
     }
 
+    /**
+     * Método que lee el contenido del spinner horas
+     * @return Valor almacenado
+     */
     public String leerHoras()
     {
         return ""+horas.getValue();
     }
 
+    /**
+     * Método que lee el contenido del spinner minutos
+     * @return Valor almacenado
+     */
     public String leerMinutos()
     {
         return ""+minutos.getValue();
@@ -361,59 +386,140 @@ public class GUIServidor extends JFrame
         pestanas.updateUI();
     }
 
+    /**
+     * Método que le agrega al arreglo examenes una cadena de texto 
+     * que recibe como parámetro
+     * @param texto Texto a añadir
+     */
     public void agregarExamen(String texto)
     {
         examenes.add(texto);
     }
 
+    /**
+     * Método que le agrega al arreglo nombresExamen una cadena de texto 
+     * que recibe como parámetro
+     * @param texto Texto a añadir
+     */
     public void agregarNombreExamen(String texto)
     {
         nombresExamen.add(texto);
     }
 
+    /**
+     * Método que le agrega al arreglo informes una cadena de texto 
+     * que recibe como parámetro
+     * @param texto Texto a añadir
+     */
     public void agregarInforme(String texto)
     {
         informes.add(texto);
     }
 
+    /**
+     * Método que le agrega al arreglo visualizar una cadena de texto 
+     * que recibe como parámetro
+     * @param texto Texto a añadir
+     */
     public void agregarVisualizar(String texto)
     {
-        examenes.add(texto);
+        visualizar.add(texto);
     }
 
+    /**
+     * Método que retorna el contenido del arreglo examenes
+     * en la posición que recibe como parámetro
+     * @param pos Posición del arreglo a buscar
+     * @return Contenido del arreglo en la posición
+     */
     public String getExamen(int pos)
     {
         return examenes.get(pos);
     }
     
+    /**
+     * Método que retorna el contenido del arreglo informes
+     * en la posición que recibe como parámetro
+     * @param pos Posición del arreglo a buscar
+     * @return Contenido del arreglo en la posición
+     */
     public String getInforme(int pos)
     {
         return informes.get(pos);
     }
     
+    /**
+     * Método que retorna el contenido del arreglo visualizar
+     * en la posición que recibe como parámetro
+     * @param pos Posición del arreglo a buscar
+     * @return Contenido del arreglo en la posición
+     */
     public String getVisualizar(int pos)
     {
         return visualizar.get(pos);
     }
 
+    /**
+     * Método que retorna el contenido del arreglo nombresExamen
+     * en la posición que recibe como parámetro
+     * @param pos Posición del arreglo a buscar
+     * @return Contenido del arreglo en la posición
+     */
     public String getNombreExamen(int pos)
     {
         return nombresExamen.get(pos);
     }
 
+    /**
+     * Método que retorna el valor seleccionado en el
+     * combo box cbCrear
+     * @return Valor seleccionado
+     */
     public String leerNombreArchivo()
     {
         return cbCrear.getSelectedItem().toString();
     }
 
+    /**
+     * Método que le asigna a la etiqueta lHorasRestantes
+     * un valor que recibe como parámetro
+     * @param horas Valor a asignar
+     */
     public void setHorasRestantes(String horas)
     {
         lHorasRestantes.setText(horas);
     }
 
+    /**
+     * Método que le asigna a la etiqueta lMinutosRestantes
+     * un valor que recibe como parámetro
+     * @param horas Valor a asignar
+     */
     public void setMinRestantes(String minutos)
     {
         lMinutosRestantes.setText(minutos);
+    }
+
+    /**
+     * Método que le asigna al area de texto taVisualizar
+     * el contenido del arreglo visualizar en una posición que
+     * recibe como parámetro
+     * @param pos Posición del arreglo
+     */
+    public void escribirVisualizar(int pos)
+    {
+        taVisualizar.setText(visualizar.get(pos));
+    }
+
+    /**
+     * Método que le asigna al area de texto taInforme
+     * el contenido del arreglo informes en una posición que
+     * recibe como parámetro
+     * @param pos Posición del arreglo
+     */
+    public void escribirInforme(int pos)
+    {
+        taInforme.setText(informes.get(pos));
     }
 
 }

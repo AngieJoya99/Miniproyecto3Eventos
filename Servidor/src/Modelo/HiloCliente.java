@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Clase que procesa la conexión con el usuario, procesa los flujos
@@ -44,6 +45,10 @@ public class HiloCliente extends Thread
         {
             procesarConexion();
         }
+        catch(IOException e)
+        {
+            
+        }
         finally
         {
             cerrarConexion();
@@ -63,12 +68,23 @@ public class HiloCliente extends Thread
         }
     }
 
-    public void procesarConexion()
+    public void procesarConexion() throws IOException
     {
         String mensaje = "Conexion exitosa";
         enviarTexto(mensaje);
         do
         {
+            try
+            {
+             mensaje = (String) entrada.readObject();     
+            }
+            catch(ClassNotFoundException e)
+            {
+
+            }catch(SocketException ex)
+            {
+                
+            }
             
         }while(!mensaje.equals("cerrar"));
     }

@@ -50,6 +50,7 @@ public class ConexionServidor extends Thread{
         {
             canticadClientes++;
             System.out.println("\nCliente número "+canticadClientes+" conectado");
+            cliente.enviarTexto("CLIENTE"+canticadClientes);
             cliente = new HiloCliente(socket, canticadClientes, multicast);
             cliente.obtenerFlujos();
             cliente.start();

@@ -120,5 +120,18 @@ public class Examen
         return this.incorrectas;
     }
 
+    /**
+     * Retorna el enunciado de la pregunta
+     * @param numPreg
+     * @return  enunciado pregunta y las respuestas
+     */
+    public String getPreguntas(int numPreg)
+    {
+        return this.preguntas.get(numPreg).getEnunciado() + this.preguntas.get(numPreg).getRespuesta();
+
+    }
+
+    
+
 
 }
