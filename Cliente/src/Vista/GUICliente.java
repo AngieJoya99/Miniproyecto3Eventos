@@ -102,15 +102,10 @@ public class GUICliente extends JFrame
         lTRestante = new JLabel("\t \t-- : --");
         lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
         lTRestante.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
-        
-        
 
         bVerResultado = new JButton("Ver Resultado");
         bResponder = new JButton("Responder");
-        
 
-
-    
         //panel 
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.CENTER);
@@ -167,18 +162,11 @@ public class GUICliente extends JFrame
         pOpcMultiple.add(pOpc2);
         pOpcMultiple.add(pBotones);
         
+        //Se añaden los componentes a la pestaña 'pregunta'
         pPregunta.add(lNumPreg);
         pPregunta.add(jsEnunciadoPregunta);
         pPregunta.add(pOpcMultiple);
 
-    
-        ManejadoraEvento evento = new ManejadoraEvento();
-        bResponder.addActionListener(evento);
-        bCancelarPreg.addActionListener(evento);
-
-    
-        
-        
        //-------- Pestaña Resultado ---------------
 
         areaResultado = new JTextArea(15, 35);
@@ -206,15 +194,20 @@ public class GUICliente extends JFrame
         pSouthResultado.add(pWestResultado, BorderLayout.WEST);
         pSouthResultado.add(bOK, BorderLayout.SOUTH);
 
-
-
-
+        //Se añaden los componentes a la pestaña 'Resultado'
         pResultado.add(lInforme);
         pResultado.add(jsResultado);
         pResultado.add(pSouthResultado);
-        
 
-    
+        // -- Eventos -- 
+        ManejadoraEvento evento = new ManejadoraEvento();
+
+        //Escucha de botones
+        bResponder.addActionListener(evento);
+        bCancelarPreg.addActionListener(evento);
+        bVerResultado.addActionListener(evento);
+        this.addKeyListener(evento);
+        
     }
 
     public void clienteConectado(int numCliente)
@@ -239,6 +232,12 @@ public class GUICliente extends JFrame
                 break;
             }     
     }
+
+    /**
+     * Función que crea los botones de las preguntas segun el numero de estas 
+     * y le añade escucha a los botones
+     * @param numPreguntas
+     */
 
     public void crearBotones(int numPreguntas)
     {
@@ -340,6 +339,14 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
                 bloquearPregunta(false);
+            }
+            if(e.getSource() == bVerResultado)
+            {
+                tpPestanas.setEnabledAt(2, true);
+                tpPestanas.setSelectedIndex(2);
+                tpPestanas.setEnabledAt(0, false);
+                tpPestanas.setEnabledAt(1, false);
+
             }
         }
 
