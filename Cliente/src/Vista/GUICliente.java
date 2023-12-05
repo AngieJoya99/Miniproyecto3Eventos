@@ -324,11 +324,8 @@ public class GUICliente extends JFrame
                     
                     labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-<<<<<<< HEAD
                     
                     
-=======
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
 
                 }
             }
@@ -339,10 +336,7 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
                 bloquearPregunta(true); 
-<<<<<<< HEAD
                 
-=======
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
 
             }
             if(e.getSource() == bCancelarPreg)

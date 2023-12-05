@@ -36,8 +36,6 @@ public class ControladorCliente
             conexionCliente.cerrarConexion();
         }
     }
-
-<<<<<<< HEAD
     
     /**
      * Recibe un String, lo divide por cada linea que contenga y establece un objeto de la clase Examen
@@ -70,15 +68,10 @@ public class ControladorCliente
     }
         
     
-=======
+
     public static void clienteConectadoC()
     {
         gui.clienteConectado(1); //No se como obener el numero de cliente
     }
 
-    public static void escucharMensaje(String mensaje)
-    {
-        //Aqui van las funciones que necesitan los mensajes
-    }
->>>>>>> f8c0bd8129c43856766f28c283e1357bbcde4fac
 }
