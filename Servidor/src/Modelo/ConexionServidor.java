@@ -15,6 +15,8 @@ public class ConexionServidor extends Thread{
     HiloCliente cliente;
     int canticadClientes;
     Multicast multicast;
+    boolean sendExam;
+    Archivo archivo;
 
     public ConexionServidor(int puerto)
     {
@@ -59,9 +61,13 @@ public class ConexionServidor extends Thread{
         }
     }
 
-    public void enviarTextoMulti (String texto)
+    public void enviarExamenMulti (String mensaje)
     {
-        multicast.enviarTextoMulti(texto);   
+        multicast.enviarTextoMulti(mensaje);   
     }
     
+    public int getCantClientes()
+    {
+        return this.canticadClientes;
+    }
 }

@@ -36,7 +36,7 @@ public class Archivo
      */
     public boolean cargarArchivo()
     {
-        String location = "Servidor"+File.separator+"src"+File.separator+"Archivos"+File.separator+nombreArchivo+".txt";
+        String location = "Servidor"+File.separator+"src"+File.separator+"Archivos"+File.separator+nombreArchivo;
         this.archivo = new File(location);
         if(this.archivo.exists())
         {
@@ -59,7 +59,7 @@ public class Archivo
     {
         try {
             Scanner buscador = new Scanner(this.archivo);
-            buscador.useDelimiter("}");
+            buscador.useDelimiter("&");
             while(buscador.hasNext())
             {
                 preguntas+=buscador.next().trim()+"\n";

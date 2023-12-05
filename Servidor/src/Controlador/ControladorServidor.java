@@ -22,23 +22,34 @@ public class ControladorServidor {
     /**
      * Método que lee el archivo del nombre indicado
      */
-    //No se cómo hacer que la GUI sepa que archivos existen
     public static void leerArchivo()
     {
-        String nombre = "Preguntas.txt";
-        archivo = new Archivo(nombre);        
+        archivo = new Archivo(gui.leerNombreArchivo());  
+    }
+
+    public static void crearExamen()
+    {
+        //String mensaje = "Examen";
+        String mensaje="";
+        mensaje+="\n"+gui.leerNombreExamen();
+        mensaje+="\n"+gui.leerHoras();
+        mensaje+="\n"+gui.leerMinutos();
+        mensaje+="\n"+archivo.getPreguntas();
+        gui.agregarExamen(mensaje);
+        gui.agregarNombreExamen(gui.leerNombreExamen());
+        System.out.println(mensaje);
+        //conexionServidor.enviarTextoMulti(mensaje);
+        //System.out.println("Examen creado exitosamente");
     }
 
     public static void enviarExamen()
     {
-        String mensaje = "Examen";
-        mensaje+="\n"+gui.leerNombreExamen();
-        mensaje+="\n"+gui.leerHoras();
-        mensaje+="\n"+gui.leerMinutos();
-        mensaje+="\n"+gui.leerSegundos();
-        mensaje+="\n"+archivo.getPreguntas();
-        conexionServidor.enviarTextoMulti(mensaje);
-        System.out.println("Examen enviado exitosamente");
+        if(conexionServidor.getCantClientes()==3)
+        {
+            multicast.enviarTextoMulti(archivo.getPreguntas());
+            System.out.println("Se enviaron las preguntas");
+        }
+        
     }
-    
+       
 }

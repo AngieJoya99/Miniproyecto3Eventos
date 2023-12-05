@@ -69,7 +69,7 @@ public class HiloCliente extends Thread
         enviarTexto(mensaje);
         do
         {
-            //No sé que debe ir aquí :(
+            
         }while(!mensaje.equals("cerrar"));
     }
 

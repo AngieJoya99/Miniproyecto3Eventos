@@ -1,23 +1,29 @@
 package Vista;
 
 import javax.swing.*;
+
+import Controlador.ControladorServidor;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GUIServidor extends JFrame 
 {
     JTabbedPane pestanas;   
     JPanel pCrear, pVisualizar, pInformes, pIniciar, pCrearNombre,
-        pCrearTiempo, pHoras, pVerSeleccionar, pInformeSeleccionar,
-        pClientes;
+        pCrearArchivo, pCrearTiempo, pHoras, pVerSeleccionar, 
+        pInformeSeleccionar, pClientes;
 
     JScrollPane spVisualizar, spInforme;
 
     JLabel lCrearNombre, lCrearArchivo, lCrearDuracion, 
         lIniciarCantidad, lIniciarTiempo, lIniciarTiempoRestante, 
         lIniciarTimer, lIniciarPreguntas, lIniciarRespondidas, 
-        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos1, lDosPuntos2;
+        lIniciarCliente1, lIniciarCliente2, lIniciarCliente3, lDosPuntos;
 
     JButton  bCrearCrear, bVerVer, bVerLimpiar, 
         bInformeVer, bInformeLimpiar, bIniciarIniciar;
@@ -25,9 +31,11 @@ public class GUIServidor extends JFrame
     JTextField tfCrearNombre;
     JTextArea taVisualizar, taInforme;
     JComboBox<String> cbVisualizar, cbInforme, cbIniciar, cbCrear;
-    JSpinner horas, minutos, segundos;
+    JSpinner horas, minutos;
     Font fuente1, fuente2;
-    SpinnerListModel modeloHora, modeloMin, modeloSeg; 
+    SpinnerListModel modeloHora, modeloMin; 
+
+    ArrayList<String> examenes, nombresExamen;
 
     /**
      * Constructor de la clase GUIServidor
@@ -49,9 +57,13 @@ public class GUIServidor extends JFrame
     public void crearGUI()
     {
         //Crear componentes
+
+        examenes = new ArrayList<String>();
+        nombresExamen = new ArrayList<String>();
+
         lCrearNombre = new JLabel("Nombre del examen");
         lCrearArchivo= new JLabel("Seleccione el archivo a cargar");
-        lCrearDuracion = new JLabel("Duración del examen ");
+        lCrearDuracion = new JLabel("Duración del examen (hh:mm)");
 
         lIniciarCantidad = new JLabel("Cantidad de preguntas");
         lIniciarCliente1 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
@@ -62,8 +74,7 @@ public class GUIServidor extends JFrame
         lIniciarTiempoRestante = new JLabel("Tiempo restante");
         lIniciarRespondidas = new JLabel("Preguntas respondidas");
         lIniciarTimer = new JLabel();
-        lDosPuntos1 = new JLabel(":");
-        lDosPuntos2 = new JLabel(":");
+        lDosPuntos = new JLabel(":");
 
         tfCrearNombre = new JTextField();
         
@@ -86,12 +97,10 @@ public class GUIServidor extends JFrame
         cbVisualizar = new JComboBox<>();
 
         modeloHora = new SpinnerListModel(listaHoras());
-        modeloMin = new SpinnerListModel(listaMinSeg());
-        modeloSeg= new SpinnerListModel(listaMinSeg());
+        modeloMin = new SpinnerListModel(listaMin());
 
         horas = new JSpinner(modeloHora);
         minutos = new JSpinner(modeloMin);
-        segundos = new JSpinner(modeloSeg);
 
         spInforme = new JScrollPane();
         spVisualizar= new JScrollPane();
@@ -102,7 +111,8 @@ public class GUIServidor extends JFrame
         pVisualizar = new JPanel(new BorderLayout());
 
         pCrearNombre = new JPanel(new GridLayout(1,2,20,10));
-        pCrearTiempo = new JPanel(new GridLayout(1,2));
+        pCrearArchivo = new JPanel();
+        pCrearTiempo = new JPanel();
         pHoras = new JPanel();
 
         pVerSeleccionar = new JPanel();
@@ -123,12 +133,10 @@ public class GUIServidor extends JFrame
         lCrearDuracion.setFont(fuente1);
         horas.setFont(fuente2);
         minutos.setFont(fuente2);
-        segundos.setFont(fuente2);
         bCrearCrear.setFont(fuente1);
 
         horas.setPreferredSize(new Dimension(40,30));
         minutos.setPreferredSize(new Dimension(40,30));
-        segundos.setPreferredSize(new Dimension(40,30));
 
         taInforme.setText("Prueba del area de texto");
 
@@ -139,14 +147,13 @@ public class GUIServidor extends JFrame
         pCrearNombre.add(lCrearNombre);
         pCrearNombre.add(tfCrearNombre);
         pCrear.add(pCrearNombre);
-        pCrear.add(lCrearArchivo);
-        pCrear.add(cbCrear);
+        pCrearArchivo.add(lCrearArchivo);
+        pCrearArchivo.add(cbCrear);
+        pCrear.add(pCrearArchivo);
         pCrearTiempo.add(lCrearDuracion);
         pHoras.add(horas);
-        pHoras.add(lDosPuntos1);
+        pHoras.add(lDosPuntos);
         pHoras.add(minutos);
-        pHoras.add(lDosPuntos2);
-        pHoras.add(segundos);
         pCrearTiempo.add(pHoras);
         pCrear.add(pCrearTiempo);
         pCrear.add(bCrearCrear);
@@ -182,13 +189,41 @@ public class GUIServidor extends JFrame
         pIniciar.add(lIniciarPreguntas);
         pIniciar.add(lIniciarRespondidas);
 
+        //Añadir páneles a pestañas
+
         pestanas.addTab("Crear examen",pCrear);
         pestanas.addTab("Visualizar examen",pVisualizar);
         pestanas.addTab("Ver informes",pInformes);
         pestanas.addTab("Realizar examen",pIniciar);
 
         add(pestanas);
-        //Hola
+
+        //Escuchas de Botones
+        ManejarEventos evento = new ManejarEventos();
+        bCrearCrear.addActionListener(evento);
+    }
+
+    /**
+     * Clase que determina las funciones que realizan los eventos
+     */
+    class ManejarEventos implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            if (e.getSource() == bCrearCrear)
+            {
+                ControladorServidor.leerArchivo();
+                ControladorServidor.crearExamen();
+            }
+            if(e.getSource()== bIniciarIniciar)
+            {
+                ControladorServidor.enviarExamen();
+                //Iniciar timer
+            }
+        }
+        
     }
 
     /**
@@ -211,7 +246,7 @@ public class GUIServidor extends JFrame
      * del 0 al 60
      * @return Arreglo de números
      */
-    public String[] listaMinSeg()
+    public String[] listaMin()
     {
         String[] arreglo = new String[61];  
         for (int i=0; i<=60; i++)
@@ -293,11 +328,6 @@ public class GUIServidor extends JFrame
         return ""+minutos.getValue();
     }
 
-    public String leerSegundos()
-    {
-        return ""+segundos.getValue();
-    }
-
     /**
      * Método que lee el nombre de los archivos guardados en el paquete Archivos
      * Y los añade al Combo Box cbCrear
@@ -312,6 +342,31 @@ public class GUIServidor extends JFrame
                 cbCrear.addItem(archivos[i].getName());
             }
         }   
+    }
+
+    public void agregarExamen(String texto)
+    {
+        examenes.add(texto);
+    }
+
+    public void agregarNombreExamen(String texto)
+    {
+        nombresExamen.add(texto);
+    }
+
+    public String getExamen(int pos)
+    {
+        return examenes.get(pos);
+    }
+
+    public String getNombreExamen(int pos)
+    {
+        return nombresExamen.get(pos);
+    }
+
+    public String leerNombreArchivo()
+    {
+        return cbCrear.getSelectedItem().toString();
     }
 
 }
