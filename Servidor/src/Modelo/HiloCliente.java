@@ -35,9 +35,9 @@ public class HiloCliente extends Thread
     {
         this.socket = socket;
         this.idCliente = idCliente;
-        ArrayList <String> preguntas = new ArrayList<>();
-        ArrayList <String> cliente = new ArrayList<>();
-        ArrayList <String> respuesta = new ArrayList<>();
+        this.preguntas = new ArrayList<>();
+        this.cliente = new ArrayList<>();
+        this.respuesta = new ArrayList<>();
     }
 
     @Override
@@ -85,8 +85,10 @@ public class HiloCliente extends Thread
              if(mensaje.contains("RESPONDIDA"))
              {
                 System.out.println(mensaje);
-                String[] respuesta = mensaje.trim().split("||");
-                
+                String[] texto = mensaje.trim().split("||");
+                preguntas.add(texto[1]);
+                cliente.add(texto[2]);
+                respuesta.add(texto[3]);
 
              }    
             }
@@ -130,5 +132,20 @@ public class HiloCliente extends Thread
     public int getIdCliente()
     {
         return idCliente;
+    }
+
+    public ArrayList<String> getPreguntas()
+    {
+        return this.preguntas;
+    }
+
+    public ArrayList<String> getClientes()
+    {
+        return this.cliente;
+    }
+
+    public ArrayList <String> getRespuestas()
+    {
+        return this.respuesta;
     }
 }
