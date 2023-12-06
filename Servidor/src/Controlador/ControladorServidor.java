@@ -259,8 +259,8 @@ public class ControladorServidor {
        if(examen.get(examenIndice).getPregRespondida() ==  examen.get(examenIndice).cantidadPreguntas())
        {
             String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
-            String incorrectas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
-            String puntaje = "El puntaje obtenido es: "+Integer.toString(calcularPuntaje(examenIndice))+"\n";
+            String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+            String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"\n";
             informe += correctas + incorrectas + puntaje;
             System.out.println("Entro a if examen respondido completamente");
             enviarMulti(informe);
@@ -280,14 +280,20 @@ public class ControladorServidor {
      * y calcula la n
 at
      */
-    public static int calcularPuntaje(int examenIndice)
+    public static double calcularPuntaje(int examenIndice)
     {
-        int correctas = examen.get(examenIndice).getCorrectas();
-        int totalPreg = examen.get(examenIndice).cantidadPreguntas();
+        double correctas =(double) examen.get(examenIndice).getCorrectas();
+        double totalPreg =(double) examen.get(examenIndice).cantidadPreguntas();
+        System.out.println("Total preguntas"+totalPreg);
         System.out.println("Estas son las preguntas correctas: "+correctas);
         System.out.println("Estas son las preguntas acumuladas: "+cantClientes);
+        double puntaje = (5/totalPreg)*correctas;
+        double intento = 5/totalPreg;
+        System.out.println(puntaje);
+        System.out.println("5/totalPreg es: "+intento);
+        System.out.println(intento*correctas);
 
-        return (correctas/totalPreg)*5;
+        return puntaje;
 
     }
 
