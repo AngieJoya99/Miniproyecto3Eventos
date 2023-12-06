@@ -1,3 +1,8 @@
+/* Angie Joya - 2322609
+ * Emily Nuñez - 2240156
+ * Sheila Valencia - 2243011
+ * Victoria Volveras - 2241874
+ */
 package Vista;
 
 import javax.swing.*;
@@ -67,7 +72,7 @@ public class GUIServidor extends JFrame
 
         lCrearNombre = new JLabel("Nombre del examen");
         lCrearArchivo= new JLabel("Seleccione el archivo a cargar");
-        lCrearDuracion = new JLabel("Duración del examen (hh:mm)");
+        lCrearDuracion = new JLabel("Duración del examen (mm:ss)");
 
         lIniciarCantidad = new JLabel("Cantidad de preguntas");
         lIniciarCliente1 = new JLabel(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
@@ -201,6 +206,8 @@ public class GUIServidor extends JFrame
         bVerLimpiar.setForeground(Color.WHITE);
         bInformeVer.setBackground(new Color(171,91,121));
         bInformeVer.setForeground(Color.WHITE);
+        bInformeLimpiar.setBackground(new Color(171,91,121));
+        bInformeLimpiar.setForeground(Color.WHITE);
         bIniciarCargar.setBackground(new Color(171,91,121));
         bIniciarCargar.setForeground(Color.WHITE);
         bIniciarIniciar.setBackground(new Color(171,91,121));
@@ -317,8 +324,9 @@ public class GUIServidor extends JFrame
             if(e.getSource()== bIniciarIniciar)
             {
                 ControladorServidor.enviarExamen();
+                ControladorServidor.tiempoRestanteHoras();
                 //ControladorServidor.tiempoRestanteHoras();
-                ControladorServidor.tiempoRestanteMinutos();
+                //ControladorServidor.tiempoRestanteMinutos();
             }
 
 

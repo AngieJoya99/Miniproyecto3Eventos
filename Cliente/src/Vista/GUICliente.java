@@ -1,3 +1,8 @@
+/* Angie Joya - 2322609
+ * Emily Nuñez - 2240156
+ * Sheila Valencia - 2243011
+ * Victoria Volveras - 2241874
+ */
 package Vista;
 
 import javax.swing.*;
@@ -7,7 +12,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -87,7 +91,7 @@ public class GUICliente extends JFrame
         areaExamen = new JTextArea("Esperando examen...", 10, 28);
         areaExamen.setEditable(false);
         jsExamen = new JScrollPane(areaExamen);
-        jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE, 5),""));
+        jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsExamen.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
 
@@ -105,6 +109,7 @@ public class GUICliente extends JFrame
         lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
+        bResponder.setEnabled(false);
         bResponder = new JButton("Responder");
 
         //panel 
@@ -131,6 +136,7 @@ public class GUICliente extends JFrame
         //Crear componentes
         
         areaPregunta = new JTextArea(15, 35);
+        areaPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta = new JScrollPane(areaPregunta);
         jsEnunciadoPregunta.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         areaPregunta.setEditable(false);
@@ -170,34 +176,35 @@ public class GUICliente extends JFrame
        //-------- Pestaña Resultado ---------------
 
         areaResultado = new JTextArea(15, 35);
+        areaResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         areaResultado.setEditable(false);
         jsResultado = new JScrollPane(areaResultado);
         jsResultado.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        lCalificacion = new JLabel("Calificacion");
-        lPregCorrecta = new JLabel("Preguntas Correctas");
-        lCalificacionNum = new JLabel("10");
-        lPregCorrectaNum = new JLabel("20");
+        //lCalificacion = new JLabel("Calificacion");
+        //lPregCorrecta = new JLabel("Preguntas Correctas");
+        //lCalificacionNum = new JLabel("10");
+        //lPregCorrectaNum = new JLabel("20");
         lInforme = new JLabel("Resultado");
         bOK = new JButton("OK");
 
-        pWestResultado = new JPanel(new BorderLayout());
+        //pWestResultado = new JPanel(new BorderLayout());
         
-        pWestResultado.add(lCalificacion, BorderLayout.NORTH); 
-        pWestResultado.add(lPregCorrecta, BorderLayout.SOUTH); 
+        //pWestResultado.add(lCalificacion, BorderLayout.NORTH); 
+        //pWestResultado.add(lPregCorrecta, BorderLayout.SOUTH); 
 
-        pEastResultado = new JPanel(new BorderLayout());
-        pEastResultado.add(lCalificacionNum, BorderLayout.NORTH);
-        pEastResultado.add(lPregCorrectaNum, BorderLayout.SOUTH);
+        //pEastResultado = new JPanel(new BorderLayout());
+        //pEastResultado.add(lCalificacionNum, BorderLayout.NORTH);
+        //pEastResultado.add(lPregCorrectaNum, BorderLayout.SOUTH);
 
-        pSouthResultado = new JPanel(new BorderLayout());
-        pSouthResultado.add(pEastResultado, BorderLayout.EAST);
-        pSouthResultado.add(pWestResultado, BorderLayout.WEST);
-        pSouthResultado.add(bOK, BorderLayout.SOUTH);
+        //pSouthResultado = new JPanel(new BorderLayout());
+        //pSouthResultado.add(pEastResultado, BorderLayout.EAST);
+        //pSouthResultado.add(pWestResultado, BorderLayout.WEST);
+        //pSouthResultado.add(bOK, BorderLayout.SOUTH);
 
         //Se añaden los componentes a la pestaña 'Resultado'
         pResultado.add(lInforme);
         pResultado.add(jsResultado);
-        pResultado.add(pSouthResultado);
+        pResultado.add(bOK);
 
         //Dar formato a elementos
         tpPestanas.setBackground(new Color(221,208,220));
@@ -238,11 +245,13 @@ public class GUICliente extends JFrame
         bCancelarPreg.addActionListener(evento);
         bVerResultado.addActionListener(evento);
         bResponderPreg.addActionListener(evento);
+        bOK.addActionListener(evento);
         rbOpcA.addItemListener(evento);
         rbOpcB.addItemListener(evento);
         rbOpcC.addItemListener(evento);
         rbOpcD.addItemListener(evento);
         this.addKeyListener(evento);
+
         
     }
 
@@ -382,29 +391,6 @@ public class GUICliente extends JFrame
         }
 
      }
-    /*public void bloquearPregunta(boolean valor)
-    {
-        for(JToggleButton boton : numeroPregunta)
-        {
-            if(valor)
-            {
-                if(boton.isSelected())
-                {
-                    
-                    boton.setEnabled(false);
-                    System.out.println("El boton "+boton.getText()+ " ha sido bloqueado");
-                 }
-            }
-            else
-            {
-                if(boton.isEnabled() == false)
-                {
-                    boton.setEnabled(true);
-                    System.out.println("la boton "+ boton.getText()+ " ha sido desbloqueado");
-                }
-            } 
-        }
-    }*/
 
     public void setEnabled(int indice, boolean bol)
     {
@@ -469,6 +455,7 @@ public class GUICliente extends JFrame
                 /*ControladorCliente.preguntaRespondida(getNumPreg());
                 if(Controlador.examenCompleto() == true)*/
                 System.out.println("RESPONDE PREGUNTA");
+                bResponder.setEnabled(true);
                 tpPestanas.setEnabledAt(0, true);  
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
@@ -476,6 +463,15 @@ public class GUICliente extends JFrame
 
                 ControladorCliente.responderPregunta(answerSelected);
 
+
+            }
+            if(e.getSource()== bOK)
+            {
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                tpPestanas.setEnabledAt(2,false);
+                bResponder.setEnabled(false);
             }
         }
 

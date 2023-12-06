@@ -35,6 +35,7 @@ public class ExamenServidor
 
     public String examenEnviar()
     {
+        System.out.println(nombre+"\n"+tiempo[0]+"\n"+tiempo[1]+"\n"+stringPreguntas);
         return nombre+"\n"+tiempo[0]+"\n"+tiempo[1]+"\n"+stringPreguntas;
     }
 
@@ -133,7 +134,10 @@ public class ExamenServidor
 
     public String getResCorrecta(int numPreg)
     {
-        return preguntas.get(numPreg).getRespuestaCorrecta();
+       
+        return preguntas.get(numPreg-1).getRespuestaCorrecta();
+        
+        
     } 
     public void setPregRespondidas()
     {

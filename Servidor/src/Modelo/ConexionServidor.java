@@ -22,6 +22,9 @@ public class ConexionServidor extends Thread{
     boolean sendExam;
     //Archivo archivo;
 
+    /**
+     * Contructor del servidor
+     */
     public ConexionServidor(int puerto)
     {
         canticadClientes=0;

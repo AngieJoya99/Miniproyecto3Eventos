@@ -50,7 +50,7 @@ public class PreguntaServidor
         String[] datos; 
         datos = texto.trim().split("\\+");
         this.respuesta = datos[1];
-        //System.out.println("La respuesta correcta es: "+respuesta);
+        System.out.println("La respuesta correcta es: "+respuesta);
     }
     /**
      * 

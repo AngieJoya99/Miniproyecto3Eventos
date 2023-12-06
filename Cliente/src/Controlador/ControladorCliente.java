@@ -31,8 +31,11 @@ public class ControladorCliente
         {
             //clienteConectadoC();
             conexionCliente = new ConexionCliente(12345);
+            System.out.println("Cliente conectado\n");
             conexionCliente.obtenerFlujos();
+            System.out.println("Flujos obtenidos\n");
             conexionCliente.procesarConexion();
+            System.out.println("Conexion procesada\n");
         } catch (IOException ex) {
             System.out.println("Error al inicial la conexion del cliente");
         }finally{
@@ -59,6 +62,7 @@ public class ControladorCliente
         }
         if (entradaCadena[0].equals("Informe"))
         {
+            System.out.println("Entro al if del informe");
             crearInforme(infoMulti);
         }
         if (entradaCadena[0].equals("Bloquear"))
@@ -77,13 +81,21 @@ public class ControladorCliente
             String numPregunta = entradaCadena[1];
             gui.bloquearPregunta(numPregunta, false);
         }
+        
     }
 
+    /**
+     * Recibe un informe y lo envia a la clase examen
+     */
     public static void crearInforme(String informe)
     {
         examen.setInforme(informe);
     }
 
+    /**
+     * Obtiene el informe que se encuentra en el examen
+     * y lo envia a la gui
+     */
     public static void obtenerInforme()
     {
         gui.areaInforme(examen.getInforme());
@@ -115,8 +127,8 @@ public class ControladorCliente
                     for(int i=4; i<cadena.length; i++)
                     {
                         examen.addPregunta(cadena[i]);
-                        System.out.println("Se adicionó correctamente la pregunta " + Integer.toString(i-4));
-                        System.out.println("Arreglo: "+ examen.getNumPreg());
+                        //System.out.println("Se adicionó correctamente la pregunta " + Integer.toString(i-4));
+                        //System.out.println("Arreglo: "+ examen.getNumPreg());
                         
                     }
                 }catch(NumberFormatException e)
@@ -145,10 +157,13 @@ public class ControladorCliente
             conexionCliente.enviarDatos("Bloquear\n"+pregunta);
             System.out.println("Se envio el mensaje bloquear");
         }
-        else{
+        else
+        {
             conexionCliente.enviarDatos("Desbloquear\n"+pregunta);
-            System.out.println("Se envio el mensaje de desbloquear");}
+            System.out.println("Se envio el mensaje de desbloquear");
+        }
     }
+
 
     public static void mostrarPregunta(int numPregunta)
     {  
@@ -191,7 +206,7 @@ public class ControladorCliente
     }
     */
 
-    public static void tiempoRestanteMinutos(int tiempoHoras, int tiempoMin) 
+   /* public static void tiempoRestanteMinutos(int tiempoHoras, int tiempoMin) 
     {
         gui.setHorasRestantes(Integer.toString(tiempoHoras));
         gui.setMinRestantes(Integer.toString(tiempoMin));
@@ -225,27 +240,9 @@ public class ControladorCliente
             }
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
-    }
-    
-    //public static void enviarRespuesta()
-
-    /*
-    //cambia el estado de la pregunta a contestada
-    public static void preguntaRespondida(int numPreg)
-    {
-        examen.preguntaContestada(numPreg);
     }*/
-
-    /*
-    public static boolean examenCompleto()
-    {
-        return examen.respuestaCompletas();
-    }
-    public static boolean respuestaCorrecta()
-    {
-        
-        return false;
-    }
-    */
+    
+    
+  
 
 }

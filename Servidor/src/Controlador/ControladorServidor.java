@@ -26,8 +26,11 @@ public class ControladorServidor {
     static ConexionServidor conexionServidor;
     static HiloCliente hiloCliente;
     static Multicast multicast;
-    private static int tiempoHoras;
     private static int tiempoMin;
+    private static int tiempoSec;
+    private static int totalSegundos;
+    private static int segundosR;
+    //private static int 
     private static int cantClientes;
     
 
@@ -223,22 +226,28 @@ public class ControladorServidor {
         System.out.println("Se entro a verificar pregunta");
         examen.get(examenIndice).setPregRespondidas();
         System.out.println("Respuesta correcta: "+examen.get(examenIndice).getResCorrecta(numPregunta));
+        //System.out.println(examen.get);
         System.out.println("Respuesta que evio_ "+respuesta);
         System.out.println("Indice: "+examenIndice);
         System.out.println("Numero de pregunta: "+numPregunta);
         
-
-        if(examen.get(examenIndice).getResCorrecta(numPregunta).equals(respuesta))
+        try{
+            if(examen.get(examenIndice).getResCorrecta(numPregunta).equals(respuesta))
+            {
+                System.out.println("La respuesta correcta es: "+(examen.get(examenIndice).getResCorrecta(numPregunta)));
+                System.out.println("Se entro al if de respuesta correcta");
+                examen.get(examenIndice).setCorrectas();  
+                System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
+            }
+            else
+            {
+                System.out.println("Se entro al if de respuesta incorrecta");
+                examen.get(examenIndice).setIncorrectas();
+                System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
+            }
+        }catch(NullPointerException e)
         {
-            System.out.println("Se entro al if de respuesta correcta");
-            examen.get(examenIndice).setCorrectas();  
-            System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
-        }
-        else
-        {
-            System.out.println("Se entro al if de respuesta incorrecta");
-            examen.get(examenIndice).setIncorrectas();
-            System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
+            System.out.println("fuera del arreglo");
         }
         verificarExamenCompleto(examenIndice);
             
@@ -246,7 +255,7 @@ public class ControladorServidor {
 
     public static void verificarExamenCompleto(int examenIndice)
     {
-        String informe = "Informe del examen '"+ examen.get(examenIndice).getNombre() +"' :\n";
+        String informe = "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
        if(examen.get(examenIndice).getPregRespondida() ==  examen.get(examenIndice).cantidadPreguntas())
        {
             String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
@@ -266,10 +275,17 @@ public class ControladorServidor {
 
     }
 
+    /**
+     * Obtiene la cantidad de preguntas correstas y las preguntas total 
+     * y calcula la n
+at
+     */
     public static int calcularPuntaje(int examenIndice)
     {
         int correctas = examen.get(examenIndice).getCorrectas();
         int totalPreg = examen.get(examenIndice).cantidadPreguntas();
+        System.out.println("Estas son las preguntas correctas: "+correctas);
+        System.out.println("Estas son las preguntas acumuladas: "+cantClientes);
 
         return (correctas/totalPreg)*5;
 
@@ -277,26 +293,6 @@ public class ControladorServidor {
 
     /**
      * Obtiene la cantidad de horas del examen
-     */
-    public static void getHoras()
-    {
-        if(gui.getExamenIniciar() != null)
-        {
-            String seleccion = gui.getExamenIniciar(), nombreEx;
-            for(int i=0; i<examen.size();i++)
-            {
-                nombreEx = examen.get(i).getNombre();
-                if(nombreEx.trim().equals(seleccion.trim()))
-                {
-                    tiempoHoras = Integer.parseInt(examen.get(i).getHoras());
-                }
-            }
-        }
-        //return tiempoHoras;
-    }
-
-    /**
-     * Permite obtener los minutos que va a durar el examen
      */
     public static void getMin()
     {
@@ -308,11 +304,37 @@ public class ControladorServidor {
                 nombreEx = examen.get(i).getNombre();
                 if(nombreEx.trim().equals(seleccion.trim()))
                 {
-                    tiempoMin = Integer.parseInt(examen.get(i).getMinutos());
+                    tiempoMin = Integer.parseInt(examen.get(i).getHoras());
+                }
+            }
+        }
+        //return tiempoHoras;
+    }
+
+    /**
+     * Permite obtener los minutos que va a durar el examen
+     */
+    public static void getSec()
+    {
+        if(gui.getExamenIniciar() != null)
+        {
+            String seleccion = gui.getExamenIniciar(), nombreEx;
+            for(int i=0; i<examen.size();i++)
+            {
+                nombreEx = examen.get(i).getNombre();
+                if(nombreEx.trim().equals(seleccion.trim()))
+                {
+                    tiempoSec = Integer.parseInt(examen.get(i).getMinutos());
                 }
             }
         }
         //return tiempoMin;
+    }
+
+    public static void getTiempo()
+    {
+        totalSegundos = (tiempoMin*60)+tiempoSec;
+        segundosR = totalSegundos; 
     }
 
     /**
@@ -320,29 +342,32 @@ public class ControladorServidor {
      */
     public static void tiempoRestanteHoras() 
     {
-        getHoras();
-        gui.setHorasRestantes(Integer.toString(tiempoHoras));
+        getMin();
+        getSec();
+        getTiempo();
+        gui.setHorasRestantes(Integer.toString(tiempoMin));
         Timer cuentaAtras = new Timer();
         TimerTask tarea = new TimerTask()
         {
             @Override
             public void run()
             { 
-                tiempoHoras = tiempoHoras -1;
-                gui.setHorasRestantes(Integer.toString(tiempoHoras));
-                if (tiempoHoras == 0)
+                segundosR = segundosR -1;
+                gui.setHorasRestantes(Integer.toString(segundosR/60));
+                gui.setMinRestantes(Integer.toString(segundosR%60));
+                if (segundosR == 0)
                 {
                     this.cancel();
                 }   
             }
         };
-        cuentaAtras.scheduleAtFixedRate(tarea, 1000*3600, 1000*3600);
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
     }
 
     /**
      * Determina los minutos restantes del examen
      */
-    public static void tiempoRestanteMinutos() 
+    /*public static void tiempoRestanteMinutos() 
     {
         getMin();
         getHoras();
@@ -378,7 +403,7 @@ public class ControladorServidor {
             }
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
-    }
+    }*/
 
     /**
      * Permite escuchar los clientes y le envia a la gui
