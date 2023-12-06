@@ -109,7 +109,7 @@ public class GUICliente extends JFrame
         lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
-        bResponder.setEnabled(false);
+        //bResponder.setEnabled(false);
         bResponder = new JButton("Responder");
 
         //panel 
