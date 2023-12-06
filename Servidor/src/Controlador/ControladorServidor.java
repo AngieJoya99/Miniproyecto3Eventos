@@ -122,7 +122,7 @@ public class ControladorServidor {
     }
 
     /**
-     * Permite limpiar el campo visualizar
+     * Permite limpiar el campo visualizar examen
      */
     public static void limpiarVisualizar()
     {
@@ -134,6 +134,9 @@ public class ControladorServidor {
         gui.escribirInforme("");   
     }
 
+    /**
+     * Inicia el examen, tomando los valores ingresados
+     */
     public static void cargarExamenIniciar()
     {
         if(gui.getExamenIniciar() != null)
@@ -155,6 +158,10 @@ public class ControladorServidor {
         }
     }
 
+    /**
+     * Permite enviar el examen a los estudiantes por medio
+     * del multicast
+     */
     public static void enviarExamen()
     {
         if(gui.getExamenIniciar() != null)
@@ -174,15 +181,33 @@ public class ControladorServidor {
         }
     }
     
-   public void procesarRespuesta(String respuesta)
+    /**
+     * Recibe la respuesta del cliente y obtiene el nombre del examen 
+     * y verifica a que examen pertenece
+     * @param respuesta
+     */
+   public static void procesarRespuesta(String respuesta)
     {
+        System.out.println("Se entro a procesor respuesta desde CS");
         String[] entradaCadena = respuesta.trim().split("\n");
-         try
+        String[] opcion = entradaCadena[3].trim().split(" ");
+        System.out.println(opcion[1]);
+        System.out.println(entradaCadena[1]);
+        System.out.println(entradaCadena[3]);
+        System.out.println(entradaCadena[4]);
+
+
+        try
         {
+            System.out.println("Se entro al try de procesar respuesta");
             for(int i=0; i<examen.size(); i++)
             {
-                if(examen.get(i).getNombre().equals(entradaCadena[3]))
-                verificarPregunta(entradaCadena[3], Integer.parseInt(entradaCadena[1]), Integer.parseInt(entradaCadena[4]));            
+                if(examen.get(i).getNombre().equals(entradaCadena[4]))
+                {
+                    System.out.println("Se entro al if de procesar respuesta");
+                    verificarPregunta(opcion[1], Integer.parseInt(entradaCadena[1]), i);
+                    System.out.println("Se ha verificado correctamente al pregunta");
+                }            
             }
 
         }catch(NumberFormatException e)
@@ -193,22 +218,66 @@ public class ControladorServidor {
     }
 
     
-    public void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
+    public static void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
     {
-         examen.get(examenIndice).setPregRespondidas();
-        if(examen.get(examenIndice).getResCorrecta(numPregunta) == respuesta)
+        System.out.println("Se entro a verificar pregunta");
+        examen.get(examenIndice).setPregRespondidas();
+        System.out.println("Respuesta correcta: "+examen.get(examenIndice).getResCorrecta(numPregunta));
+        System.out.println("Respuesta que evio_ "+respuesta);
+        System.out.println("Indice: "+examenIndice);
+        System.out.println("Numero de pregunta: "+numPregunta);
+        
+
+        if(examen.get(examenIndice).getResCorrecta(numPregunta).equals(respuesta))
+        {
+            System.out.println("Se entro al if de respuesta correcta");
             examen.get(examenIndice).setCorrectas();  
+            System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
+        }
         else
         {
+            System.out.println("Se entro al if de respuesta incorrecta");
             examen.get(examenIndice).setIncorrectas();
+            System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
         }
+        verificarExamenCompleto(examenIndice);
             
     }
 
-    public void verificarExamenCompleto(int examenIndice)
+    public static void verificarExamenCompleto(int examenIndice)
     {
-       // if(examen.get(enviarExamen))
+        String informe = "Informe del examen '"+ examen.get(examenIndice).getNombre() +"' :\n";
+       if(examen.get(examenIndice).getPregRespondida() ==  examen.get(examenIndice).cantidadPreguntas())
+       {
+            String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
+            String incorrectas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+            String puntaje = "El puntaje obtenido es: "+Integer.toString(calcularPuntaje(examenIndice))+"\n";
+            informe += correctas + incorrectas + puntaje;
+            System.out.println("Entro a if examen respondido completamente");
+            enviarMulti(informe);
+            System.out.println("Se ha enviado el informe");
+       }
+       else
+       {
+            System.out.println("El examen no se ha contestado completamente");
+        
+       }
+    
+
     }
+
+    public static int calcularPuntaje(int examenIndice)
+    {
+        int correctas = examen.get(examenIndice).getCorrectas();
+        int totalPreg = examen.get(examenIndice).cantidadPreguntas();
+
+        return (correctas/totalPreg)*5;
+
+    }
+
+    /**
+     * Obtiene la cantidad de horas del examen
+     */
     public static void getHoras()
     {
         if(gui.getExamenIniciar() != null)
@@ -226,6 +295,9 @@ public class ControladorServidor {
         //return tiempoHoras;
     }
 
+    /**
+     * Permite obtener los minutos que va a durar el examen
+     */
     public static void getMin()
     {
         if(gui.getExamenIniciar() != null)
@@ -243,6 +315,9 @@ public class ControladorServidor {
         //return tiempoMin;
     }
 
+    /**
+     * Determina las horas restantes del examen
+     */
     public static void tiempoRestanteHoras() 
     {
         getHoras();
@@ -264,6 +339,9 @@ public class ControladorServidor {
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*3600, 1000*3600);
     }
 
+    /**
+     * Determina los minutos restantes del examen
+     */
     public static void tiempoRestanteMinutos() 
     {
         getMin();
@@ -302,6 +380,11 @@ public class ControladorServidor {
         cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
     }
 
+    /**
+     * Permite escuchar los clientes y le envia a la gui
+     * el cliente conectado
+     * @param num
+     */
     public static void escucharClientes(int num)
     {
         cantClientes+=num;
@@ -309,6 +392,10 @@ public class ControladorServidor {
         
     }
 
+    /**
+     * Envia por el multicast un texto que recibe como parametro
+     * @param texto
+     */
     public static void enviarMulti(String texto)
     {
         multicast.enviarTextoMulti(texto);

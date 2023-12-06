@@ -30,6 +30,16 @@ public class Examen
         this.textoPreguntas="";
     }
 
+    public int getHoras()
+    {
+        return this.tiempo[0];
+    }
+
+    public int getMin()
+    {
+        return this.tiempo[1];
+    }
+
     /**
      * A partir de una cadena de texto que recibe como parámetro,
      * la adiciona al contenido actual de la variable textoPreguntas,
@@ -42,6 +52,12 @@ public class Examen
         this.preguntas.add(new Pregunta(texto));
         this.textoPreguntas+=(texto+"\n");
     }
+
+    public void setInforme(String informeC)
+    {
+        this.informe = informeC;
+    }
+
 
     
 

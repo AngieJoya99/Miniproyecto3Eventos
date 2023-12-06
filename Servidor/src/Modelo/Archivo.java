@@ -16,8 +16,8 @@ public class Archivo
 {
     private File archivo;
     private String preguntas;
-    String nombreArchivo;
-    int cantidadPreguntas;
+    private String nombreArchivo;
+    private int cantidadPreguntas;
 
     /**
      * Constructor de la clase Archivo

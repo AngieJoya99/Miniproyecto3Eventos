@@ -20,7 +20,7 @@ public class ConexionServidor extends Thread{
     int canticadClientes;
     Multicast multicast;
     boolean sendExam;
-    Archivo archivo;
+    //Archivo archivo;
 
     public ConexionServidor(int puerto)
     {

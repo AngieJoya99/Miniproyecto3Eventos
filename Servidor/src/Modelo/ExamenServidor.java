@@ -18,7 +18,7 @@ public class ExamenServidor
     private int correctas, incorrectas, respondidas;  
 
     /**
-     * Constructor de la clase ExamenServidpr
+     * Constructor de la clase ExamenServidor
      */
     public ExamenServidor(String nombre, int horas, int minutos, String preguntas)
     {

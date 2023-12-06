@@ -1,4 +1,4 @@
-/* Angie Joya - 2322609
+    /* Angie Joya - 2322609
  * Emily Nuñez - 2240156
  * Sheila Valencia - 2243011
  * Victoria Volveras - 2241874
@@ -160,6 +160,8 @@ public class HiloCliente extends Thread
                 System.out.println("Add a clientes Hilo cliente");
                 respuesta.add(texto[3]);
                 System.out.println("Add a respuestas Hilo cliente");
+                ControladorServidor.procesarRespuesta(mensaje);
+                System.out.println("Se proceso la respuesta desde el hilo cliente");
                 //ControladorServidor.verificarPregunta(preguntas.get(1))
 
              }

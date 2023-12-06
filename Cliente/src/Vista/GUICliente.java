@@ -31,7 +31,7 @@ public class GUICliente extends JFrame
 
     JPanel pExamen,pWestResultado, pEastResultado, pSouthResultado, pResultado, pPregunta, pTextArea, pBotonesPreg, pSurExamen, pNorteExamen, pUsuarioConectado, pInformacion, pOpcMultiple, pBotones, pOpc1, pOpc2, pInfoResultado;
 
-    JLabel lTRestante, lPregRes, lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
+    JLabel lTRestanteH, lTRestanteM, lDosP, lPregRes, lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
 
     /**
      *Constructor de la clase GUIServidor
@@ -39,14 +39,16 @@ public class GUICliente extends JFrame
     public GUICliente()
     {
         setTitle("Cliente");
-        setSize(480, 500);
+        setSize(480, 530);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
 
-    
+    /**
+     * Metodo que permite crear la gui
+     */
     public void crearGUI()
     {
 
@@ -74,7 +76,7 @@ public class GUICliente extends JFrame
         //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
-        pInformacion = new JPanel(new GridLayout(2,0));
+        pInformacion = new JPanel();
         pBotonesPreg = new JPanel(new GridLayout(11,0));
 
         pNorteExamen = new JPanel();
@@ -94,9 +96,13 @@ public class GUICliente extends JFrame
         lTempoRestante = new JLabel("\t\t\t\tTiempo Restante   ");
         //lPregRespondidas = new JLabel("\t\t\t\t");
         //lPregRes = new JLabel("\t \t");
-        lTRestante = new JLabel("\t \t");
+        lTRestanteH = new JLabel();
+        lTRestanteM = new JLabel();
+        lDosP = new JLabel();
         //lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
-        lTRestante.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        lTRestanteH.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        lTRestanteM.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
         bResponder = new JButton("Responder");
@@ -106,7 +112,9 @@ public class GUICliente extends JFrame
         pTextArea.add(bResponder, BorderLayout.CENTER);
 
         pInformacion.add(lTempoRestante);
-        pInformacion.add(lTRestante);
+        pInformacion.add(lTRestanteH);
+        pInformacion.add(lDosP);
+        pInformacion.add(lTRestanteM);
         //pInformacion.add(lTRestante);pInformacion.add(lPregRes);
         pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
         pSurExamen.add(bVerResultado, BorderLayout.NORTH);
@@ -131,10 +139,10 @@ public class GUICliente extends JFrame
         lNumPreg = new JLabel("Preguna 1");
         
 
-        rbOpcA = new JRadioButton("Opción A");
-        rbOpcB = new JRadioButton("Opción B");
-        rbOpcC = new JRadioButton("Opción C");
-        rbOpcD = new JRadioButton("Opción D");
+        rbOpcA = new JRadioButton("Opción a");
+        rbOpcB = new JRadioButton("Opción b");
+        rbOpcC = new JRadioButton("Opción c");
+        rbOpcD = new JRadioButton("Opción d");
         bgGrupoOpc = new ButtonGroup();
         bgGrupoOpc.add(rbOpcA);bgGrupoOpc.add(rbOpcB);
         bgGrupoOpc.add(rbOpcC);bgGrupoOpc.add(rbOpcD);
@@ -238,12 +246,34 @@ public class GUICliente extends JFrame
         
     }
 
-    public void setTiempoRestante(String duracion)
+    /**
+     * Obtiene el tiempo del examen
+     * @param duracion tiempo que dura el examen
+     */
+    public void setHorasRestantes(String duracion)
     {
-        lTRestante.setText("         "+duracion);
+        lTRestanteH.setText(duracion);
 
     }
 
+    public void setMinRestantes(String duracion)
+    {
+        lTRestanteM.setText(duracion);
+
+    }
+    
+
+    public void areaInforme(String informe)
+    {
+        areaResultado.setText(informe);
+    }
+
+
+    /**
+     * Permite bloquear o desbloquar una pestaña, dependiendo de el valor de entrada
+     * @param indice
+     * @param valor si se desbloquea o se bloquea
+     */
     public void bloquearPestaña(int indice, boolean valor)
     {
         if(valor)
@@ -251,28 +281,7 @@ public class GUICliente extends JFrame
         else
             tpPestanas.setEnabledAt(indice, true);
     }
-    public void clienteConectado(int numCliente)
-    {
-        int opcion = numCliente;
-        switch (opcion) 
-        {
-            case 1:
-                lClienteConectado1.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
-                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
-                break;
-            case 2:
-                lClienteConectado2.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
-                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
-                break;
-            case 3:
-                lClienteConectado3.setIcon(new ImageIcon(getClass().getResource("../imagenes/Verde.png")));
-                System.out.println("El cliente "+Integer.toString(opcion)+" se ha conectado");
-                break;
-            default:
-                System.out.println("No se ha conectado ningun cliente");
-                break;
-            }     
-    }
+    
 
     /**
      * Función que crea los botones de las preguntas segun el numero de estas 
@@ -452,6 +461,7 @@ public class GUICliente extends JFrame
                 tpPestanas.setSelectedIndex(2);
                 tpPestanas.setEnabledAt(0, false);
                 tpPestanas.setEnabledAt(1, false);
+                ControladorCliente.obtenerInforme();
 
             }
             if(e.getSource() == bResponderPreg)
@@ -507,7 +517,5 @@ public class GUICliente extends JFrame
                 }
             }
 		}
-
-    
     }
 }
