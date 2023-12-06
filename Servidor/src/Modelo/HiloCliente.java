@@ -13,6 +13,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import Controlador.ControladorServidor;
+
 /**
  * Clase que procesa la conexión con el usuario, procesa los flujos
  * y cierra la conexión cuando esta termina.
@@ -26,6 +28,7 @@ public class HiloCliente extends Thread
     
     int idCliente;
     Multicast multicast;
+    boolean coneccion;
     
 
     /**
@@ -41,6 +44,7 @@ public class HiloCliente extends Thread
         this.cliente = new ArrayList<>();
         this.respuesta = new ArrayList<>();
         this.multicast = multicast;
+        this.coneccion=true;
     }
 
     @Override
@@ -55,7 +59,8 @@ public class HiloCliente extends Thread
         }
         catch(IOException e)
         {
-            
+            coneccion=false;
+            //ControladorServidor.escucharClientes(-1);
         }
         finally
         {
@@ -97,6 +102,8 @@ public class HiloCliente extends Thread
             salida.close();
             socket.close();
             System.out.println("La conexión con el estudiante "+idCliente+" ha terminado");
+            ControladorServidor.escucharClientes(-1);
+            coneccion=false;
         } catch (IOException e) {
             System.out.println("Error al cerrar la conexion");
         }
@@ -105,6 +112,11 @@ public class HiloCliente extends Thread
     public int getIdCliente()
     {
         return this.idCliente;
+    }
+
+    public void setIdCliente(int id)
+    {
+        this.idCliente = id;
     }
 
     public ArrayList<String> getPreguntas()
@@ -122,15 +134,16 @@ public class HiloCliente extends Thread
         return this.respuesta;
     }
 
-    public boolean isConnected()
+    public boolean getConeccion()
     {
-        return socket.isClosed();
+        return this.coneccion;
     }
 
     public void procesarConexion() throws IOException
     {
         String mensaje = "Conexion exitosa";
-        enviarTexto(mensaje);
+        //boolean seEnvia = false;
+        //enviarTexto(mensaje);
         do
         {
             try
@@ -145,7 +158,27 @@ public class HiloCliente extends Thread
                 respuesta.add(texto[3]);
                 //ControladorServidor.verificarPregunta(preguntas.get(1))
 
-             }    
+             }
+
+             if(mensaje.contains("Bloquear"))
+             {
+                System.out.println("Bloquear pregunta");
+                String[] texto = mensaje.trim().split("\n");
+                System.out.println(texto[1]);
+                //seEnvia = multicast.enviarTextoMulti("Bloquear\n"+texto[1]);
+                ControladorServidor.enviarMulti("Bloquear\n"+texto[1]);
+                System.out.println("Recibi bloqueo");
+             }
+             
+             if(mensaje.contains("Desbloquear"))
+             {
+                System.out.println("Desbloquear pregunta");
+                String[] texto = mensaje.trim().split("\n");
+                //multicast.enviarTextoMulti("Desbloquear\n"+texto[1]);
+                ControladorServidor.enviarMulti("Desbloquear\n"+texto[1]);
+                System.out.println("Recibi desbloqueo");
+             }
+
             }
             catch(ClassNotFoundException e)
             {
@@ -153,6 +186,9 @@ public class HiloCliente extends Thread
             }catch(SocketException ex)
             {
                 System.out.println("El cliente "+Integer.toString(getIdCliente())+" se fue");
+                coneccion = false;
+                //ControladorServidor.escucharClientes(-1);
+                break;
             }
             
         }while(socket.isConnected());

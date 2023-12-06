@@ -159,6 +159,30 @@ public class GUIServidor extends JFrame
         lIniciarRespondidas.setPreferredSize(new Dimension(350,40));
         pestanas.setFont(fuente3);
 
+        pestanas.setBackground(new Color(221,208,220));
+        pCrear.setBackground(new Color(221,208,220));
+        pVisualizar.setBackground(new Color(221,208,220));
+        pInformes.setBackground(new Color(221,208,220));
+        pIniciar.setBackground(new Color(221,208,220));
+        pCrearArchivo.setBackground(new Color(221,208,220));
+        pCrearNombre.setBackground(new Color(221,208,220));
+        pCrearTiempo.setBackground(new Color(221,208,220));
+        pHoras.setBackground(new Color(221,208,220));
+        pVerSeleccionar.setBackground(new Color(221,208,220));
+        pInformeSeleccionar.setBackground(new Color(221,208,220));
+        pClientes.setBackground(new Color(221,208,220));
+
+        bCrearCrear.setBackground(new Color(171,91,121));
+        bCrearCrear.setForeground(Color.WHITE);
+        bVerVer.setBackground(new Color(171,91,121));
+        bVerVer.setForeground(Color.WHITE);
+        bVerLimpiar.setBackground(new Color(171,91,121));
+        bVerLimpiar.setForeground(Color.WHITE);
+        bInformeVer.setBackground(new Color(171,91,121));
+        bInformeVer.setForeground(Color.WHITE);
+        bInformeLimpiar.setBackground(new Color(171,91,121));
+        bInformeLimpiar.setForeground(Color.WHITE);
+
         
         // Posicionar elementos del panel Crear
         pCrearNombre.add(lCrearNombre);
@@ -270,7 +294,7 @@ public class GUIServidor extends JFrame
             {
                 ControladorServidor.enviarExamen();
                 //ControladorServidor.tiempoRestanteHoras();
-                //ControladorServidor.tiempoRestanteMinutos();
+                ControladorServidor.tiempoRestanteMinutos();
             }
 
 
@@ -317,52 +341,31 @@ public class GUIServidor extends JFrame
      * @param color Icono rojo si es false, icono verde
      * si es true
      */
-    public void cambiarIcono1( boolean color)
+    public void cambiarIconos(int i)
     {
-        if (!color)
+        if (i==0)
         {
             lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
-        }
-        else
+            lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+            lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        }   
+        if (i==1)
         {
             lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
-        }
-    }
-
-    /**
-     * Cambia el ícono del label que representa la conexión
-     * del cliente 2 dependiendo de un valor booleano que recibe
-     * como parámetro
-     * @param color Icono rojo si es false, icono verde
-     * si es true
-     */
-    public void cambiarIcono2( boolean color)
-    {
-        if (!color)
-        {
             lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
-        }
-        else
+            lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
+        }            
+        if (i==2)
         {
+            lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
             lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
-        }
-    }
-
-    /**
-     * Cambia el ícono del label que representa la conexión
-     * del cliente 3 dependiendo de un valor booleano que recibe
-     * como parámetro
-     * @param color Icono rojo si es false, icono verde
-     * si es true
-     */
-    public void cambiarIcono3( boolean color)
-    {
-        if (!color)
-        {
             lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Rojo.png")));
         }
-        else
+            
+        if (i==3)
         {
+            lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
+            lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
             lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
         }
     }

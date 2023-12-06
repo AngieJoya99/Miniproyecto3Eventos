@@ -39,7 +39,7 @@ public class GUICliente extends JFrame
     public GUICliente()
     {
         setTitle("Cliente");
-        setSize(480, 620);
+        setSize(480, 500);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,11 +70,12 @@ public class GUICliente extends JFrame
         add(tpPestanas);
         tpPestanas.setEnabledAt(1, false);
         tpPestanas.setEnabledAt(2, false);
+        tpPestanas.setEnabledAt(0, false);
+        //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
         pInformacion = new JPanel(new GridLayout(2,2));
         pBotonesPreg = new JPanel(new GridLayout(11,0));
-        pUsuarioConectado = new JPanel();
 
         pNorteExamen = new JPanel();
         pSurExamen = new JPanel(new BorderLayout());
@@ -92,13 +93,6 @@ public class GUICliente extends JFrame
         
         lTempoRestante = new JLabel("\t\t\t\tTiempo Restante   ");
         lPregRespondidas = new JLabel("\t\t\t\tPreguntas Respondidas  ");
-        
-        
-        lClienteConectado1 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
-        lClienteConectado2 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
-        lClienteConectado3 = new JLabel(new ImageIcon(getClass().getResource("../imagenes/Rojo.png")));
-        pUsuarioConectado.add(lClienteConectado1);  pUsuarioConectado.add(lClienteConectado2);  pUsuarioConectado.add(lClienteConectado3);
-
         lPregRes = new JLabel("\t \t--");
         lTRestante = new JLabel("\t \t-- : --");
         lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
@@ -113,19 +107,15 @@ public class GUICliente extends JFrame
 
         pInformacion.add(lTempoRestante);pInformacion.add(lPregRespondidas);
         pInformacion.add(lTRestante);pInformacion.add(lPregRes);
-
-        pUsuarioConectado.add(lClienteConectado1);pUsuarioConectado.add(lClienteConectado2);pUsuarioConectado.add(lClienteConectado3);
-
-       pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
-       pSurExamen.add(bVerResultado, BorderLayout.NORTH);
-       pSurExamen.add(pInformacion, BorderLayout.CENTER);
-       pSurExamen.add(pUsuarioConectado, BorderLayout.SOUTH);
+        pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
+        pSurExamen.add(bVerResultado, BorderLayout.NORTH);
+        pSurExamen.add(pInformacion, BorderLayout.CENTER);
+        
 
         
         //Se añaden los paneles a la pestaña examen
         pExamen.add(pNorteExamen, BorderLayout.NORTH);
-        pExamen.add(pSurExamen, BorderLayout.CENTER);
-        pExamen.add(pUsuarioConectado, BorderLayout.SOUTH);
+        pExamen.add(pSurExamen, BorderLayout.SOUTH);
 
         //---------pestaña pregunta-----------------
 
@@ -211,6 +201,26 @@ public class GUICliente extends JFrame
         
     }
 
+    public void setTiempoRestante(String duracion)
+    {
+        lTRestante.setText("         "+duracion);
+
+    }
+    public void setTiempoRestante(String duracion)
+    {
+        lTRestante.setText("         "+duracion);
+
+    }
+    
+
+
+    public void bloquearPestaña(int indice, boolean valor)
+    {
+        if(valor)
+            tpPestanas.setEnabledAt(indice, false);
+        else
+            tpPestanas.setEnabledAt(indice, true);
+    }
     public void clienteConectado(int numCliente)
     {
         int opcion = numCliente;
@@ -242,6 +252,7 @@ public class GUICliente extends JFrame
 
     public void crearBotones(int numPreguntas)
     {
+        
         ButtonGroup grupoBotonPreg = new ButtonGroup();
         ManejadoraEvento evento = new ManejadoraEvento();
         for (int i=0; i < numPreguntas ; i++ )
@@ -291,15 +302,43 @@ public class GUICliente extends JFrame
         areaExamen.setText(pregunta);
     }
 
-    public void setTextPestPreg(String pregunta)
+    public void setTextPestPreg(String pregunta, String respuesta)
     {
-        areaPregunta.setText(pregunta);
+        areaPregunta.setText(pregunta+"\n"+respuesta);
     }
-    /**
+   /**
      * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
-     * @param valor
+     * @param numPreg
      */
-    public void bloquearPregunta(boolean valor)
+
+     public void bloquearPregunta(String numPreg, boolean valor)
+     {
+        System.out.println("Entre a bloquearPregunta");
+        for(JToggleButton boton : numeroPregunta)
+        {
+            if(valor == true)
+            {
+                System.out.println("Entre al if de valor igual a true");
+                 if(boton.getText() == numPreg)
+                {
+                    boton.setEnabled(false);
+                    pBotonesPreg.updateUI();
+                    System.out.println("El boton "+boton.getText()+ " ha sido bloqueado");  
+                }
+            }
+            else
+            {
+                System.out.println("Entre al if de valor igual a false");
+                if(boton.getText() == numPreg)
+                {
+                    boton.setEnabled(true);
+                    System.out.println("la boton "+ boton.getText()+ " ha sido desbloqueado");
+                }
+            } 
+        }
+
+     }
+    /*public void bloquearPregunta(boolean valor)
     {
         for(JToggleButton boton : numeroPregunta)
         {
@@ -321,7 +360,7 @@ public class GUICliente extends JFrame
                 }
             } 
         }
-    }
+    }*/
 
     public void setEnabled(int indice, boolean bol)
     {
@@ -341,9 +380,17 @@ public class GUICliente extends JFrame
              {
                 if(e.getSource()== boton)
                 {
-                    ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
-                    //labelNumeroPregunta(boton.getText());
+                    try
+                    {
+                        ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
+                        //labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+
+                    }catch(NumberFormatException ex)
+                    {
+                        System.out.println("Error al convertir cadena a número: " + ex.getMessage());
+                    }
+                    
 
                 }
             }
@@ -352,7 +399,7 @@ public class GUICliente extends JFrame
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
                 //tpPestanas.setEnabledAt(0, false);
-                bloquearPregunta(true); 
+                ControladorCliente.enviarBloqueada(getNumPreg(), true);
 
             }
             if(e.getSource() == bCancelarPreg)
@@ -360,7 +407,8 @@ public class GUICliente extends JFrame
                 tpPestanas.setEnabledAt(0, true);  
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
-                bloquearPregunta(false);
+                ControladorCliente.enviarBloqueada(getNumPreg(), false);
+                
             }
             if(e.getSource() == bVerResultado)
             {

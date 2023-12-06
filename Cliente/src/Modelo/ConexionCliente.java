@@ -40,9 +40,10 @@ public class ConexionCliente
             try 
             {
                 mensaje = (String) entrada.readObject();
+                ControladorCliente.informacioEntrada(mensaje);
                 //mostrarMensaje("\n"+mensaje);
-                System.out.println(mensaje);
-                ControladorCliente.establecerPreguntas(mensaje);
+                System.out.println(mensaje + "no pasa nada");
+                //ControladorCliente.establecerPreguntas(mensaje);
                 //ControladorCliente.mostrarPregunta(2);
                 if(mensaje.contains("CLIENTE"))
                 {
@@ -54,7 +55,7 @@ public class ConexionCliente
                 System.out.println("error tipo de dato incorrecto");
             }
             
-        }while(!mensaje.equals("SERVIDOR>>> TERMINAR"));
+        }while(cliente.isConnected());
     }
     
     public void cerrarConexion()

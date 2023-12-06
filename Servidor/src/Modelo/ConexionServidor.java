@@ -61,8 +61,9 @@ public class ConexionServidor extends Thread{
 
     public void addCliente(Socket socket)
     {
-        this.canticadClientes++;
+        this.canticadClientes = (contadorActual())+1;
         System.out.println("\nCliente número "+this.canticadClientes+" conectado");
+        ControladorServidor.escucharClientes(1);
         cliente = new HiloCliente(socket, this.canticadClientes, multicast);
         arregloClientes.add(cliente);
         //cliente.enviarTexto("CLIENTE"+canticadClientes);
@@ -96,5 +97,23 @@ public class ConexionServidor extends Thread{
     public ArrayList<String> respuestaRes()
     {
         return cliente.getRespuestas();
+    }
+    
+    public int contadorActual()
+    {
+        int cant = this.canticadClientes;
+        for (int i = 0; i<this.arregloClientes.size();i++)
+        {
+            if(arregloClientes.get(i).getConeccion())
+            {
+                arregloClientes.get(i).setIdCliente(cant);
+            }
+            if(!arregloClientes.get(i).getConeccion())
+            {
+                cant = cant-1;
+                arregloClientes.remove(i);
+            }
+        }
+        return cant;
     }
 }

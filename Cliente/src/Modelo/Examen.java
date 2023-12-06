@@ -20,14 +20,13 @@ public class Examen
     /**
      * Constructor de la clase examen
      */
-    public Examen(String nombre, int horas, int minutos, int segundos)
+    public Examen(String nombre, int horas, int minutos)
     {
         this.preguntas = new ArrayList<Pregunta>();
         this.tiempo= new int[]{0,0,0};
         this.nombre = nombre;
         this.tiempo[0] = horas;
         this.tiempo[1] = minutos;
-        this.tiempo[2] = segundos;
         this.textoPreguntas="";
     }
 
@@ -43,6 +42,8 @@ public class Examen
         this.preguntas.add(new Pregunta(texto));
         this.textoPreguntas+=(texto+"\n");
     }
+
+    
 
     /**
      * Retorna el texto almacenado en la variable textoPreguntas
@@ -60,7 +61,7 @@ public class Examen
      */
     public String getDuracion()
     {
-        String duracion = ""+tiempo[0]+":"+tiempo[1]+":"+tiempo[2];
+        String duracion = ""+tiempo[0]+":"+tiempo[1];
         return duracion;
     }
 
@@ -127,8 +128,19 @@ public class Examen
      */
     public String getPreguntas(int numPreg)
     {
-        return this.preguntas.get(numPreg).getEnunciado() + this.preguntas.get(numPreg).getRespuesta();
+        return this.preguntas.get(numPreg).getEnunciado();
 
+    }
+
+    public String getOpciones(int numPreg)
+    {
+        String opciones = this.preguntas.get(numPreg).getOpcion(0) + "\n" + this.preguntas.get(numPreg).getOpcion(1) + "\n" + this.preguntas.get(numPreg).getOpcion(2) + "\n"+this.preguntas.get(numPreg).getOpcion(3);
+        return opciones;
+    }
+
+    public int getNumPreg()
+    {
+        return preguntas.size();
     }
 
     /**

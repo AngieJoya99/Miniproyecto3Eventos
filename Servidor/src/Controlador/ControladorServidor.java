@@ -28,6 +28,7 @@ public class ControladorServidor {
     static Multicast multicast;
     private static int tiempoHoras;
     private static int tiempoMin;
+    private static int cantClientes;
     
 
     /**
@@ -38,10 +39,8 @@ public class ControladorServidor {
         gui = new GUIServidor();
         examen = new ArrayList<ExamenServidor>();
         conexionServidor = new ConexionServidor(12345);
-        tiempoHoras = Integer.parseInt(gui.leerHoras());
-        tiempoMin = Integer.parseInt(gui.leerMinutos());
         multicast = new Multicast();
-
+        cantClientes =0;
     }
 
     public static Multicast getMulticast()
@@ -93,44 +92,6 @@ public class ControladorServidor {
             mensaje+=preguntas[0]+"\n";    
         }
         return mensaje;
-    }
-
-    public static void tiempoRestanteHoras() 
-    {
-        Timer cuentaAtras = new Timer();
-        TimerTask tarea = new TimerTask()
-        {
-            @Override
-            public void run()
-            { 
-                tiempoHoras = tiempoHoras -1;
-                gui.setHorasRestantes(Integer.toString(tiempoHoras));
-                if (tiempoHoras == 0)
-                {
-                    this.cancel();
-                }   
-            }
-        };
-        cuentaAtras.scheduleAtFixedRate(tarea, 1000*3600, 1000*3600);
-    }
-
-    public static void tiempoRestanteMinutos() 
-    {
-        Timer cuentaAtras = new Timer();
-        TimerTask tarea = new TimerTask()
-        {
-            @Override
-            public void run()
-            { 
-                tiempoMin = tiempoMin -1;
-                gui.setMinRestantes(Integer.toString(tiempoMin));
-                if (tiempoMin == 0)
-                {
-                    this.cancel();
-                }   
-            }
-        };
-        cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
     }
 
     public static void mostrarVisualizar()
@@ -190,11 +151,11 @@ public class ControladorServidor {
                 }
             }
             multicast.enviarTextoMulti(enviar);
-            System.out.println(enviar);
+            //System.out.println(enviar);
         }
     }
     
-    
+
     
     public void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
     {
@@ -202,6 +163,110 @@ public class ControladorServidor {
             examen.get(examenIndice).setCorrectas();
     }
 
+    public static void getHoras()
+    {
+        if(gui.getExamenIniciar() != null)
+        {
+            String seleccion = gui.getExamenIniciar(), nombreEx;
+            for(int i=0; i<examen.size();i++)
+            {
+                nombreEx = examen.get(i).getNombre();
+                if(nombreEx.trim().equals(seleccion.trim()))
+                {
+                    tiempoHoras = Integer.parseInt(examen.get(i).getHoras());
+                }
+            }
+        }
+        //return tiempoHoras;
+    }
+
+    public static void getMin()
+    {
+        if(gui.getExamenIniciar() != null)
+        {
+            String seleccion = gui.getExamenIniciar(), nombreEx;
+            for(int i=0; i<examen.size();i++)
+            {
+                nombreEx = examen.get(i).getNombre();
+                if(nombreEx.trim().equals(seleccion.trim()))
+                {
+                    tiempoMin = Integer.parseInt(examen.get(i).getMinutos());
+                }
+            }
+        }
+        //return tiempoMin;
+    }
+
+    public static void tiempoRestanteHoras() 
+    {
+        getHoras();
+        gui.setHorasRestantes(Integer.toString(tiempoHoras));
+        Timer cuentaAtras = new Timer();
+        TimerTask tarea = new TimerTask()
+        {
+            @Override
+            public void run()
+            { 
+                tiempoHoras = tiempoHoras -1;
+                gui.setHorasRestantes(Integer.toString(tiempoHoras));
+                if (tiempoHoras == 0)
+                {
+                    this.cancel();
+                }   
+            }
+        };
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000*3600, 1000*3600);
+    }
+
+    public static void tiempoRestanteMinutos() 
+    {
+        getMin();
+        getHoras();
+        gui.setHorasRestantes(Integer.toString(tiempoHoras));
+        gui.setMinRestantes(Integer.toString(tiempoMin));
+        Timer cuentaAtras = new Timer();
+        TimerTask tarea = new TimerTask()
+        {
+            @Override
+            public void run()
+            { 
+                tiempoMin = tiempoMin -1;
+                gui.setMinRestantes(Integer.toString(tiempoMin));
+                if (tiempoMin == 0)
+                {
+                     if(tiempoHoras>0)
+                    {
+                        gui.setHorasRestantes(Integer.toString(tiempoHoras-1));
+                        tiempoMin=59;
+                        gui.setMinRestantes(Integer.toString(59));
+                    }
+                    if(tiempoHoras==0)
+                    {
+                        gui.setHorasRestantes(Integer.toString(0));
+                        tiempoMin=59;
+                        gui.setMinRestantes(Integer.toString(59));
+                    }
+                    if(tiempoMin==0)
+                    {
+                        this.cancel();
+                    }
+                }   
+            }
+        };
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
+    }
+
+    public static void escucharClientes(int num)
+    {
+        cantClientes+=num;
+        gui.cambiarIconos(cantClientes);
+        
+    }
+
+    public static void enviarMulti(String texto)
+    {
+        multicast.enviarTextoMulti(texto);
+    }
     
        
 }
