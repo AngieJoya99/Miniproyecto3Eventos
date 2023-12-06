@@ -74,30 +74,10 @@ public class ConexionServidor extends Thread{
         cliente.obtenerFlujos();
         cliente.start();
     }
-
-    public void enviarExamenMulti (String mensaje)
-    {
-        multicast.enviarTextoMulti(mensaje);   
-    }
     
     public int getCantClientes()
     {
         return this.canticadClientes;
-    }
-
-    public ArrayList<String> preguntasRes()
-    {
-        return cliente.getPreguntas();
-    }
-
-    public ArrayList<String> clientesRes()
-    {
-        return cliente.getClientes();
-    }
-
-    public ArrayList<String> respuestaRes()
-    {
-        return cliente.getRespuestas();
     }
     
     public int contadorActual()

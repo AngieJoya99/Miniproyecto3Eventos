@@ -40,9 +40,6 @@ public class HiloCliente extends Thread
     {
         this.socket = socket;
         this.idCliente = idCliente;
-        this.preguntas = new ArrayList<>();
-        this.cliente = new ArrayList<>();
-        this.respuesta = new ArrayList<>();
         this.multicast = multicast;
         this.coneccion=true;
     }
@@ -119,21 +116,6 @@ public class HiloCliente extends Thread
         this.idCliente = id;
     }
 
-    public ArrayList<String> getPreguntas()
-    {
-        return this.preguntas;
-    }
-
-    public ArrayList<String> getClientes()
-    {
-        return this.cliente;
-    }
-
-    public ArrayList <String> getRespuestas()
-    {
-        return this.respuesta;
-    }
-
     public boolean getConeccion()
     {
         return this.coneccion;
@@ -152,13 +134,10 @@ public class HiloCliente extends Thread
              if(mensaje.contains("RESPONDIDA"))
              {
                 System.out.println(mensaje);
-                String[] texto = mensaje.trim().split("\n");
+                //String[] texto = mensaje.trim().split("\n");
                 System.out.println("Corta el texto");
-                preguntas.add(texto[1]);
                 System.out.println("Add a preguntas Hilo cliente");
-                cliente.add(texto[2]);
                 System.out.println("Add a clientes Hilo cliente");
-                respuesta.add(texto[3]);
                 System.out.println("Add a respuestas Hilo cliente");
                 ControladorServidor.procesarRespuesta(mensaje);
                 System.out.println("Se proceso la respuesta desde el hilo cliente");
