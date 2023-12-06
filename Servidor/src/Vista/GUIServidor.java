@@ -45,7 +45,7 @@ public class GUIServidor extends JFrame
     public GUIServidor()
     {
         setTitle("Servidor");
-        setSize(440, 500);
+        setSize(440, 530);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -93,7 +93,7 @@ public class GUIServidor extends JFrame
         bInformeLimpiar = new JButton("Limpiar");
         bIniciarIniciar = new JButton("Iniciar");
         bIniciarCargar = new JButton("Cargar");
-        //bIniciarIniciar.setEnabled(false);
+        bIniciarIniciar.setEnabled(false);
 
         taInforme = new JTextArea();
         taVisualizar = new JTextArea();
@@ -143,7 +143,28 @@ public class GUIServidor extends JFrame
         lCrearDuracion.setFont(fuente1);
         horas.setFont(fuente2);
         minutos.setFont(fuente2);
+        cbCrear.setFont(fuente2);
         bCrearCrear.setFont(fuente1);
+        cbVisualizar.setFont(fuente2);
+        bVerVer.setFont(fuente1);
+        bVerLimpiar.setFont(fuente1);
+        taVisualizar.setFont(fuente2);
+        cbInforme.setFont(fuente2);
+        bInformeVer.setFont(fuente1);
+        bInformeLimpiar.setFont(fuente1);
+        taInforme.setFont(fuente2);
+
+        cbIniciar.setFont(fuente2);
+        bIniciarCargar.setFont(fuente1);
+        lIniciarCantidad.setFont(fuente1);
+        lIniciarTiempo.setFont(fuente1);
+        bIniciarIniciar.setFont(fuente1);
+        lIniciarTiempoRestante.setFont(fuente1);
+        lHorasRestantes.setFont(fuente2);
+        lMinutosRestantes.setFont(fuente2);
+        lDosPuntosR.setFont(fuente1);
+        lIniciarRespondidas.setFont(fuente1);
+        
 
         horas.setPreferredSize(new Dimension(40,30));
         minutos.setPreferredSize(new Dimension(40,30));
@@ -180,8 +201,11 @@ public class GUIServidor extends JFrame
         bVerLimpiar.setForeground(Color.WHITE);
         bInformeVer.setBackground(new Color(171,91,121));
         bInformeVer.setForeground(Color.WHITE);
-        bInformeLimpiar.setBackground(new Color(171,91,121));
-        bInformeLimpiar.setForeground(Color.WHITE);
+        bIniciarCargar.setBackground(new Color(171,91,121));
+        bIniciarCargar.setForeground(Color.WHITE);
+        bIniciarIniciar.setBackground(new Color(171,91,121));
+        bIniciarIniciar.setForeground(Color.WHITE);
+
 
         
         // Posicionar elementos del panel Crear
@@ -367,6 +391,7 @@ public class GUIServidor extends JFrame
             lIniciarCliente1.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
             lIniciarCliente2.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
             lIniciarCliente3.setIcon(new ImageIcon(getClass().getResource("../Imagenes/Verde.png")));
+            bIniciarIniciar.setEnabled(true);
         }
     }
 
@@ -619,6 +644,11 @@ public class GUIServidor extends JFrame
     public void setIniciarTiempo(String texto)
     {
         lIniciarTiempo.setText(texto);
+    }
+
+    public void enableIniciar(Boolean bool)
+    {
+        bIniciarIniciar.setEnabled(bool);
     }
 
     

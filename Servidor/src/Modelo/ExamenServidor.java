@@ -15,7 +15,7 @@ public class ExamenServidor
     private ArrayList<PreguntaServidor> preguntas;
     private String nombre, informe, stringPreguntas;
     private int[] tiempo; 
-    private int correctas, incorrectas;  
+    private int correctas, incorrectas, respondidas;  
 
     /**
      * Constructor de la clase ExamenServidpr
@@ -134,6 +134,14 @@ public class ExamenServidor
     public String getResCorrecta(int numPreg)
     {
         return preguntas.get(numPreg).getRespuestaCorrecta();
-    }    
+    } 
+    public void setPregRespondidas()
+    {
+        respondidas++;
+    }   
+    public int getPregRespondida()
+    {
+        return respondidas;
+    }
 }
 

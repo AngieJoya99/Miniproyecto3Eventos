@@ -66,8 +66,6 @@ public class ConexionServidor extends Thread{
         ControladorServidor.escucharClientes(1);
         cliente = new HiloCliente(socket, this.canticadClientes, multicast);
         arregloClientes.add(cliente);
-        //cliente.enviarTexto("CLIENTE"+canticadClientes);
-        //cliente.enviarTexto("CLIENTE");
 
         
         cliente.obtenerFlujos();

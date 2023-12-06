@@ -68,6 +68,8 @@ public class ControladorCliente
         if (entradaCadena[0].equals("Desbloquear"))
         {
             System.out.println("Entre al if de desbloquear");
+            System.out.println(entradaCadena[0]);
+            System.out.println(entradaCadena[1]);
             String numPregunta = entradaCadena[1];
             gui.bloquearPregunta(numPregunta, false);
         }
@@ -115,6 +117,7 @@ public class ControladorCliente
             establecerBotonesPreg(examen.getNumPreg());
             gui.bloquearPestaña(0,false);
             establecerTiempo();
+            
     }
 
     /**
@@ -140,25 +143,40 @@ public class ControladorCliente
         gui.setTextPestPreg(examen.getPreguntas(numPregunta-1), examen.getOpciones(numPregunta-1));
     }
 
-    //manda info al servidor
+    /**
+     * Manda la respuesta al servidor
+     * @param respuesta
+     */
     public static void responderPregunta(String respuesta)
     {
-        String mensaje = "RESPONDIDA||"+gui.getNumPreg()+"||"+conexionCliente.getNombreCliente()+"||"+respuesta;
+        String mensaje = "RESPONDIDA\n"+gui.getNumPreg()+"\n"+Thread.currentThread().getName()+"\n"+respuesta+"\n"+examen.getNombre();
+        System.out.println("Antes de enviar datos");
         conexionCliente.enviarDatos(mensaje);
+        System.out.println("Oprime responder pregunta");
     }
 
+    /**
+     * Funcion que permite estableces los botones, depentiendo
+     * de la cantidad de preguntas
+     * @param num Cantidad botones
+     */
     public static void establecerBotonesPreg(int num)
     {
         gui.establecerBotones(num);
     }
 
+    /**
+     * Establece el tiempo restante del examen
+     */
     public static void establecerTiempo()
     {
         
         gui.setTiempoRestante(examen.getDuracion());
 
     }
-    public static void establecer
+    
+    //public static void enviarRespuesta()
+
     /*
     //cambia el estado de la pregunta a contestada
     public static void preguntaRespondida(int numPreg)

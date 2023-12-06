@@ -43,6 +43,10 @@ public class ControladorServidor {
         cantClientes =0;
     }
 
+    /**
+     * Funcion que retorna el multicast
+     * @return multicast
+     */
     public static Multicast getMulticast()
     {
         return multicast;
@@ -78,7 +82,12 @@ public class ControladorServidor {
         examen.add(new ExamenServidor(nombreExamen ,horas ,minutos , preguntasArchivo));
     }
 
-    
+    /**
+     * Recibe un texto como parametro y separa las prenguntas 
+     * ingresandolas a datos
+     * @param texto
+     * @return
+     */
     public static String separarPreguntas(String texto)
     {
         String mensaje="";
@@ -94,18 +103,27 @@ public class ControladorServidor {
         return mensaje;
     }
 
+    /**
+     * Permite visualizar en la gui el examen seleccionao
+     */
     public static void mostrarVisualizar()
     {
         String texto = gui.cualVisualizar();
         gui.escribirVisualizar(texto);
     }
 
+    /**
+     * Permite mostrar el informe que se selecciono en la gui
+     */
     public static void mostrarInforme()
     {
         String texto = gui.cualInforme();
         gui.escribirInforme(texto);
     }
 
+    /**
+     * Permite limpiar el campo visualizar
+     */
     public static void limpiarVisualizar()
     {
         gui.escribirVisualizar("");   
@@ -152,17 +170,45 @@ public class ControladorServidor {
             }
             multicast.enviarTextoMulti(enviar);
             //System.out.println(enviar);
+            gui.enableIniciar(false);
         }
     }
     
+   public void procesarRespuesta(String respuesta)
+    {
+        String[] entradaCadena = respuesta.trim().split("\n");
+         try
+        {
+            for(int i=0; i<examen.size(); i++)
+            {
+                if(examen.get(i).getNombre().equals(entradaCadena[3]))
+                verificarPregunta(entradaCadena[3], Integer.parseInt(entradaCadena[1]), Integer.parseInt(entradaCadena[4]));            
+            }
+
+        }catch(NumberFormatException e)
+        {
+            System.out.println("Error al convertir cadena a número: " + e.getMessage());
+        }
+        
+    }
 
     
     public void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
     {
+         examen.get(examenIndice).setPregRespondidas();
         if(examen.get(examenIndice).getResCorrecta(numPregunta) == respuesta)
-            examen.get(examenIndice).setCorrectas();
+            examen.get(examenIndice).setCorrectas();  
+        else
+        {
+            examen.get(examenIndice).setIncorrectas();
+        }
+            
     }
 
+    public void verificarExamenCompleto(int examenIndice)
+    {
+       // if(examen.get(enviarExamen))
+    }
     public static void getHoras()
     {
         if(gui.getExamenIniciar() != null)

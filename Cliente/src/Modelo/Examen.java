@@ -15,7 +15,7 @@ public class Examen
     private ArrayList<Pregunta> preguntas;
     private String nombre, informe, textoPreguntas;
     private int[] tiempo; 
-    private int correctas, incorrectas;  
+    private int correctas, incorrectas, respondidas=1;  
 
     /**
      * Constructor de la clase examen
@@ -141,6 +141,15 @@ public class Examen
     public int getNumPreg()
     {
         return preguntas.size();
+    }
+
+    public void setPregRespondidas()
+    {
+        respondidas++;
+    }
+    public int getPregRespondida()
+    {
+        return respondidas;
     }
 
     /**

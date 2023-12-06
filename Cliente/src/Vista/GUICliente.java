@@ -74,7 +74,7 @@ public class GUICliente extends JFrame
         //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
-        pInformacion = new JPanel(new GridLayout(2,2));
+        pInformacion = new JPanel(new GridLayout(2,0));
         pBotonesPreg = new JPanel(new GridLayout(11,0));
 
         pNorteExamen = new JPanel();
@@ -82,7 +82,7 @@ public class GUICliente extends JFrame
         
         
 
-        areaExamen = new JTextArea(10, 28);
+        areaExamen = new JTextArea("Esperando examen...", 10, 28);
         areaExamen.setEditable(false);
         jsExamen = new JScrollPane(areaExamen);
         jsExamen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE, 5),""));
@@ -92,10 +92,10 @@ public class GUICliente extends JFrame
         lExamen = new JLabel();
         
         lTempoRestante = new JLabel("\t\t\t\tTiempo Restante   ");
-        lPregRespondidas = new JLabel("\t\t\t\tPreguntas Respondidas  ");
-        lPregRes = new JLabel("\t \t--");
-        lTRestante = new JLabel("\t \t-- : --");
-        lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
+        //lPregRespondidas = new JLabel("\t\t\t\t");
+        //lPregRes = new JLabel("\t \t");
+        lTRestante = new JLabel("\t \t");
+        //lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
         lTRestante.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
@@ -105,8 +105,9 @@ public class GUICliente extends JFrame
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.CENTER);
 
-        pInformacion.add(lTempoRestante);pInformacion.add(lPregRespondidas);
-        pInformacion.add(lTRestante);pInformacion.add(lPregRes);
+        pInformacion.add(lTempoRestante);
+        pInformacion.add(lTRestante);
+        //pInformacion.add(lTRestante);pInformacion.add(lPregRes);
         pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
         pSurExamen.add(bVerResultado, BorderLayout.NORTH);
         pSurExamen.add(pInformacion, BorderLayout.CENTER);
@@ -190,6 +191,37 @@ public class GUICliente extends JFrame
         pResultado.add(jsResultado);
         pResultado.add(pSouthResultado);
 
+        //Dar formato a elementos
+        tpPestanas.setBackground(new Color(221,208,220));
+        pExamen.setBackground(new Color(221,208,220));
+        pResultado.setBackground(new Color(221,208,220));
+        pPregunta.setBackground(new Color(221,208,220));
+        pUsuarioConectado.setBackground(new Color(221,208,220));
+        pTextArea.setBackground(new Color(221,208,220));
+        pInformacion.setBackground(new Color(221,208,220));
+        pBotonesPreg.setBackground(new Color(221,208,220));
+        pNorteExamen.setBackground(new Color(221,208,220));
+        pSurExamen.setBackground(new Color(221,208,220));
+        pBotones.setBackground(new Color(221,208,220));
+        pOpc1.setBackground(new Color(221,208,220));
+        pOpc2.setBackground(new Color(221,208,220));
+        pOpcMultiple.setBackground(new Color(221,208,220));
+        /*
+        pBotonesPreg.setBackground(new Color(221,208,220));
+        pEastResultado.setBackground(new Color(221,208,220));
+        pInfoResultado.setBackground(new Color(221,208,220));
+        
+        pInformacion.setBackground(new Color(221,208,220));
+        
+        
+        
+        
+        
+        
+        pSouthResultado.setBackground(new Color(221,208,220));
+        */
+        
+
         // -- Eventos -- 
         ManejadoraEvento evento = new ManejadoraEvento();
 
@@ -197,6 +229,11 @@ public class GUICliente extends JFrame
         bResponder.addActionListener(evento);
         bCancelarPreg.addActionListener(evento);
         bVerResultado.addActionListener(evento);
+        bResponderPreg.addActionListener(evento);
+        rbOpcA.addItemListener(evento);
+        rbOpcB.addItemListener(evento);
+        rbOpcC.addItemListener(evento);
+        rbOpcD.addItemListener(evento);
         this.addKeyListener(evento);
         
     }
@@ -206,13 +243,6 @@ public class GUICliente extends JFrame
         lTRestante.setText("         "+duracion);
 
     }
-    public void setTiempoRestante(String duracion)
-    {
-        lTRestante.setText("         "+duracion);
-
-    }
-    
-
 
     public void bloquearPestaña(int indice, boolean valor)
     {
@@ -319,7 +349,9 @@ public class GUICliente extends JFrame
             if(valor == true)
             {
                 System.out.println("Entre al if de valor igual a true");
-                 if(boton.getText() == numPreg)
+                System.out.println(boton.getText());
+                System.out.println(numPreg);
+                 if(boton.getText().equals(numPreg))
                 {
                     boton.setEnabled(false);
                     pBotonesPreg.updateUI();
@@ -329,9 +361,12 @@ public class GUICliente extends JFrame
             else
             {
                 System.out.println("Entre al if de valor igual a false");
-                if(boton.getText() == numPreg)
+                System.out.println(boton.getText());
+                System.out.println(numPreg);
+                if(boton.getText().equals(numPreg))
                 {
                     boton.setEnabled(true);
+                    pBotonesPreg.updateUI();
                     System.out.println("la boton "+ boton.getText()+ " ha sido desbloqueado");
                 }
             } 
@@ -371,7 +406,7 @@ public class GUICliente extends JFrame
 
     class ManejadoraEvento implements ActionListener,KeyListener, ItemListener
     {
-        String answerSelected;
+        String answerSelected = "";
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -385,7 +420,6 @@ public class GUICliente extends JFrame
                         ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
                         //labelNumeroPregunta(boton.getText());
                     System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
-<<<<<<< HEAD
 
                     }catch(NumberFormatException ex)
                     {
@@ -393,21 +427,16 @@ public class GUICliente extends JFrame
                     }
                     
 
-=======
->>>>>>> a2cd697c72d0598ca0cbf7e1ca0da66641c42624
                 }
             }
             if(e.getSource() == bResponder)
             {
+                
                 tpPestanas.setEnabledAt(1, true);
                 tpPestanas.setSelectedIndex(1);
-                //tpPestanas.setEnabledAt(0, false);
-<<<<<<< HEAD
+                tpPestanas.setEnabledAt(0, false);
                 ControladorCliente.enviarBloqueada(getNumPreg(), true);
 
-=======
-                bloquearPregunta(true); 
->>>>>>> a2cd697c72d0598ca0cbf7e1ca0da66641c42624
             }
             if(e.getSource() == bCancelarPreg)
             {
@@ -429,8 +458,14 @@ public class GUICliente extends JFrame
             {
                 /*ControladorCliente.preguntaRespondida(getNumPreg());
                 if(Controlador.examenCompleto() == true)*/
+                System.out.println("RESPONDE PREGUNTA");
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                System.out.println("Pregunta selecionada: "+answerSelected);
 
                 ControladorCliente.responderPregunta(answerSelected);
+
             }
         }
 
@@ -476,6 +511,3 @@ public class GUICliente extends JFrame
     
     }
 }
-
-
-

@@ -152,10 +152,14 @@ public class HiloCliente extends Thread
              if(mensaje.contains("RESPONDIDA"))
              {
                 System.out.println(mensaje);
-                String[] texto = mensaje.trim().split("||");
+                String[] texto = mensaje.trim().split("\n");
+                System.out.println("Corta el texto");
                 preguntas.add(texto[1]);
+                System.out.println("Add a preguntas Hilo cliente");
                 cliente.add(texto[2]);
+                System.out.println("Add a clientes Hilo cliente");
                 respuesta.add(texto[3]);
+                System.out.println("Add a respuestas Hilo cliente");
                 //ControladorServidor.verificarPregunta(preguntas.get(1))
 
              }
@@ -166,7 +170,7 @@ public class HiloCliente extends Thread
                 String[] texto = mensaje.trim().split("\n");
                 System.out.println(texto[1]);
                 //seEnvia = multicast.enviarTextoMulti("Bloquear\n"+texto[1]);
-                ControladorServidor.enviarMulti("Bloquear\n"+texto[1]);
+                ControladorServidor.enviarMulti("Bloquear\n"+texto[1]+"\n");
                 System.out.println("Recibi bloqueo");
              }
              
@@ -175,6 +179,7 @@ public class HiloCliente extends Thread
                 System.out.println("Desbloquear pregunta");
                 String[] texto = mensaje.trim().split("\n");
                 //multicast.enviarTextoMulti("Desbloquear\n"+texto[1]);
+                System.out.println(texto[1]);
                 ControladorServidor.enviarMulti("Desbloquear\n"+texto[1]);
                 System.out.println("Recibi desbloqueo");
              }
