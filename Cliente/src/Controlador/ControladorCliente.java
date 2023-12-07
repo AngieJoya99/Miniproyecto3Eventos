@@ -243,6 +243,10 @@ public class ControladorCliente
                 if (segundosR == 0)
                 {
                     this.cancel();
+                    gui.bloquearPestaña(0,false);
+                    gui.bloquearPestaña(1,false);
+                    gui.bloquearPestaña(2,true);
+
                 }   
             }
         };

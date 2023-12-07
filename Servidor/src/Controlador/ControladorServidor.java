@@ -107,7 +107,7 @@ public class ControladorServidor {
     }
 
     /**
-     * Permite visualizar en la gui el examen seleccionao
+     * Permite visualizar en la gui el examen seleccionado
      */
     public static void mostrarVisualizar()
     {
@@ -374,53 +374,7 @@ at
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
     }
-
-    /**
-     * Determina los minutos restantes del examen
-     */
-    /*public static void tiempoRestanteMinutos() 
-    {
-        getMin();
-        getHoras();
-        gui.setHorasRestantes(Integer.toString(tiempoHoras));
-        gui.setMinRestantes(Integer.toString(tiempoMin));
-        Timer cuentaAtras = new Timer();
-        TimerTask tarea = new TimerTask()
-        {
-            @Override
-            public void run()
-            { 
-                tiempoMin = tiempoMin -1;
-                gui.setMinRestantes(Integer.toString(tiempoMin));
-                if (tiempoMin == 0)
-                {
-                     if(tiempoHoras>0)
-                    {
-                        gui.setHorasRestantes(Integer.toString(tiempoHoras-1));
-                        tiempoMin=59;
-                        gui.setMinRestantes(Integer.toString(59));
-                    }
-                    if(tiempoHoras==0)
-                    {
-                        gui.setHorasRestantes(Integer.toString(0));
-                        tiempoMin=59;
-                        gui.setMinRestantes(Integer.toString(59));
-                    }
-                    if(tiempoMin==0)
-                    {
-                        this.cancel();
-                    }
-                }   
-            }
-        };
-        cuentaAtras.scheduleAtFixedRate(tarea, 1000*60, 1000*60);
-    }*/
-
-    /**
-     * Permite escuchar los clientes y le envia a la gui
-     * el cliente conectado
-     * @param num
-     */
+    
     public static void escucharClientes(int num)
     {
         cantClientes+=num;

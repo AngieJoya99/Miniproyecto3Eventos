@@ -327,11 +327,7 @@ public class GUIServidor extends JFrame
                 ControladorServidor.tiempoRestanteHoras();
                 //ControladorServidor.tiempoRestanteHoras();
                 //ControladorServidor.tiempoRestanteMinutos();
-            }
-
-
-
-            
+            }            
         }
         
     }
