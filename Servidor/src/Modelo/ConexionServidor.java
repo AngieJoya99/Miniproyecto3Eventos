@@ -24,7 +24,6 @@ public class ConexionServidor extends Thread
     int canticadClientes;
     Multicast multicast;
     boolean sendExam;
-    //Archivo archivo;
 
     /**
      * Contructor del servidor
@@ -80,8 +79,6 @@ public class ConexionServidor extends Thread
         ControladorServidor.escucharClientes(1);
         cliente = new HiloCliente(socket, this.canticadClientes, multicast);
         arregloClientes.add(cliente);
-
-        
         cliente.obtenerFlujos();
         cliente.start();
     }

@@ -64,7 +64,6 @@ public class Archivo
             {
                 preguntas+=buscador.next().trim()+"\n";
                 cantidadPreguntas++;
-                //buscador.nextLine();
             }
             buscador.close();
             System.out.println("Se establecieron las preguntas correctamente");                 

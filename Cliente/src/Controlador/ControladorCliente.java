@@ -118,11 +118,10 @@ public class ControladorCliente
     public static  void establecerPreguntas(String examenString)
     {  
             
-            System.out.println("Aqui comienza a divir string");
+            System.out.println("Se establecen las preguntas");
             String[] cadena = examenString.trim().split("\n");
             int horas = Integer.parseInt(cadena[2]);
             int minutos = Integer.parseInt(cadena[3]);
-
             if (cadena.length >= 4) 
             {
                 try{
@@ -131,10 +130,7 @@ public class ControladorCliente
                     tiempoSec = examen.getMin();
                     for(int i=4; i<cadena.length; i++)
                     {
-                        examen.addPregunta(cadena[i]);
-                        //System.out.println("Se adicionó correctamente la pregunta " + Integer.toString(i-4));
-                        //System.out.println("Arreglo: "+ examen.getNumPreg());
-                        
+                        examen.addPregunta(cadena[i]);  
                     }
                 }catch(NumberFormatException e)
                 {
@@ -144,12 +140,8 @@ public class ControladorCliente
             {
                 System.out.println("El examen no cuenta con las lineas necesarias para adicionar las preguntas");
             }
-
             establecerBotonesPreg(examen.getNumPreg());
-            tiempoRestanteHoras();
-
-            //tiempoRestanteMinutos();
-            
+            tiempoRestanteHoras();     
     }
 
     /**
@@ -188,7 +180,6 @@ public class ControladorCliente
     public static void responderPregunta(String respuesta)
     {
         String mensaje = "RESPONDIDA\n"+gui.getNumPreg()+"\n"+Thread.currentThread().getName()+"\n"+respuesta+"\n"+examen.getNombre();
-        System.out.println("Antes de enviar datos");
         conexionCliente.enviarDatos(mensaje);
         System.out.println("Oprime responder pregunta");
         gui.setTextAreaPreg("Se ha contestado la pregunta!");
@@ -207,19 +198,6 @@ public class ControladorCliente
     }
 
     /**
-     * Establece el tiempo restante del examen
-     */
-    /** 
-    public static void establecerTiempo()
-    {
-        
-        gui.setTiempoRestante(examen.getDuracion());
-
-    }
-
-    */
-
-    /**
      * Permite obtener los segundos
      */
     public static void getTiempo()
@@ -233,8 +211,6 @@ public class ControladorCliente
      */
     public static void tiempoRestanteHoras() 
     {
-        //getMin();
-        //getSec();
         getTiempo();
         gui.setHorasRestantes(Integer.toString(tiempoMin));
         gui.setMinRestantes(Integer.toString(tiempoSec));

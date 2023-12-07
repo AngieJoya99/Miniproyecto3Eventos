@@ -37,7 +37,6 @@ public class PreguntaServidor
         String[] datos; 
         datos = texto.trim().split("-");
         this.enunciado = datos[0];
-        //System.out.println("El enunciado es: "+enunciado);
     }
 
     /**
@@ -72,7 +71,6 @@ public class PreguntaServidor
         for (int i=1; i<=4; i++)
         {
             this.opciones[i-1] = datos[i];
-            //System.out.println("La opción "+(i-1)+" es: "+this.opciones[i-1]);
         }        
     }
 

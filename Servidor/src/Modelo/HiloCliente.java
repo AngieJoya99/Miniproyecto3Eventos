@@ -58,7 +58,6 @@ public class HiloCliente extends Thread
         catch(IOException e)
         {
            this. coneccion=false;
-            //ControladorServidor.escucharClientes(-1);
         }
         finally
         {
@@ -134,17 +133,22 @@ public class HiloCliente extends Thread
         this.idCliente = id;
     }
 
-    
+    /**
+     * Retorna la conexion
+     * @return
+     */
     public boolean getConeccion()
     {
         return this.coneccion;
     }
 
+    /**
+     * Metodo que permite procesar la conexion
+     * @throws IOException
+     */
     public void procesarConexion() throws IOException
     {
         String mensaje = "Conexion exitosa";
-        //boolean seEnvia = false;
-        //enviarTexto(mensaje);
         do
         {
             try
@@ -153,15 +157,12 @@ public class HiloCliente extends Thread
              if(mensaje.contains("RESPONDIDA"))
              {
                 System.out.println(mensaje);
-                //String[] texto = mensaje.trim().split("\n");
                 System.out.println("Corta el texto");
                 System.out.println("Add a preguntas Hilo cliente");
                 System.out.println("Add a clientes Hilo cliente");
                 System.out.println("Add a respuestas Hilo cliente");
                 ControladorServidor.procesarRespuesta(mensaje);
                 System.out.println("Se proceso la respuesta desde el hilo cliente");
-                //ControladorServidor.verificarPregunta(preguntas.get(1))
-
              }
 
              if(mensaje.contains("Bloquear"))
@@ -169,7 +170,6 @@ public class HiloCliente extends Thread
                 System.out.println("Bloquear pregunta");
                 String[] texto = mensaje.trim().split("\n");
                 System.out.println(texto[1]);
-                //seEnvia = multicast.enviarTextoMulti("Bloquear\n"+texto[1]);
                 ControladorServidor.enviarMulti("Bloquear\n"+texto[1]+"\n");
                 System.out.println("Recibi bloqueo");
              }
@@ -178,7 +178,6 @@ public class HiloCliente extends Thread
              {
                 System.out.println("Desbloquear pregunta");
                 String[] texto = mensaje.trim().split("\n");
-                //multicast.enviarTextoMulti("Desbloquear\n"+texto[1]);
                 System.out.println(texto[1]);
                 ControladorServidor.enviarMulti("Desbloquear\n"+texto[1]);
                 System.out.println("Recibi desbloqueo");
@@ -192,7 +191,6 @@ public class HiloCliente extends Thread
             {
                 System.out.println("El cliente "+Integer.toString(getIdCliente())+" se fue");
                 this.coneccion = false;
-                //ControladorServidor.escucharClientes(-1);
                 break;
             }
             

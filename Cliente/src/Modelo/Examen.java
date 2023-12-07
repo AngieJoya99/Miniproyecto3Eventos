@@ -58,9 +58,6 @@ public class Examen
         this.informe = informeC;
     }
 
-
-    
-
     /**
      * Retorna el texto almacenado en la variable textoPreguntas
      * @return Valor almacenado en la variable
@@ -167,8 +164,4 @@ public class Examen
     {
         return respondidas;
     }
-
-    
-
-
 }

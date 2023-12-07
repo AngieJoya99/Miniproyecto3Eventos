@@ -31,7 +31,6 @@ public class Multicast
         try {
             socketMulticast = new MulticastSocket();
             dato = new byte[0];
-            //No es localhost
             grupo = InetAddress.getByName("231.0.0.1");
             datagrama =  new DatagramPacket(dato, 0, grupo, 10000);
         } catch (UnknownHostException e) {

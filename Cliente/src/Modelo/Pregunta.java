@@ -98,19 +98,4 @@ public class Pregunta
     {
         return this.opciones[i];
     }
-
-    /**
-     * 
-     * @return true si la pregunta ya ha sido contestada, en caso contrario false
-     */
-    /*public boolean getEstadoPregunta()
-    {
-        return this.estadoPregunta;
-    }
-
-    public void setEstadoPregunta()
-    {
-        this.estadoPregunta = true;
-    }*/
-
 }

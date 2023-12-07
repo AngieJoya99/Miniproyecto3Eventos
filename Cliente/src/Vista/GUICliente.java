@@ -305,7 +305,7 @@ public class GUICliente extends JFrame
         for (int i=0; i < numPreguntas ; i++ )
         {
             JToggleButton botonPreg = new JToggleButton( Integer.toString(i+1));
-            botonPreg.setBackground(new Color(221,208,220));
+            botonPreg.setBackground(new Color(157,113,129));
             botonPreg.setForeground(Color.WHITE);
             botonPreg.setFont(fuenteBotones);
             

@@ -56,18 +56,12 @@ public class ConexionCliente
     public void procesarConexion() throws IOException
     {
         String mensaje = "";
-        //campoIntroducir.setEnabled(true);
         do
         {
             try 
             {
                 mensaje = (String) entrada.readObject();
-                System.out.println("Desde clase Controlador Cliente se recibe el siguiente mensaje del servidor: "+mensaje);
                 ControladorCliente.informacioEntrada(mensaje);
-                //mostrarMensaje("\n"+mensaje);
-                System.out.println(mensaje + "no pasa nada");
-                //ControladorCliente.establecerPreguntas(mensaje);
-                //ControladorCliente.mostrarPregunta(2);
                 if(mensaje.contains("CLIENTE"))
                 {
                     System.out.println("mensaje recibido" + mensaje );
@@ -91,7 +85,6 @@ public class ConexionCliente
             salida.close();
             entrada.close();
             cliente.close();
-            //campoIntroducir.setEnabled(false);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -105,13 +98,11 @@ public class ConexionCliente
     {
         try 
         {
-            
             salida.writeObject(mensaje);
             salida.flush();
         } catch (IOException ex) {
             System.out.println("Error al mandar daatos al servidor");
-        }
-        
+        }  
     }
 
     /**
