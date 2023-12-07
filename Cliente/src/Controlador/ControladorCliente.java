@@ -61,6 +61,7 @@ public class ControladorCliente
         {
             System.out.println("entro a if examen");
             establecerPreguntas(infoMulti);
+            gui.bPestExamenSetEnabled(true);
         }
         if (entradaCadena[0].equals("Informe"))
         {
@@ -93,9 +94,8 @@ public class ControladorCliente
      */
     public static void crearInforme(String informe)
     {
-        String[] entradaCadena = informe.trim().split("\n");
-        informe = entradaCadena[0] +"\n"+ entradaCadena[1] +"\n"+ entradaCadena[2] +"\n"+  entradaCadena[3] +"\n"+  entradaCadena[4];
-        examen.setInforme(informe);
+       String[] entradaCadena = informe.trim().split("//");
+        examen.setInforme(entradaCadena[0]);
     }
 
     /**
@@ -150,7 +150,7 @@ public class ControladorCliente
 
             establecerBotonesPreg(examen.getNumPreg());
             tiempoRestanteHoras();
-            //gui.bloquearPestaña(0,true);
+
             //tiempoRestanteMinutos();
             
     }
@@ -193,6 +193,7 @@ public class ControladorCliente
         System.out.println("Oprime responder pregunta");
         gui.setTextAreaPreg("Se ha contestado la pregunta!");
         gui.bResponderSetEnabled(false);
+        
     }
 
     /**
@@ -246,6 +247,8 @@ public class ControladorCliente
                     gui.bloquearPestaña(0,false);
                     gui.bloquearPestaña(1,false);
                     gui.bloquearPestaña(2,true);
+                    gui.focalizarPestaña(2);
+                    obtenerInforme();
 
                 }   
             }

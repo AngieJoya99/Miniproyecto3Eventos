@@ -74,10 +74,9 @@ public class GUICliente extends JFrame
         tpPestanas.addTab("Pregunta",pPregunta);
         tpPestanas.addTab("Resultado",pResultado);
         add(tpPestanas);
+
         tpPestanas.setEnabledAt(1, false);
         tpPestanas.setEnabledAt(2, false);
-        tpPestanas.setEnabledAt(0, false);
-        //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
         pInformacion = new JPanel();
@@ -109,9 +108,9 @@ public class GUICliente extends JFrame
         lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
-        //bResponder.setEnabled(false);
         bResponder = new JButton("Responder");
-
+        bResponder.setEnabled(false);
+        bVerResultado.setEnabled(false);
         //panel 
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.CENTER);
@@ -136,9 +135,9 @@ public class GUICliente extends JFrame
         //Crear componentes
         
         areaPregunta = new JTextArea(15, 35);
-        areaPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta = new JScrollPane(areaPregunta);
         jsEnunciadoPregunta.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jsEnunciadoPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         areaPregunta.setEditable(false);
         bCancelarPreg = new JButton("Cancelar");
         bResponderPreg = new JButton("Responder");
@@ -176,10 +175,10 @@ public class GUICliente extends JFrame
        //-------- Pestaña Resultado ---------------
 
         areaResultado = new JTextArea(15, 35);
-        areaResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         areaResultado.setEditable(false);
         jsResultado = new JScrollPane(areaResultado);
         jsResultado.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jsResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         //lCalificacion = new JLabel("Calificacion");
         //lPregCorrecta = new JLabel("Preguntas Correctas");
         //lCalificacionNum = new JLabel("10");
@@ -252,6 +251,18 @@ public class GUICliente extends JFrame
         rbOpcD.addItemListener(evento);
         this.addKeyListener(evento);
 
+        bResponder.setFocusable(false);
+        bCancelarPreg.setFocusable(false);
+        bVerResultado.setFocusable(false);
+        bResponderPreg.setFocusable(false);
+        rbOpcA.setFocusable(false);
+        rbOpcB.setFocusable(false);
+        rbOpcC.setFocusable(false);
+        rbOpcD.setFocusable(false);
+
+        setFocusable(true);
+        requestFocus();
+
         
     }
 
@@ -285,10 +296,12 @@ public class GUICliente extends JFrame
      */
     public void bloquearPestaña(int indice, boolean valor)
     {
-        if(valor)
-            tpPestanas.setEnabledAt(indice, false);
-        else
-            tpPestanas.setEnabledAt(indice, true);
+        tpPestanas.setEnabledAt(indice, valor);
+    }
+
+    public void focalizarPestaña(int indice)
+    {
+        tpPestanas.setSelectedIndex(indice);
     }
     
 
@@ -313,6 +326,7 @@ public class GUICliente extends JFrame
             System.out.println("el boton "+numeroPregunta.get(i).getText()+" ha sido creado");
             numeroPregunta.get(i).addActionListener( evento);
             pBotonesPreg.updateUI();
+            botonPreg.setFocusable(false);
         }
     }
 
@@ -355,6 +369,10 @@ public class GUICliente extends JFrame
     public void setTextPestPreg(String pregunta, String respuesta)
     {
         areaPregunta.setText(pregunta+"\n"+respuesta);
+    }
+    public void bResponderSetEnabled(boolean valor)
+    {
+        bResponder.setEnabled(valor);
     }
 
    /**
@@ -399,16 +417,27 @@ public class GUICliente extends JFrame
 
      }
 
-    public void setEnabled(int indice, boolean bol)
+    public void bPestExamenSetEnabled(boolean valor)
     {
-        tpPestanas.setEnabledAt(indice, bol);
-
+       // bResponder.setEnabled(valor);
+        bVerResultado.setEnabled(valor);
     }
+     public boolean desbloquearBInforme()
+     {
+        int pregRes=0; 
+        for(JToggleButton boton : numeroPregunta)
+        {
+            if(!boton.isEnabled())
+                pregRes+=1;
+        }
 
-    public void bResponderSetEnabled(boolean valor)
-    {
-        bResponder.setEnabled(valor);
-    }
+        if(pregRes == numeroPregunta.size())
+            return true;
+        else
+        {
+            return false;
+        }
+     }
 
 
     class ManejadoraEvento implements ActionListener,KeyListener, ItemListener
@@ -435,17 +464,16 @@ public class GUICliente extends JFrame
                     {
                         System.out.println("Error al convertir cadena a número: " + ex.getMessage());
                     }
-                    
-
                 }
             }
             if(e.getSource() == bResponder)
             {
                 
-                tpPestanas.setEnabledAt(1, true);
-                tpPestanas.setSelectedIndex(1);
-                tpPestanas.setEnabledAt(0, false);
-                ControladorCliente.enviarBloqueada(getNumPreg(), true);
+                    tpPestanas.setEnabledAt(1, true);
+                    tpPestanas.setSelectedIndex(1);
+                    tpPestanas.setEnabledAt(0, false);
+                    ControladorCliente.enviarBloqueada(getNumPreg(), true);
+               
 
             }
             if(e.getSource() == bCancelarPreg)
@@ -458,11 +486,19 @@ public class GUICliente extends JFrame
             }
             if(e.getSource() == bVerResultado)
             {
-                tpPestanas.setEnabledAt(2, true);
-                tpPestanas.setSelectedIndex(2);
-                tpPestanas.setEnabledAt(0, false);
-                tpPestanas.setEnabledAt(1, false);
-                ControladorCliente.obtenerInforme();
+                if(desbloquearBInforme())
+                {
+                    tpPestanas.setEnabledAt(2, true);
+                    tpPestanas.setSelectedIndex(2);
+                    tpPestanas.setEnabledAt(0, false);
+                    tpPestanas.setEnabledAt(1, false);
+                    ControladorCliente.obtenerInforme();
+                }
+                else
+                { 
+                    System.out.println("El usuario ha seleccionado ver resultado, pero no se han contestado todas las preguntas");
+                }
+
 
             }
             if(e.getSource() == bResponderPreg)
@@ -501,10 +537,61 @@ public class GUICliente extends JFrame
         @Override
         public void keyPressed(KeyEvent e) 
         {
-            if((e.getKeyCode() == KeyEvent.VK_ENTER) && (if(e.getKeyCode() == KeyEvent.VK_ENTER)))
+            boolean altPressed=true;
+            if (e.getKeyCode() == KeyEvent.VK_ALT) {
+               altPressed = true;
+            } else if (altPressed && e.getKeyCode() == KeyEvent.VK_R) {
+                // Alt+R pressed
+                System.out.println("RESPONDE PREGUNTA");
+                bResponder.setEnabled(true);
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                System.out.println("Pregunta selecionada: "+answerSelected);
+                ControladorCliente.responderPregunta(answerSelected);
+                
+            }
+            /*if((e.getKeyChar() == 82) && (e.getKeyChar() == 18))
             {
+                System.out.println("RESPONDE PREGUNTA");
+                bResponder.setEnabled(true);
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                System.out.println("Pregunta selecionada: "+answerSelected);
+                ControladorCliente.responderPregunta(answerSelected);
+            }   
+            if((e.getKeyChar() == 18) && (e.getKeyChar()==67))
+            {
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                ControladorCliente.enviarBloqueada(getNumPreg(), false);
+            } 
 
-            }    
+            if(e.getKeyChar()==79)
+            {
+                tpPestanas.setEnabledAt(1, true);
+                tpPestanas.setSelectedIndex(1);
+                tpPestanas.setEnabledAt(0, false);
+                ControladorCliente.enviarBloqueada(getNumPreg(), true);
+            }
+            if(e.getKeyChar()==65)
+            {
+                rbOpcA.setSelected(true);
+            }
+            if(e.getKeyChar()==66)
+            {
+                rbOpcB.setSelected(true);
+            }
+            if(e.getKeyChar()==67)
+            {
+                rbOpcC.setSelected(true);
+            }
+            if(e.getKeyChar()==68)
+            {
+                rbOpcD.setSelected(true);
+            }*/
         }
 
         @Override

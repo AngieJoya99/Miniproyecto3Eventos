@@ -23,6 +23,7 @@ public class ControladorServidor {
     static GUIServidor gui;
     static Archivo archivo;
     static ArrayList<ExamenServidor> examen;
+    static ArrayList<String> informeCliente;
     static ConexionServidor conexionServidor;
     static HiloCliente hiloCliente;
     static Multicast multicast;
@@ -40,7 +41,9 @@ public class ControladorServidor {
     public static void iniciar()
     {
         gui = new GUIServidor();
+
         examen = new ArrayList<ExamenServidor>();
+        informeCliente = new ArrayList<String>();
         conexionServidor = new ConexionServidor(12345);
         multicast = new Multicast();
         cantClientes =0;
@@ -193,9 +196,12 @@ public class ControladorServidor {
     {
         System.out.println("Se entro a procesor respuesta desde CS");
         String[] entradaCadena = respuesta.trim().split("\n");
+        
         String[] opcion = entradaCadena[3].trim().split(" ");
-        System.out.println(opcion[1]);
-        System.out.println(entradaCadena[1]);
+        System.out.println("Estos son los dato que recibe verificar pregunta");
+        System.out.println("respuesta usuario: "+opcion[1]);
+        System.out.println("numPreg"+ entradaCadena[1]);
+        System.out.println("Id cliente: " + entradaCadena[2]);
         System.out.println(entradaCadena[3]);
         System.out.println(entradaCadena[4]);
 
@@ -208,7 +214,7 @@ public class ControladorServidor {
                 if(examen.get(i).getNombre().equals(entradaCadena[4]))
                 {
                     System.out.println("Se entro al if de procesar respuesta");
-                    verificarPregunta(opcion[1], Integer.parseInt(entradaCadena[1]), i);
+                    verificarPregunta(opcion[1], Integer.parseInt(entradaCadena[1]), i, entradaCadena[2]);
                     System.out.println("Se ha verificado correctamente al pregunta");
                 }            
             }
@@ -221,7 +227,7 @@ public class ControladorServidor {
     }
 
     
-    public static void verificarPregunta(String respuesta, int numPregunta, int examenIndice)
+    public static void verificarPregunta(String respuesta, int numPregunta, int examenIndice, String idCliente)
     {
         System.out.println("Se entro a verificar pregunta");
         examen.get(examenIndice).setPregRespondidas();
@@ -230,31 +236,38 @@ public class ControladorServidor {
         System.out.println("Respuesta que evio_ "+respuesta);
         System.out.println("Indice: "+examenIndice);
         System.out.println("Numero de pregunta: "+numPregunta);
-        
+
+
+        String inicio = "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
+        String resCorrecta = examen.get(examenIndice).getResCorrecta(numPregunta);
+        String informe = inicio + "Pregunta "+ Integer.toString(numPregunta) + "\nEnunciado:\n"+ examen.get(examenIndice).getPreguntas(numPregunta-1)+"\nLa pregunta fue respondida por el cliente: "+ idCliente + "\nSu respuesta fue: "+respuesta+"\nLa respuesta correcta de la pregunta es: "+ resCorrecta+"\n";
         try{
             if(examen.get(examenIndice).getResCorrecta(numPregunta).equals(respuesta))
             {
                 System.out.println("La respuesta correcta es: "+(examen.get(examenIndice).getResCorrecta(numPregunta)));
                 System.out.println("Se entro al if de respuesta correcta");
                 examen.get(examenIndice).setCorrectas();  
+                informe += "¡La respuesta fue correcta!\n";
                 System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
             }
             else
             {
                 System.out.println("Se entro al if de respuesta incorrecta");
                 examen.get(examenIndice).setIncorrectas();
+                informe +="¡La respuesta fue incorrecta!\n";
                 System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
             }
         }catch(NullPointerException e)
         {
             System.out.println("fuera del arreglo");
         }
+        informeCliente.add(informe); 
         System.out.println("Ahora se verifica examen completo");
         verificarExamenCompleto(examenIndice);
             
     }
 
-    public static void verificarExamenCompleto(int examenIndice)
+    /*public static void verificarExamenCompleto(int examenIndice)
     {
         String informe = "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
        if(examen.get(examenIndice).getPregRespondida() ==  examen.get(examenIndice).cantidadPreguntas())
@@ -275,8 +288,29 @@ public class ControladorServidor {
             System.out.println("El examen no se ha contestado completamente");
         
        }
-    
+    }*/
 
+    public static void verificarExamenCompleto(int examenIndice)
+    {
+            //informe += "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
+            String informe="";
+            String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
+            String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+            String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
+
+            for(int i=0; i<informeCliente.size(); i++)
+            {
+                informe +=informeCliente.get(i);
+                System.out.println("Se ha añadido info preg del arreglo a el String informe");
+            }
+            informe += correctas + incorrectas + puntaje;
+            
+            System.out.println("El informe que se va a enviar es: "+informe);
+            System.out.println("Entro a if examen respondido completamente");
+            //hiloCliente.enviarTexto(informe);
+            enviarMulti(informe);
+            System.out.println("Se ha enviado el informe");
+            //System.out.println("El examen no se ha contestado completamente");
     }
 
     /**
@@ -374,7 +408,7 @@ at
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
     }
-    
+
     public static void escucharClientes(int num)
     {
         cantClientes+=num;
