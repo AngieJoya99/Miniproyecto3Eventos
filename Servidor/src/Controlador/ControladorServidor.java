@@ -31,6 +31,7 @@ public class ControladorServidor {
     private static int tiempoSec;
     private static int totalSegundos;
     private static int segundosR;
+    private static boolean tiempoCero;
     //private static int 
     private static int cantClientes;
     
@@ -44,7 +45,7 @@ public class ControladorServidor {
 
         examen = new ArrayList<ExamenServidor>();
         informeCliente = new ArrayList<String>();
-        informeCliente.add("Informe \n");
+        informeCliente.add("Informe\n");
         conexionServidor = new ConexionServidor(12345);
         multicast = new Multicast();
         cantClientes =0;
@@ -240,13 +241,13 @@ public class ControladorServidor {
     
     public static void verificarPregunta(String respuesta, int numPregunta, int examenIndice, String idCliente)
     {
-        System.out.println("Se entro a verificar pregunta");
+        //System.out.println("Se entro a verificar pregunta");
         examen.get(examenIndice).setPregRespondidas();
-        System.out.println("Respuesta correcta: "+examen.get(examenIndice).getResCorrecta(numPregunta));
+        //System.out.println("Respuesta correcta: "+examen.get(examenIndice).getResCorrecta(numPregunta));
         //System.out.println(examen.get);
-        System.out.println("Respuesta que envió "+respuesta);
-        System.out.println("Indice: "+examenIndice);
-        System.out.println("Numero de pregunta: "+numPregunta);
+        //System.out.println("Respuesta que envió "+respuesta);
+        //System.out.println("Indice: "+examenIndice);
+        //System.out.println("Numero de pregunta: "+numPregunta);
 
         examen.get(examenIndice).iniciarInforme("");
         //informeCliente.add("Nombre del examen: "+ examen.get(examenIndice).getNombre() +" :\n");
@@ -255,18 +256,18 @@ public class ControladorServidor {
         try{
             if(examen.get(examenIndice).getResCorrecta(numPregunta).equals(respuesta))
             {
-                System.out.println("La respuesta correcta es: "+(examen.get(examenIndice).getResCorrecta(numPregunta)));
-                System.out.println("Se entro al if de respuesta correcta");
+                //System.out.println("La respuesta correcta es: "+(examen.get(examenIndice).getResCorrecta(numPregunta)));
+                //System.out.println("Se entro al if de respuesta correcta");
                 examen.get(examenIndice).setCorrectas();  
                 informe += "¡La respuesta fue correcta!\n";
-                System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
+                //System.out.println("La pregunta "+Integer.toString(numPregunta)+"es correcta");
             }
             else
             {
-                System.out.println("Se entro al if de respuesta incorrecta");
+                //System.out.println("Se entro al if de respuesta incorrecta");
                 examen.get(examenIndice).setIncorrectas();
                 informe +="¡La respuesta fue incorrecta!\n";
-                System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
+                //System.out.println("La pregunta "+Integer.toString(numPregunta)+"es incorrecta");
             }
         }catch(NullPointerException e)
         {
@@ -274,7 +275,7 @@ public class ControladorServidor {
         }
         informeCliente.add(informe);
         examen.get(examenIndice).setInforme(informe); 
-        System.out.println("Ahora se verifica examen completo");
+        //System.out.println("Ahora se verifica examen completo");
         verificarExamenCompleto(examenIndice);
             
     }
@@ -304,13 +305,18 @@ public class ControladorServidor {
 
     public static void verificarExamenCompleto(int examenIndice)
     {
-        if(examen.get(examenIndice).getPregRespondida()==examen)
+        String informe="";
+        String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
+        String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+        String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
+        System.out.println("Estos son los segundos" + segundosR);
+        if((examen.get(examenIndice).getPregRespondida()== examen.get(examenIndice).cantidadPreguntas())||(segundosR == 1)||(segundosR==0))
         {
             //informe += "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
-            String informe="";
-            String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
-            String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
-            String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
+           // String informe="";
+            //String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
+            //String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+            //String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
             
             for(int i=0; i<informeCliente.size(); i++)
             {
@@ -326,6 +332,25 @@ public class ControladorServidor {
             enviarMulti(informe);
             System.out.println("Se ha enviado el informe");
             //System.out.println("El examen no se ha contestado completamente");
+        }
+        /*if(segundosR == 0)
+        {
+            System.out.println("Entró al if del tiempoCero");
+            for(int i=0; i<informeCliente.size(); i++)
+            {
+                informe +=informeCliente.get(i);
+                System.out.println("Se ha añadido info preg del arreglo a el String informe");
+            }
+            informe += correctas + incorrectas + puntaje;
+            System.out.println("el informe cuadno el tiempo se acabo es: "+informe);
+            examen.get(examenIndice).setInforme(informe);
+            
+            enviarMulti(informe);
+            System.out.println("Se ha enviado el informe dado que el tiempo se acabo");
+        }*/
+        else
+        {
+            System.out.println("No se ha contestado todo el examen");
         }
     }
 
@@ -418,7 +443,10 @@ at
                 gui.setMinRestantes(Integer.toString(segundosR%60));
                 if (segundosR == 0)
                 {
+                    tiempoCero = true;
+                    segundosR = 0;
                     this.cancel();
+
                 }   
             }
         };
