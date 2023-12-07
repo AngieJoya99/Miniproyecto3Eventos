@@ -32,7 +32,6 @@ public class ControladorServidor {
     private static int totalSegundos;
     private static int segundosR;
     private static int tiempoIndiceExamen;
-    //private static int 
     private static int cantClientes;
     
 
@@ -170,7 +169,7 @@ public class ControladorServidor {
                 {
                     System.out.println("Encontrado");
                     cantPreg=examen.get(i).cantidadPreguntas();
-                    tiempo = examen.get(i).getHoras()+" : "+examen.get(i).getMinutos();
+                    tiempo = examen.get(i).getMinutos()+" : "+examen.get(i).getSegundos();
                 }
             }
             gui.setIniciarPreguntas("Cantidad de preguntas:     "+cantPreg);
@@ -205,7 +204,7 @@ public class ControladorServidor {
      * y verifica a que examen pertenece
      * @param respuesta
      */
-   public static void procesarRespuesta(String respuesta)
+    public static void procesarRespuesta(String respuesta)
     {
         String[] entradaCadena = respuesta.trim().split("\n");
         String[] opcion = entradaCadena[3].trim().split(" ");
@@ -316,26 +315,9 @@ public class ControladorServidor {
             
             System.out.println("El informe que se va a enviar es: "+informe);
             System.out.println("Entro a if examen respondido completamente");
-            //hiloCliente.enviarTexto(informe);
             enviarMulti(informe);
             System.out.println("Se ha enviado el informe");
-            //System.out.println("El examen no se ha contestado completamente");
         }
-        /*if(segundosR == 0)
-        {
-            System.out.println("Entró al if del tiempoCero");
-            for(int i=0; i<informeCliente.size(); i++)
-            {
-                informe +=informeCliente.get(i);
-                System.out.println("Se ha añadido info preg del arreglo a el String informe");
-            }
-            informe += correctas + incorrectas + puntaje;
-            System.out.println("el informe cuadno el tiempo se acabo es: "+informe);
-            examen.get(examenIndice).setInforme(informe);
-            
-            enviarMulti(informe);
-            System.out.println("Se ha enviado el informe dado que el tiempo se acabo");
-        }*/
         else
         {
             System.out.println("No se ha contestado todo el examen");
@@ -360,7 +342,6 @@ public class ControladorServidor {
         System.out.println(intento*correctas);
 
         return puntaje;
-
     }
 
     /**
@@ -376,7 +357,7 @@ public class ControladorServidor {
                 nombreEx = examen.get(i).getNombre();
                 if(nombreEx.trim().equals(seleccion.trim()))
                 {
-                    tiempoMin = Integer.parseInt(examen.get(i).getHoras());
+                    tiempoMin = Integer.parseInt(examen.get(i).getMinutos());
                 }
             }
         }
@@ -395,13 +376,15 @@ public class ControladorServidor {
                 nombreEx = examen.get(i).getNombre();
                 if(nombreEx.trim().equals(seleccion.trim()))
                 {
-                    tiempoSec = Integer.parseInt(examen.get(i).getMinutos());
+                    tiempoSec = Integer.parseInt(examen.get(i).getSegundos());
                 }
             }
         }
-        //return tiempoMin;
     }
 
+    /**
+     * Modifica el tiempo restante
+     */
     public static void getTiempo()
     {
         totalSegundos = (tiempoMin*60)+tiempoSec;

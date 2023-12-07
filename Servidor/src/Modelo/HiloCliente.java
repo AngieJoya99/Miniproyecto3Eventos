@@ -1,4 +1,4 @@
-    /* Angie Joya - 2322609
+/* Angie Joya - 2322609
  * Emily Nuñez - 2240156
  * Sheila Valencia - 2243011
  * Victoria Volveras - 2241874
@@ -29,8 +29,6 @@ public class HiloCliente extends Thread
     int idCliente;
     Multicast multicast;
     boolean coneccion;
-    
-
 
     /**
      * Constructor de la clase HiloServidor
@@ -45,10 +43,10 @@ public class HiloCliente extends Thread
         this.coneccion=true;
     }
 
-    @Override
     /**
      * Métdo que corre el hilo
      */
+    @Override
     public void run() 
     {
         try
@@ -99,7 +97,7 @@ public class HiloCliente extends Thread
     }
 
     /**
-     * Cierra los flujos de entrada y salida y el socket
+     * Cierra los flujos de entrada, salida y el socket
      */
     public void cerrarConexion()
     {
@@ -116,8 +114,8 @@ public class HiloCliente extends Thread
     }
 
     /**
-     * Retorna la identificacion del cliente
-     * @return
+     * Obtiene la identidicacion del cliente
+     * @return Retorna la identificacion del cliente
      */
     public int getIdCliente()
     {
@@ -134,8 +132,8 @@ public class HiloCliente extends Thread
     }
 
     /**
-     * Retorna la conexion
-     * @return
+     * Retorna si el cliente esta conectado
+     * @return Retorna la conexion
      */
     public boolean getConeccion()
     {

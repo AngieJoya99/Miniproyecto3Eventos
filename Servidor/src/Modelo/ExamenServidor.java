@@ -34,12 +34,20 @@ public class ExamenServidor
         this.informe="El examen no ha sido respondido\nNo es posible generar un informe";
     }
 
+    /**
+     * Convierte en cadena de texto los atributos del examen
+     * y los retorna
+     * @return string del examen 
+     */
     public String examenEnviar()
     {
         System.out.println(nombre+"\n"+tiempo[0]+"\n"+tiempo[1]+"\n"+stringPreguntas);
         return nombre+"\n"+tiempo[0]+"\n"+tiempo[1]+"\n"+stringPreguntas;
     }
 
+    /**
+     * Crea objetos de la clase preguntas
+     */
     public void generarPreguntas()
     {
         String[] datos; 
@@ -50,11 +58,19 @@ public class ExamenServidor
         }
     }
 
+    /**
+     * Le agrega al atributo informe el texto que recibe como parametro
+     * @param texto texto procesar
+     */
     public void iniciarInforme(String texto)
     {
         this.informe = texto;
     }
 
+    /**
+     * Adicionar texto al informe
+     * @param texto texto procesar
+     */
     public void setInforme(String texto)
     {
         this.informe += texto;
@@ -79,7 +95,7 @@ public class ExamenServidor
     }
 
     /**
-     * 
+     * Incrementa el numero de preguntas correctas
      */
     public void setCorrectas()
     {
@@ -87,7 +103,7 @@ public class ExamenServidor
     }
 
     /**
-     * 
+     * Incrementa el numero de preguntas incorrectas
      */
     public void setIncorrectas()
     {
@@ -123,21 +139,38 @@ public class ExamenServidor
 
     }
 
+    /**
+     * Retorna la cantidad de preguntas del examen
+     * @return cantidad de preguntas
+     */
     public int cantidadPreguntas()
     {
         return this.preguntas.size();
     }
 
-    public String getHoras()
+    /**
+     * Retorna la cantidad de minutos que dura el examen
+     * @return minutos del examen
+     */
+    public String getMinutos()
     {
         return ""+this.tiempo[0];
     }
 
-    public String getMinutos()
+    /**
+     * Retorna la cantidad de segundos que dura el examen
+     * @return segundos del examen
+     */
+    public String getSegundos()
     {
         return ""+this.tiempo[1];
     }
 
+    /**
+     * Restorna la respuesta correcta de la pregunta
+     * @param numPreg el numero de la pregunta
+     * @return
+     */
     public String getResCorrecta(int numPreg)
     {
        
@@ -145,10 +178,18 @@ public class ExamenServidor
         
         
     } 
+
+    /**
+     * Incrementa el numero de respuestas respondidas
+     */
     public void setPregRespondidas()
     {
         respondidas++;
-    }   
+    } 
+
+    /**
+     * Retona la cantidad de preguntas respondidas
+     */
     public int getPregRespondida()
     {
         return respondidas;

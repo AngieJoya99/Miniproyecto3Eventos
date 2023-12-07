@@ -21,7 +21,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import Controlador.ControladorCliente;
 
-
+/**
+ * Clase que contiene la gui del cliente
+ */
 public class GUICliente extends JFrame 
 {
     private ArrayList <JToggleButton> numeroPregunta;
@@ -108,6 +110,7 @@ public class GUICliente extends JFrame
         bResponder = new JButton("Responder");
         bResponder.setEnabled(false);
         bVerResultado.setEnabled(false);
+        
         //panel 
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
         pTextArea.add(bResponder, BorderLayout.CENTER);
@@ -116,7 +119,6 @@ public class GUICliente extends JFrame
         pInformacion.add(lTRestanteH);
         pInformacion.add(lDosP);
         pInformacion.add(lTRestanteM);
-        //pInformacion.add(lTRestante);pInformacion.add(lPregRes);
         pNorteExamen.add(pBotonesPreg);pNorteExamen.add(pTextArea);
         pSurExamen.add(bVerResultado, BorderLayout.NORTH);
         pSurExamen.add(pInformacion, BorderLayout.CENTER);
@@ -255,22 +257,29 @@ public class GUICliente extends JFrame
     }
 
     /**
-     * Obtiene el tiempo del examen
+     * Establece el tiempo del examen
      * @param duracion tiempo que dura el examen
-     */
+     **/
     public void setHorasRestantes(String duracion)
     {
         lTRestanteH.setText(duracion);
 
     }
 
+    /**
+     * Establece los minutos del examen
+     * @param duracion tiempo que dura el examen
+     **/
     public void setMinRestantes(String duracion)
     {
         lTRestanteM.setText(duracion);
 
     }
     
-
+    /**
+     * Imprime el informe en el area de texto de la pestaña resultado
+     * @param informe
+     */
     public void areaInforme(String informe)
     {
         areaResultado.setText(informe);
@@ -287,6 +296,10 @@ public class GUICliente extends JFrame
         tpPestanas.setEnabledAt(indice, valor);
     }
 
+    /**
+     * Redirecciona al usuario a la pestaña que se desee
+     * @param indice
+     */
     public void focalizarPestaña(int indice)
     {
         tpPestanas.setSelectedIndex(indice);
@@ -318,11 +331,20 @@ public class GUICliente extends JFrame
         }
     }
 
+    /**
+     * Redimensiona el panel de botones segun el numero de preguntas del examen
+     * @param numPreguntas 
+     */
+
     public void redimensionarPanel(int numPreguntas)
     {
         pBotonesPreg.setLayout(new GridLayout(numPreguntas,0));
     }
 
+    /**
+     * Añade los botones en el panel de botones segun el numero de botones
+     * @param numPreg
+     */
     public void establecerBotones (int numPreg)
     {   
         crearBotones(numPreg);
@@ -334,12 +356,18 @@ public class GUICliente extends JFrame
         pBotonesPreg.updateUI();
         System.out.println("tamaño arreglo de botones de pregunta: "+Integer.toString(numeroPregunta.size()));
     } 
-
+    /**
+     * Actualiza el label de numero de pregunta en la pestaña pregunta
+     * @param numPregunta
+     */
     public void labelNumeroPregunta (String numPregunta)
     {    
-            lNumPreg.setText("Pregunta "+ numPregunta);
+        lNumPreg.setText("Pregunta "+ numPregunta);
     }
 
+    /**
+     * @return  el numero de pregunta que esta respondiendo el usuario
+     */
     public String getNumPreg()
     {
         String[] palabras = lNumPreg.getText().split(" ");
@@ -347,25 +375,38 @@ public class GUICliente extends JFrame
         return palabras[1];
     }
 
+    /**
+     * Escribe la pregunta en el area de texto
+     * @param pregunta texto de la pregunta
+     */
     public void setTextAreaPreg(String pregunta)
     {
         areaExamen.setText(pregunta);
     }
 
+    /**
+     * Imprime en el area de texto de de pestaña pregunta el enunciado de la pregunta y las opciones de respuestas
+     * @param pregunta 
+     * @param respuesta
+     */
     public void setTextPestPreg(String pregunta, String respuesta)
     {
         areaPregunta.setText(pregunta+"\n"+respuesta);
     }
+
+    /**
+     * Habilita (true) o deshabilita (false)  el boton que permite responder las preguntas
+     * @param valor true o false
+     */
     public void bResponderSetEnabled(boolean valor)
     {
         bResponder.setEnabled(valor);
     }
 
    /**
-     * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
+     * Funcion que recibe como parametro un booleano que establece si se quiere bloquear la pregunta o desbloquearla
      * @param numPreg
      */
-
      public void bloquearPregunta(String numPreg, boolean valor)
      {
         System.out.println("Entre a bloquearPregunta");
@@ -400,10 +441,19 @@ public class GUICliente extends JFrame
 
      }
 
+    /**
+     * Habilita (true) o deshabilita (false) el boton en la pestaña examen que permite ver el resultado segun el valor que recibe
+     * @param valor true o false
+     */
     public void bPestExamenSetEnabled(boolean valor)
     {
         bVerResultado.setEnabled(valor);
     }
+
+    /**
+     * Permite desbloquear el boton para ver el informe
+     * @return true o false
+     */
      public boolean desbloquearBInforme()
      {
         int pregRes=0; 
@@ -422,6 +472,9 @@ public class GUICliente extends JFrame
      }
 
 
+    /**
+     * Clase que maneja los eventos del teclado
+     */
     class ManejadoraEvento implements ActionListener,KeyListener, ItemListener
     {
         String answerSelected = "";

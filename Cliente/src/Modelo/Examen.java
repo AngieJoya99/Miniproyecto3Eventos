@@ -145,21 +145,38 @@ public class Examen
 
     }
 
+    /**
+     * Establece las opciones de respuesta del examen
+     * @param numPreg
+     * @return
+     */
     public String getOpciones(int numPreg)
     {
         String opciones = this.preguntas.get(numPreg).getOpcion(0) + "\n" + this.preguntas.get(numPreg).getOpcion(1) + "\n" + this.preguntas.get(numPreg).getOpcion(2) + "\n"+this.preguntas.get(numPreg).getOpcion(3);
         return opciones;
     }
 
+    /**
+     * Retorna el numero de pregunta
+     * @return numero de pregunta
+     */
     public int getNumPreg()
     {
         return preguntas.size();
     }
 
+    /**
+     * Incrementa el numero de preguntas respondidas
+     */
     public void setPregRespondidas()
     {
         respondidas++;
     }
+
+    /**
+     * Retorna el numero de preguntas respondidas
+     * @return preguntas respondidas
+     */
     public int getPregRespondida()
     {
         return respondidas;

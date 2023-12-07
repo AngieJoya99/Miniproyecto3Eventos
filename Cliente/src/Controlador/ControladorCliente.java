@@ -29,6 +29,10 @@ public class ControladorCliente
     private static int totalSegundos;
     private static int segundosR;
 
+    /**
+     * Metodo que inicia la gui
+     * y las conexion desde el cliente
+     */
     public static void iniciar()
     {
         gui = new GUICliente();
@@ -188,7 +192,7 @@ public class ControladorCliente
     }
 
     /**
-     * Funcion que permite estableces los botones, depentiendo
+     * Funcion que permite establecer los botones, dependiendo
      * de la cantidad de preguntas
      * @param num Cantidad botones
      */

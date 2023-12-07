@@ -82,9 +82,11 @@ public class Archivo
         return this.preguntas;
     }
 
+    /**
+     * Retorna la cantidad de preguntas
+     */
     public int getCantidadPreguntas()
     {
         return this.cantidadPreguntas;
     }
-
 }

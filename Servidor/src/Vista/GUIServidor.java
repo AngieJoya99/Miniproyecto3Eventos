@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Clase que contiene la interfaz gráfica du usuario
+ * Clase que contiene la interfaz gráfica de usuario
  */
 public class GUIServidor extends JFrame 
 {
@@ -81,7 +81,7 @@ public class GUIServidor extends JFrame
         lIniciarPreguntas = new JLabel("Cantidad de preguntas");
         lIniciarTiempo = new JLabel("Tiempo");
         lIniciarTiempoRestante = new JLabel("Tiempo restante");
-        lIniciarRespondidas = new JLabel("Preguntas respondidas");
+        lIniciarRespondidas = new JLabel("");
         lHorasRestantes = new JLabel();
         lMinutosRestantes = new JLabel();
         lDosPuntos = new JLabel(":");
@@ -135,11 +135,9 @@ public class GUIServidor extends JFrame
 
         pestanas = new JTabbedPane();
 
-
         fuente1 = new Font("Lato", Font.BOLD, 20);
         fuente2 = new Font("Lato", Font.PLAIN, 16);
         fuente3 = new Font("Lato", Font.BOLD, 13);
-
 
         //Dar formato a elementos
         lCrearNombre.setFont(fuente1);
@@ -169,7 +167,6 @@ public class GUIServidor extends JFrame
         lMinutosRestantes.setFont(fuente2);
         lDosPuntosR.setFont(fuente1);
         lIniciarRespondidas.setFont(fuente1);
-        
 
         horas.setPreferredSize(new Dimension(40,30));
         minutos.setPreferredSize(new Dimension(40,30));
@@ -212,8 +209,6 @@ public class GUIServidor extends JFrame
         bIniciarCargar.setForeground(Color.WHITE);
         bIniciarIniciar.setBackground(new Color(171,91,121));
         bIniciarIniciar.setForeground(Color.WHITE);
-
-
         
         // Posicionar elementos del panel Crear
         pCrearNombre.add(lCrearNombre);
@@ -261,7 +256,6 @@ public class GUIServidor extends JFrame
         pIniciar.add(lIniciarRespondidas);
 
         //Añadir páneles a pestañas
-
         pestanas.addTab("Crear examen",pCrear);
         pestanas.addTab("Visualizar examen",pVisualizar);
         pestanas.addTab("Ver informes",pInformes);
@@ -278,7 +272,6 @@ public class GUIServidor extends JFrame
         bVerLimpiar.addActionListener(evento);
         bIniciarIniciar.addActionListener(evento);
         bIniciarCargar.addActionListener(evento);
-
     }
 
     /**
@@ -286,7 +279,6 @@ public class GUIServidor extends JFrame
      */
     class ManejarEventos implements ActionListener
     {
-
         @Override
         public void actionPerformed(ActionEvent e) 
         {
@@ -325,11 +317,8 @@ public class GUIServidor extends JFrame
             {
                 ControladorServidor.enviarExamen();
                 ControladorServidor.tiempoRestanteHoras();
-                //ControladorServidor.tiempoRestanteHoras();
-                //ControladorServidor.tiempoRestanteMinutos();
             }            
-        }
-        
+        } 
     }
 
     /**
@@ -601,6 +590,10 @@ public class GUIServidor extends JFrame
         taVisualizar.setText(texto);
     }
 
+    /**
+     * Retorna el examen seleccionado en la pestaña informe
+     * @return examen seleccionado
+     */
     public String getExamenInforme()
     {
         return ""+cbInforme.getSelectedItem();
@@ -617,26 +610,40 @@ public class GUIServidor extends JFrame
         taInforme.setText(texto);
     }
 
+    /**
+     * Retorna el examen seleccionado en el comboBox
+     * @return examen seleccionado en el comboBox
+     */
     public String getExamenIniciar()
     {
         return ""+cbIniciar.getSelectedItem();
     }
 
+    /**
+     * Muestra la cantidad de preguntas que tiene el examen
+     * @param texto
+     */
     public void setIniciarPreguntas(String texto)
     {
         lIniciarCantidad.setText(texto);
     }
 
+    /**
+     * Establece el label de iniciar tiempo
+     * @param texto tiempo
+     */
     public void setIniciarTiempo(String texto)
     {
         lIniciarTiempo.setText(texto);
     }
 
+    /**
+     * Permite habilitar o deshabilitar el boton iniciar
+     * @param bool true para habilitar
+     * false para deshabilitar
+     */
     public void enableIniciar(Boolean bool)
     {
         bIniciarIniciar.setEnabled(bool);
     }
-
-    
-
 }

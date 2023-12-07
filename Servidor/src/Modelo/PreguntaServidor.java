@@ -52,7 +52,7 @@ public class PreguntaServidor
         System.out.println("La respuesta correcta es: "+respuesta);
     }
     /**
-     * 
+     *@return Obtiene la respuesta correcta
      */
     public String getRespuestaCorrecta()
     {
@@ -112,9 +112,11 @@ public class PreguntaServidor
         return this.estadoPregunta;
     }
 
+    /**
+     * estabelce el estado pregunta
+     */
     public void setEstadoPregunta()
     {
         this.estadoPregunta = true;
     }
-
 }
