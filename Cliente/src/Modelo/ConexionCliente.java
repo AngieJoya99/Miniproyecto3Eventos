@@ -75,6 +75,7 @@ public class ConexionCliente
     {
         try 
         {
+            
             salida.writeObject(mensaje);
             salida.flush();
         } catch (IOException ex) {

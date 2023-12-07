@@ -249,6 +249,7 @@ public class ControladorServidor {
         {
             System.out.println("fuera del arreglo");
         }
+        System.out.println("Ahora se verifica examen completo");
         verificarExamenCompleto(examenIndice);
             
     }
@@ -262,7 +263,10 @@ public class ControladorServidor {
             String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
             String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"\n";
             informe += correctas + incorrectas + puntaje;
+            
+            System.out.println("El informe que se va a enviar es: "+informe);
             System.out.println("Entro a if examen respondido completamente");
+            //hiloCliente.enviarTexto(informe);
             enviarMulti(informe);
             System.out.println("Se ha enviado el informe");
        }

@@ -52,7 +52,7 @@ public class ControladorCliente
     {
         String[] entradaCadena = infoMulti.trim().split("\n");
         System.out.println("Ha entrado a la funcion informacionEntrada");
-        System.out.println(infoMulti);
+        System.out.println("ESTO ES LO QUE ENTRA DEL MULTICAST: "+infoMulti);
         System.out.println(entradaCadena[0]);
         //establecerPreguntas(infoMulti);
         if (entradaCadena[0].equals("Examen"))
@@ -62,8 +62,10 @@ public class ControladorCliente
         }
         if (entradaCadena[0].equals("Informe"))
         {
+            
             System.out.println("Entro al if del informe");
             crearInforme(infoMulti);
+            System.out.println("se ha creado el informe enviado desde Servidor");
         }
         if (entradaCadena[0].equals("Bloquear"))
         {
@@ -89,6 +91,7 @@ public class ControladorCliente
      */
     public static void crearInforme(String informe)
     {
+        System.out.println(informe);
         examen.setInforme(informe);
     }
 

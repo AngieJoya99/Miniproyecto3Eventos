@@ -74,9 +74,10 @@ public class GUICliente extends JFrame
         tpPestanas.addTab("Pregunta",pPregunta);
         tpPestanas.addTab("Resultado",pResultado);
         add(tpPestanas);
+        tpPestanas.setEnabledAt(0, false);
         tpPestanas.setEnabledAt(1, false);
         tpPestanas.setEnabledAt(2, false);
-        tpPestanas.setEnabledAt(0, false);
+        
         //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
@@ -109,7 +110,7 @@ public class GUICliente extends JFrame
         lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
-        //bResponder.setEnabled(false);
+        //bVerResultado.setEnabled(false);
         bResponder = new JButton("Responder");
 
         //panel 
@@ -136,8 +137,8 @@ public class GUICliente extends JFrame
         //Crear componentes
         
         areaPregunta = new JTextArea(15, 35);
-        areaPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta = new JScrollPane(areaPregunta);
+        jsEnunciadoPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         areaPregunta.setEditable(false);
         bCancelarPreg = new JButton("Cancelar");
@@ -176,10 +177,11 @@ public class GUICliente extends JFrame
        //-------- Pestaña Resultado ---------------
 
         areaResultado = new JTextArea(15, 35);
-        areaResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         areaResultado.setEditable(false);
         jsResultado = new JScrollPane(areaResultado);
         jsResultado.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        areaResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
+        
         //lCalificacion = new JLabel("Calificacion");
         //lPregCorrecta = new JLabel("Preguntas Correctas");
         //lCalificacionNum = new JLabel("10");
@@ -455,12 +457,11 @@ public class GUICliente extends JFrame
                 /*ControladorCliente.preguntaRespondida(getNumPreg());
                 if(Controlador.examenCompleto() == true)*/
                 System.out.println("RESPONDE PREGUNTA");
-                bResponder.setEnabled(true);
+                //bResponder.setEnabled(true);
                 tpPestanas.setEnabledAt(0, true);  
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
                 System.out.println("Pregunta selecionada: "+answerSelected);
-
                 ControladorCliente.responderPregunta(answerSelected);
 
 

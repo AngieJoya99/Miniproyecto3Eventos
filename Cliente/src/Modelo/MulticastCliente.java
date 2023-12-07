@@ -48,6 +48,7 @@ public class MulticastCliente extends Thread
             {
                 socketMulticast.receive(dataCliente); //El mensaje que llega
                 salida = new String(dataCliente.getData()); //Aqui tengo el dato que llega
+                System.out.println("llega del servidor" + dataCliente.getData());
                 ControladorCliente.informacioEntrada(salida); 
                 System.out.println("Llego el mensaje");
             } catch (IOException ex) 

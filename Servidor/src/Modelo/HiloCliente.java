@@ -81,6 +81,7 @@ public class HiloCliente extends Thread
     public void enviarTexto (String texto)
     {
         try {
+            System.out.println("el mensaje que ha llegado para enviar es: "+texto);
             salida.writeObject(texto);
             salida.flush();
             System.out.println("La información se envió correctamente");
