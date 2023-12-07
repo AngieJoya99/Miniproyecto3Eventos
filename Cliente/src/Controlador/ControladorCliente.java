@@ -91,7 +91,8 @@ public class ControladorCliente
      */
     public static void crearInforme(String informe)
     {
-        System.out.println(informe);
+        String[] entradaCadena = informe.trim().split("\n");
+        informe = entradaCadena[0] +"\n"+ entradaCadena[1] +"\n"+ entradaCadena[2] +"\n"+  entradaCadena[3] +"\n"+  entradaCadena[4];
         examen.setInforme(informe);
     }
 
@@ -144,7 +145,7 @@ public class ControladorCliente
             }
 
             establecerBotonesPreg(examen.getNumPreg());
-            gui.bloquearPestaña(0,false);
+            //gui.bloquearPestaña(0,true);
             //tiempoRestanteMinutos();
             
     }
