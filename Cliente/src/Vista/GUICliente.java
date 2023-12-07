@@ -37,13 +37,14 @@ public class GUICliente extends JFrame
 
     JLabel lTRestanteH, lTRestanteM, lDosP, lPregRes, lExamen, lTempoRestante, lPregRespondidas, lClienteConectado1, lClienteConectado2, lClienteConectado3,lNumPreg, lInforme, lPregCorrecta, lCalificacion, lCalificacionNum, lPregCorrectaNum; 
 
+    Font fuente1, fuente2, fuente3, fuenteBotones;
     /**
      *Constructor de la clase GUIServidor
      */
     public GUICliente()
     {
         setTitle("Cliente");
-        setSize(480, 530);
+        setSize(500, 550);
         crearGUI();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,8 +85,11 @@ public class GUICliente extends JFrame
 
         pNorteExamen = new JPanel();
         pSurExamen = new JPanel(new BorderLayout());
-        
-        
+
+        fuente1 = new Font("Lato", Font.BOLD, 20);
+        fuente2 = new Font("Lato", Font.PLAIN, 16);
+        fuente3 = new Font("Lato", Font.BOLD, 13);
+        fuenteBotones = new Font("Lato", Font.BOLD, 18);
 
         areaExamen = new JTextArea("Esperando examen...", 10, 28);
         areaExamen.setEditable(false);
@@ -220,20 +224,37 @@ public class GUICliente extends JFrame
         pOpc1.setBackground(new Color(221,208,220));
         pOpc2.setBackground(new Color(221,208,220));
         pOpcMultiple.setBackground(new Color(221,208,220));
-        /*
-        pBotonesPreg.setBackground(new Color(221,208,220));
-        pEastResultado.setBackground(new Color(221,208,220));
-        pInfoResultado.setBackground(new Color(221,208,220));
-        
-        pInformacion.setBackground(new Color(221,208,220));
-        
-        
-        
-        
-        
-        
-        pSouthResultado.setBackground(new Color(221,208,220));
-        */
+
+        bResponder.setBackground(new Color(171,91,121));
+        bResponder.setForeground(Color.WHITE);
+        bResponder.setFont(fuenteBotones);
+        bCancelarPreg.setBackground(new Color(171,91,121));
+        bCancelarPreg.setForeground(Color.WHITE);
+        bCancelarPreg.setFont(fuenteBotones);
+        bVerResultado.setBackground(new Color(171,91,121));
+        bVerResultado.setForeground(Color.WHITE);
+        bVerResultado.setFont(fuenteBotones);
+        bResponderPreg.setBackground(new Color(171,91,121));
+        bResponderPreg.setForeground(Color.WHITE);
+        bResponderPreg.setFont(fuenteBotones);
+        bOK.setBackground(new Color(171,91,121));
+        bOK.setForeground(Color.WHITE);
+        bOK.setFont(fuenteBotones);
+
+        lInforme.setFont(fuente1);
+        lNumPreg.setFont(fuente1);
+        rbOpcA.setFont(fuente2);
+        rbOpcA.setBackground(new Color(221,208,220));
+        rbOpcB.setFont(fuente2);
+        rbOpcB.setBackground(new Color(221,208,220));
+        rbOpcC.setFont(fuente2);
+        rbOpcC.setBackground(new Color(221,208,220));
+        rbOpcD.setFont(fuente2);
+        rbOpcD.setBackground(new Color(221,208,220));
+        lTempoRestante.setFont(fuenteBotones);
+        areaExamen.setFont(fuente2);
+        areaPregunta.setFont(fuente2);
+        areaResultado.setFont(fuente2);
         
 
         // -- Eventos -- 
@@ -320,6 +341,9 @@ public class GUICliente extends JFrame
         {
             
             JToggleButton botonPreg = new JToggleButton( Integer.toString(i+1));
+            botonPreg.setBackground(new Color(171,91,121));
+            botonPreg.setForeground(Color.WHITE);
+            botonPreg.setFont(fuenteBotones);
             
             numeroPregunta.add(botonPreg);
             grupoBotonPreg.add(botonPreg);
@@ -469,10 +493,10 @@ public class GUICliente extends JFrame
             if(e.getSource() == bResponder)
             {
                 
-                    tpPestanas.setEnabledAt(1, true);
-                    tpPestanas.setSelectedIndex(1);
-                    tpPestanas.setEnabledAt(0, false);
-                    ControladorCliente.enviarBloqueada(getNumPreg(), true);
+                tpPestanas.setEnabledAt(1, true);
+                tpPestanas.setSelectedIndex(1);
+                tpPestanas.setEnabledAt(0, false);
+                ControladorCliente.enviarBloqueada(getNumPreg(), true);
                
 
             }
@@ -558,6 +582,21 @@ public class GUICliente extends JFrame
             if(e.getKeyCode()==KeyEvent.VK_D)
             {
                 rbOpcD.setSelected(true);
+            }
+            if ((e.getKeyCode() == KeyEvent.VK_R) && (e.getKeyCode() == KeyEvent.VK_ALT))
+            {
+                bResponder.setEnabled(true);
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                ControladorCliente.responderPregunta(answerSelected);
+            }
+            if ((e.getKeyCode() == KeyEvent.VK_C) && (e.getKeyCode() == KeyEvent.VK_ALT))
+            {
+                tpPestanas.setEnabledAt(0, true);  
+                tpPestanas.setSelectedIndex(0);
+                tpPestanas.setEnabledAt(1,false);
+                ControladorCliente.enviarBloqueada(getNumPreg(), false);
             }
         }
 

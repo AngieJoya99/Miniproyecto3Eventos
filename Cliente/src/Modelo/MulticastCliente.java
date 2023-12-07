@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.Arrays;
 
 import Controlador.ControladorCliente;
 
@@ -56,6 +57,8 @@ public class MulticastCliente extends Thread
                 salida = new String(dataCliente.getData()); //Aqui tengo el dato que llega
                 System.out.println("llega del servidor" + dataCliente.getData());
                 ControladorCliente.informacioEntrada(salida); 
+                Arrays.fill(mensajeRecibir, (byte) 0);
+
                 System.out.println("Llego el mensaje");
             } catch (IOException ex) 
             {

@@ -57,7 +57,7 @@ public class HiloCliente extends Thread
         }
         catch(IOException e)
         {
-            coneccion=false;
+           this. coneccion=false;
             //ControladorServidor.escucharClientes(-1);
         }
         finally
@@ -67,6 +67,9 @@ public class HiloCliente extends Thread
         
     }
 
+    /**
+     * Crea los flujos de entrada y de salida
+     */
     public void obtenerFlujos()
     {
         try 
@@ -80,6 +83,11 @@ public class HiloCliente extends Thread
         }
     }
 
+    /**
+     * Permite enviar mensajes a un cliente 
+     * en especifico
+     * @param texto
+     */
     public void enviarTexto (String texto)
     {
         try {
@@ -102,22 +110,31 @@ public class HiloCliente extends Thread
             socket.close();
             System.out.println("La conexión con el estudiante "+idCliente+" ha terminado");
             ControladorServidor.escucharClientes(-1);
-            coneccion=false;
+            this.coneccion=false;
         } catch (IOException e) {
             System.out.println("Error al cerrar la conexion");
         }
     }
 
+    /**
+     * Retorna la identificacion del cliente
+     * @return
+     */
     public int getIdCliente()
     {
         return this.idCliente;
     }
 
+    /**
+     * Obtiene la identificacion del cliente
+     * @param id
+     */
     public void setIdCliente(int id)
     {
         this.idCliente = id;
     }
 
+    
     public boolean getConeccion()
     {
         return this.coneccion;
@@ -174,7 +191,7 @@ public class HiloCliente extends Thread
             }catch(SocketException ex)
             {
                 System.out.println("El cliente "+Integer.toString(getIdCliente())+" se fue");
-                coneccion = false;
+                this.coneccion = false;
                 //ControladorServidor.escucharClientes(-1);
                 break;
             }

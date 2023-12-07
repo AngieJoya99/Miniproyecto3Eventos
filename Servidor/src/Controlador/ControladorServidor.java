@@ -31,7 +31,7 @@ public class ControladorServidor {
     private static int tiempoSec;
     private static int totalSegundos;
     private static int segundosR;
-    private static boolean tiempoCero;
+    private static int tiempoIndiceExamen;
     //private static int 
     private static int cantClientes;
     
@@ -49,6 +49,7 @@ public class ControladorServidor {
         conexionServidor = new ConexionServidor(12345);
         multicast = new Multicast();
         cantClientes =0;
+        //
     }
 
     /**
@@ -223,11 +224,13 @@ public class ControladorServidor {
             System.out.println("Se entro al try de procesar respuesta");
             for(int i=0; i<examen.size(); i++)
             {
-                if(examen.get(i).getNombre().equals(entradaCadena[4]))
+                if(examen.get(i).getNombre().equals(entradaCadena[4]) )
                 {
+
                     System.out.println("Se entro al if de procesar respuesta");
                     verificarPregunta(opcion[1], Integer.parseInt(entradaCadena[1]), i, entradaCadena[2]);
                     System.out.println("Se ha verificado correctamente al pregunta");
+                    tiempoIndiceExamen = i;
                 }            
             }
 
@@ -303,6 +306,27 @@ public class ControladorServidor {
        }
     }*/
 
+    public static void enviarInformeTiempo(int examenIndice)
+    {
+        String informe="";
+        String correctas = "Numero de respuestas correctas: "+ Integer.toString(examen.get(examenIndice).getCorrectas())+"\n";
+        String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
+        String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
+        for(int i=0; i<informeCliente.size(); i++)
+            {
+                informe +=informeCliente.get(i);
+                System.out.println("Se ha añadido info preg del arreglo a el String informe tiempo");
+            }
+            informe += correctas + incorrectas + puntaje;
+            examen.get(examenIndice).setInforme(informe);
+            
+            System.out.println("El informe que se va a enviar es tiempo: "+informe);
+            System.out.println("Entro a if examen respondido completamente tiempo");
+            //hiloCliente.enviarTexto(informe);
+            enviarMulti(informe);
+            System.out.println("Se ha enviado el informe tiempo");
+    }
+
     public static void verificarExamenCompleto(int examenIndice)
     {
         String informe="";
@@ -310,7 +334,7 @@ public class ControladorServidor {
         String incorrectas = "Numero de respuestas incorrectas: "+ Integer.toString(examen.get(examenIndice).getIncorrectas())+"\n";
         String puntaje = "El puntaje obtenido es: "+Double.toString(calcularPuntaje(examenIndice))+"//";
         System.out.println("Estos son los segundos" + segundosR);
-        if((examen.get(examenIndice).getPregRespondida()== examen.get(examenIndice).cantidadPreguntas())||(segundosR == 1)||(segundosR==0))
+        if((examen.get(examenIndice).getPregRespondida()== examen.get(examenIndice).cantidadPreguntas())||(segundosR==1)||(segundosR==0))
         {
             //informe += "Informe\n'"+ examen.get(examenIndice).getNombre() +"' :\n";
            // String informe="";
@@ -356,8 +380,7 @@ public class ControladorServidor {
 
     /**
      * Obtiene la cantidad de preguntas correstas y las preguntas total 
-     * y calcula la n
-at
+     * y calcula la nota
      */
     public static double calcularPuntaje(int examenIndice)
     {
@@ -393,7 +416,6 @@ at
                 }
             }
         }
-        //return tiempoHoras;
     }
 
     /**
@@ -443,8 +465,7 @@ at
                 gui.setMinRestantes(Integer.toString(segundosR%60));
                 if (segundosR == 0)
                 {
-                    tiempoCero = true;
-                    segundosR = 0;
+                    enviarInformeTiempo(tiempoIndiceExamen);
                     this.cancel();
 
                 }   
@@ -453,6 +474,10 @@ at
         cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
     }
 
+    /**
+     * Incrementa el contador de clientes y cambia el icono en la gui
+     * @param num
+     */
     public static void escucharClientes(int num)
     {
         cantClientes+=num;
@@ -462,12 +487,10 @@ at
 
     /**
      * Envia por el multicast un texto que recibe como parametro
-     * @param texto
+     * @param texto texto para los clientes
      */
     public static void enviarMulti(String texto)
     {
         multicast.enviarTextoMulti(texto);
     }
-    
-       
 }

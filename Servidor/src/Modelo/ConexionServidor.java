@@ -13,7 +13,11 @@ import java.util.ArrayList;
 
 import Controlador.ControladorServidor;
 
-public class ConexionServidor extends Thread{
+/**
+ * Clase que permite establecer una conexion con los clientes
+ */
+public class ConexionServidor extends Thread
+{
     ServerSocket servidor;
     HiloCliente cliente;
     ArrayList<HiloCliente> arregloClientes;
@@ -40,6 +44,9 @@ public class ConexionServidor extends Thread{
         }
     }
 
+    /**
+     * Espera y añade clientes
+     */
     @Override
     public void run() 
     {
@@ -47,7 +54,8 @@ public class ConexionServidor extends Thread{
         {
             try {
                 System.out.println("\nEsperando un cliente");
-                if(canticadClientes<3)
+                this.canticadClientes = contadorActual();
+                if(this.arregloClientes.size()<3)
                 {   
                     addCliente(servidor.accept());
                 }
@@ -62,6 +70,10 @@ public class ConexionServidor extends Thread{
         }
     }
 
+    /**
+     * Agrega los clientes
+     * @param socket
+     */
     public void addCliente(Socket socket)
     {
         this.canticadClientes = (contadorActual())+1;
@@ -75,11 +87,19 @@ public class ConexionServidor extends Thread{
         cliente.start();
     }
     
+    /**
+     * Permite conocer la cantidad de clientes
+     * @return cantidad de clientes
+     */
     public int getCantClientes()
     {
         return this.canticadClientes;
     }
     
+    /**
+     * Revisa que el cliente este conectado y
+     * si no esta conectado lo remueve el arreglo de clientes
+     */
     public int contadorActual()
     {
         int cant = this.canticadClientes;
@@ -91,7 +111,7 @@ public class ConexionServidor extends Thread{
             }
             if(!arregloClientes.get(i).getConeccion())
             {
-                cant = cant-1;
+                this.canticadClientes = this.canticadClientes-1;
                 arregloClientes.remove(i);
             }
         }

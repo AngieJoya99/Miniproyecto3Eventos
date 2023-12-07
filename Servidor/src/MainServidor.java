@@ -5,7 +5,8 @@
  */
 import Controlador.ControladorServidor;
 
-public class MainServidor {
+public class MainServidor 
+{
 
     /**
      * @param args the command line arguments

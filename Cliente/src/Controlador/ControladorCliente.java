@@ -15,6 +15,9 @@ import Vista.GUICliente;
 import Modelo.Examen;
 import Controlador.ControladorCliente;
 
+/**
+ * Clase controladora del cliente
+ */
 public class ControladorCliente 
 {
     static GUICliente gui;
@@ -62,12 +65,14 @@ public class ControladorCliente
             System.out.println("entro a if examen");
             establecerPreguntas(infoMulti);
             gui.bPestExamenSetEnabled(true);
+            gui.setTextAreaPreg("¡Puedes realizar tu examen!\nSelecciona una pregunta para previsualizar");
         }
         if (entradaCadena[0].trim().equals("Informe"))
         {
             
             System.out.println("Entro al if del informe");
             crearInforme(infoMulti);
+            gui.setTextAreaPreg("Has respondido todas las preguntas\nSelecciona 'ver Resultado' para ver tu calificación");
             System.out.println("se ha creado el informe enviado desde Servidor");
         }
         if (entradaCadena[0].equals("Bloquear"))
@@ -175,7 +180,10 @@ public class ControladorCliente
         }
     }
 
-
+    /**
+     * Permite mostrar la pregunta en la gui
+     * @param numPregunta numero de la pregunta a mostrar
+     */
     public static void mostrarPregunta(int numPregunta)
     {  
         gui.setTextAreaPreg(examen.getPreguntas(numPregunta-1));
@@ -221,12 +229,18 @@ public class ControladorCliente
 
     */
 
+    /**
+     * Permite obtener los segundos
+     */
     public static void getTiempo()
     {
         totalSegundos = (tiempoMin*60)+tiempoSec;
         segundosR = totalSegundos; 
     }
 
+    /**
+     * Establece el tiempo que falta para acabarse el examen
+     */
     public static void tiempoRestanteHoras() 
     {
         //getMin();
@@ -257,8 +271,4 @@ public class ControladorCliente
         };
         cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
     }
-    
-    
-  
-
 }

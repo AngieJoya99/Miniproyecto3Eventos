@@ -138,7 +138,7 @@ public class GUIServidor extends JFrame
 
         fuente1 = new Font("Lato", Font.BOLD, 20);
         fuente2 = new Font("Lato", Font.PLAIN, 16);
-        fuente3 = new Font("Open Sans", Font.BOLD, 13);
+        fuente3 = new Font("Lato", Font.BOLD, 13);
 
 
         //Dar formato a elementos

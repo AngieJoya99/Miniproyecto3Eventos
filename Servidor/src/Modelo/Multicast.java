@@ -61,7 +61,6 @@ public class Multicast
             datagrama.setData(cadena);
             datagrama.setLength(cadena.length);
             socketMulticast.send(datagrama);
-            mensaje = "";
             return true;
         } catch (IOException e) {
             System.out.println("Error al enviar información a todos los usuarios");

@@ -12,6 +12,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import Controlador.ControladorCliente;
 
+/**
+ * Clase que permite establecer la conexion con el servidor
+ */
 public class ConexionCliente 
 {
     MulticastCliente miMulticastCliente;
@@ -21,6 +24,11 @@ public class ConexionCliente
     ObjectInputStream entrada;
     String nombreCliente;
    
+    /**
+     * Constructor de la clase conexion cliente
+     * @param puerto
+     * @throws IOException
+     */
     public ConexionCliente(int puerto) throws IOException
     {
         System.out.println("\nConcectando por el puerto "+puerto+". Por favor espere");
@@ -29,6 +37,10 @@ public class ConexionCliente
         miMulticastCliente = new MulticastCliente(this);
     }
     
+    /**
+     * Metodo que permite obtener los flujos
+     * @throws IOException
+     */
     public void obtenerFlujos() throws IOException
     {
         salida = new ObjectOutputStream(cliente.getOutputStream());
@@ -37,6 +49,10 @@ public class ConexionCliente
         System.out.println("Se obtuvieron los flujos E/S");
     }
 
+    /**
+     * Metodo que permite procesar y obtener mensajes desde el servidor
+     * @throws IOException
+     */
     public void procesarConexion() throws IOException
     {
         String mensaje = "";
@@ -65,6 +81,9 @@ public class ConexionCliente
         }while(cliente.isConnected());
     }
     
+    /**
+     * Metodo que cierra la conexion con el servidor
+     */
     public void cerrarConexion()
     {
         System.out.println("cerrando conexion...");
@@ -78,6 +97,10 @@ public class ConexionCliente
         }
     }
 
+    /**
+     * Metodo que permite enviar mensajes hacia el servidor
+     * @param mensaje mensaje que se quiere enviar al servidor
+     */
     public void enviarDatos(String mensaje)
     {
         try 
@@ -91,6 +114,10 @@ public class ConexionCliente
         
     }
 
+    /**
+     * Proporciona el nombre del cliente
+     * @return nombre del cliente
+     */
     public String getNombreCliente()
     {
         return this.nombreCliente;
