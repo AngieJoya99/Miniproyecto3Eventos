@@ -356,6 +356,7 @@ at
         getSec();
         getTiempo();
         gui.setHorasRestantes(Integer.toString(tiempoMin));
+        gui.setMinRestantes(Integer.toString(tiempoSec));
         Timer cuentaAtras = new Timer();
         TimerTask tarea = new TimerTask()
         {

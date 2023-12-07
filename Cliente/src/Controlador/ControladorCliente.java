@@ -21,8 +21,10 @@ public class ControladorCliente
     static ConexionCliente conexionCliente;
     static MulticastCliente multicastCliente;
     static Examen examen;
-    //private static int tiempoHoras;
-    //private static int tiempoMin;
+    private static int tiempoMin;
+    private static int tiempoSec;
+    private static int totalSegundos;
+    private static int segundosR;
 
     public static void iniciar()
     {
@@ -128,6 +130,8 @@ public class ControladorCliente
             {
                 try{
                     examen = new Examen(cadena[1], horas, minutos);
+                    tiempoMin = examen.getHoras();
+                    tiempoSec = examen.getMin();
                     for(int i=4; i<cadena.length; i++)
                     {
                         examen.addPregunta(cadena[i]);
@@ -145,6 +149,7 @@ public class ControladorCliente
             }
 
             establecerBotonesPreg(examen.getNumPreg());
+            tiempoRestanteHoras();
             //gui.bloquearPestaña(0,true);
             //tiempoRestanteMinutos();
             
@@ -186,6 +191,8 @@ public class ControladorCliente
         System.out.println("Antes de enviar datos");
         conexionCliente.enviarDatos(mensaje);
         System.out.println("Oprime responder pregunta");
+        gui.setTextAreaPreg("Se ha contestado la pregunta!");
+        gui.bResponderSetEnabled(false);
     }
 
     /**
@@ -208,7 +215,39 @@ public class ControladorCliente
         gui.setTiempoRestante(examen.getDuracion());
 
     }
+
     */
+
+    public static void getTiempo()
+    {
+        totalSegundos = (tiempoMin*60)+tiempoSec;
+        segundosR = totalSegundos; 
+    }
+
+    public static void tiempoRestanteHoras() 
+    {
+        //getMin();
+        //getSec();
+        getTiempo();
+        gui.setHorasRestantes(Integer.toString(tiempoMin));
+        gui.setMinRestantes(Integer.toString(tiempoSec));
+        Timer cuentaAtras = new Timer();
+        TimerTask tarea = new TimerTask()
+        {
+            @Override
+            public void run()
+            { 
+                segundosR = segundosR -1;
+                gui.setHorasRestantes(Integer.toString(segundosR/60));
+                gui.setMinRestantes(Integer.toString(segundosR%60));
+                if (segundosR == 0)
+                {
+                    this.cancel();
+                }   
+            }
+        };
+        cuentaAtras.scheduleAtFixedRate(tarea, 1000, 1000);
+    }
 
    /* public static void tiempoRestanteMinutos(int tiempoHoras, int tiempoMin) 
     {

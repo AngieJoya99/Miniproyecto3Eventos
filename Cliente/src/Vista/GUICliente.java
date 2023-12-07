@@ -74,10 +74,10 @@ public class GUICliente extends JFrame
         tpPestanas.addTab("Pregunta",pPregunta);
         tpPestanas.addTab("Resultado",pResultado);
         add(tpPestanas);
-        
-        //bloquear pestañas
         tpPestanas.setEnabledAt(1, false);
         tpPestanas.setEnabledAt(2, false);
+        tpPestanas.setEnabledAt(0, false);
+        //establecerBotones(10);
         
         pTextArea = new JPanel(new BorderLayout());
         pInformacion = new JPanel();
@@ -102,16 +102,15 @@ public class GUICliente extends JFrame
         //lPregRes = new JLabel("\t \t");
         lTRestanteH = new JLabel();
         lTRestanteM = new JLabel();
-        lDosP = new JLabel();
+        lDosP = new JLabel(":");
         //lPregRes.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
         lTRestanteH.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
         lTRestanteM.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
         lDosP.setFont(new Font("Hedvig Letters Serif", Font.BOLD, 24));
 
         bVerResultado = new JButton("Ver Resultado");
-        bVerResultado.setEnabled(false);
+        //bResponder.setEnabled(false);
         bResponder = new JButton("Responder");
-        bResponder.setEnabled(false);
 
         //panel 
         pTextArea.add(jsExamen, BorderLayout.NORTH); 
@@ -137,8 +136,8 @@ public class GUICliente extends JFrame
         //Crear componentes
         
         areaPregunta = new JTextArea(15, 35);
+        areaPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta = new JScrollPane(areaPregunta);
-        jsEnunciadoPregunta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         jsEnunciadoPregunta.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         areaPregunta.setEditable(false);
         bCancelarPreg = new JButton("Cancelar");
@@ -177,11 +176,10 @@ public class GUICliente extends JFrame
        //-------- Pestaña Resultado ---------------
 
         areaResultado = new JTextArea(15, 35);
+        areaResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
         areaResultado.setEditable(false);
         jsResultado = new JScrollPane(areaResultado);
         jsResultado.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jsResultado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(171,91,121), 5)));
-        
         //lCalificacion = new JLabel("Calificacion");
         //lPregCorrecta = new JLabel("Preguntas Correctas");
         //lCalificacionNum = new JLabel("10");
@@ -287,7 +285,10 @@ public class GUICliente extends JFrame
      */
     public void bloquearPestaña(int indice, boolean valor)
     {
-        tpPestanas.setEnabledAt(indice, valor);
+        if(valor)
+            tpPestanas.setEnabledAt(indice, false);
+        else
+            tpPestanas.setEnabledAt(indice, true);
     }
     
 
@@ -311,6 +312,7 @@ public class GUICliente extends JFrame
             grupoBotonPreg.add(botonPreg);
             System.out.println("el boton "+numeroPregunta.get(i).getText()+" ha sido creado");
             numeroPregunta.get(i).addActionListener( evento);
+            pBotonesPreg.updateUI();
         }
     }
 
@@ -327,7 +329,7 @@ public class GUICliente extends JFrame
         {
              pBotonesPreg.add(numeroPregunta.get(i));
         }
-        bResponder.setEnabled(true);
+        pBotonesPreg.updateUI();
         System.out.println("tamaño arreglo de botones de pregunta: "+Integer.toString(numeroPregunta.size()));
     } 
 
@@ -354,6 +356,7 @@ public class GUICliente extends JFrame
     {
         areaPregunta.setText(pregunta+"\n"+respuesta);
     }
+
    /**
      * funcion que recibe como parametro un booleano que me dice si se quiere bloquear la pregunta o desbloquearla
      * @param numPreg
@@ -371,7 +374,10 @@ public class GUICliente extends JFrame
                 System.out.println(numPreg);
                  if(boton.getText().equals(numPreg))
                 {
+                    //boton.setVisible(false);
                     boton.setEnabled(false);
+                    //boton.setFocusable(false);
+                    //boton.setVisible(false);
                     pBotonesPreg.updateUI();
                     System.out.println("El boton "+boton.getText()+ " ha sido bloqueado");  
                 }
@@ -383,6 +389,7 @@ public class GUICliente extends JFrame
                 System.out.println(numPreg);
                 if(boton.getText().equals(numPreg))
                 {
+                    //boton.setVisible(true);
                     boton.setEnabled(true);
                     pBotonesPreg.updateUI();
                     System.out.println("la boton "+ boton.getText()+ " ha sido desbloqueado");
@@ -392,20 +399,16 @@ public class GUICliente extends JFrame
 
      }
 
-     public void desbloquearBInforme()
-     {
-        int pregRes=0; 
-        for(JToggleButton boton : numeroPregunta)
-        {
-            if(!boton.isEnabled())
-                pregRes+=1;
-        }
+    public void setEnabled(int indice, boolean bol)
+    {
+        tpPestanas.setEnabledAt(indice, bol);
 
-        if(pregRes == numeroPregunta.size());
-            bVerResultado.setEnabled(true);
-     }
+    }
 
-    
+    public void bResponderSetEnabled(boolean valor)
+    {
+        bResponder.setEnabled(valor);
+    }
 
 
     class ManejadoraEvento implements ActionListener,KeyListener, ItemListener
@@ -422,8 +425,11 @@ public class GUICliente extends JFrame
                     try
                     {
                         ControladorCliente.mostrarPregunta(Integer.parseInt(boton.getText()));
+                        System.out.println("El boton "+ boton.getText() +" ha sido seleccionado"); 
+                        bResponder.setEnabled(true);
+                        
                         //labelNumeroPregunta(boton.getText());
-                    System.out.println("El boton "+ boton.getText() +" ha sido seleccionado");
+                    
 
                     }catch(NumberFormatException ex)
                     {
@@ -464,13 +470,18 @@ public class GUICliente extends JFrame
                 /*ControladorCliente.preguntaRespondida(getNumPreg());
                 if(Controlador.examenCompleto() == true)*/
                 System.out.println("RESPONDE PREGUNTA");
-                //bResponder.setEnabled(true);
+                bResponder.setEnabled(true);
                 tpPestanas.setEnabledAt(0, true);  
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
                 System.out.println("Pregunta selecionada: "+answerSelected);
                 ControladorCliente.responderPregunta(answerSelected);
-                desbloquearBInforme();
+                //areaExamen.setText("Se ha respondido la pregunta!");
+                //areaPregunta.setText("");
+                //bResponder.setEnabled(false);
+                
+                //ControladorCliente.enviarBloqueada(getNumPreg(),false);
+
             }
             if(e.getSource()== bOK)
             {
