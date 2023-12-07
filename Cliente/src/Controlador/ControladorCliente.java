@@ -34,7 +34,6 @@ public class ControladorCliente
         gui = new GUICliente();
         try 
         {
-            //clienteConectadoC();
             conexionCliente = new ConexionCliente(12345);
             System.out.println("Cliente conectado\n");
             conexionCliente.obtenerFlujos();
@@ -57,9 +56,6 @@ public class ControladorCliente
     {
         String[] entradaCadena = infoMulti.trim().split("\n");
         System.out.println("Ha entrado a la funcion informacionEntrada");
-        //System.out.println("ESTO ES LO QUE ENTRA DEL MULTICAST: "+infoMulti);
-        System.out.println(entradaCadena[0]);
-        //establecerPreguntas(infoMulti);
         if (entradaCadena[0].equals("Examen"))
         {
             System.out.println("entro a if examen");
@@ -68,8 +64,7 @@ public class ControladorCliente
             gui.setTextAreaPreg("¡Puedes realizar tu examen!\nSelecciona una pregunta para previsualizar");
         }
         if (entradaCadena[0].trim().equals("Informe"))
-        {
-            
+        {  
             System.out.println("Entro al if del informe");
             crearInforme(infoMulti);
             gui.setTextAreaPreg("Has respondido todas las preguntas\nSelecciona 'ver Resultado' para ver tu calificación");
@@ -125,11 +120,6 @@ public class ControladorCliente
             
             System.out.println("Aqui comienza a divir string");
             String[] cadena = examenString.trim().split("\n");
-            System.out.println("Lineas examen: "+Integer.toString(cadena.length));
-            System.out.println("String en la posicion 1 arreglo: "+cadena[1]);
-            System.out.println("String en la posicion 2 arreglo: "+cadena[2]);
-            System.out.println("String en la posicion 3 arreglo: "+cadena[3]);
-            
             int horas = Integer.parseInt(cadena[2]);
             int minutos = Integer.parseInt(cadena[3]);
 

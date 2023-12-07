@@ -54,8 +54,7 @@ public class ConexionServidor extends Thread
         {
             try {
                 System.out.println("\nEsperando un cliente");
-                this.canticadClientes = contadorActual();
-                if(this.arregloClientes.size()<3)
+                if(canticadClientes<3)
                 {   
                     addCliente(servidor.accept());
                 }
