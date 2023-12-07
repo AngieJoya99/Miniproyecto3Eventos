@@ -601,29 +601,11 @@ public class GUIServidor extends JFrame
         taVisualizar.setText(texto);
     }
 
-    /**
-     * Método que lee el elemento seleccionado del combo box cbInforme
-     * busca que posicion del arreglo nombresExamen contiene lo mismo
-     * Y retorna el contenido del arreglo informes en esa posición
-     * @return Contenido del arreglo
-     */
-    public String cualInforme()
+    public String getExamenInforme()
     {
-        int posicion=0;
-        if(cbInforme.getSelectedItem() != null)
-        {
-            String examen = cbInforme.getSelectedItem().toString();
-            for (int i=0; i<nombresExamen.size();i++)
-            {
-                if (nombresExamen.get(i).equals(examen))
-                    posicion = i;  
-            }
-            return informes.get(posicion);
-        }
-        else
-            return ("No hay examenes creados");
-        
+        return ""+cbInforme.getSelectedItem();
     }
+
 
     /**
      * Método que le asigna al area de texto taVisualizar 

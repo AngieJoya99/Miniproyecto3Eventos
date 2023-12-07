@@ -1,3 +1,9 @@
+/* Angie Joya - 2322609
+ * Emily Nuñez - 2240156
+ * Sheila Valencia - 2243011
+ * Victoria Volveras - 2241874
+ */
+
 package Modelo;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -41,7 +47,7 @@ public class MulticastCliente extends Thread
     {
         byte [] mensajeRecibir = new byte[3000];
         DatagramPacket dataCliente = new DatagramPacket(mensajeRecibir, mensajeRecibir.length);
-        String salida;
+        String salida = "";
         while(true)
         {
             try 

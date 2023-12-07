@@ -478,10 +478,12 @@ public class GUICliente extends JFrame
             }
             if(e.getSource() == bCancelarPreg)
             {
+                System.out.println("LE DI CLIC A CANCELAR");
                 tpPestanas.setEnabledAt(0, true);  
                 tpPestanas.setSelectedIndex(0);
                 tpPestanas.setEnabledAt(1,false);
                 ControladorCliente.enviarBloqueada(getNumPreg(), false);
+                System.out.println("ENVIÉ A LA PREGUNTA"+getNumPreg()+"FALSE");
                 
             }
             if(e.getSource() == bVerResultado)
@@ -537,61 +539,26 @@ public class GUICliente extends JFrame
         @Override
         public void keyPressed(KeyEvent e) 
         {
-            boolean altPressed=true;
-            if (e.getKeyCode() == KeyEvent.VK_ALT) {
-               altPressed = true;
-            } else if (altPressed && e.getKeyCode() == KeyEvent.VK_R) {
-                // Alt+R pressed
-                System.out.println("RESPONDE PREGUNTA");
-                bResponder.setEnabled(true);
-                tpPestanas.setEnabledAt(0, true);  
-                tpPestanas.setSelectedIndex(0);
-                tpPestanas.setEnabledAt(1,false);
-                System.out.println("Pregunta selecionada: "+answerSelected);
-                ControladorCliente.responderPregunta(answerSelected);
-                
+            if(e.getKeyCode()== KeyEvent.VK_O)
+            {
+                bResponder.doClick();
             }
-            /*if((e.getKeyChar() == 82) && (e.getKeyChar() == 18))
-            {
-                System.out.println("RESPONDE PREGUNTA");
-                bResponder.setEnabled(true);
-                tpPestanas.setEnabledAt(0, true);  
-                tpPestanas.setSelectedIndex(0);
-                tpPestanas.setEnabledAt(1,false);
-                System.out.println("Pregunta selecionada: "+answerSelected);
-                ControladorCliente.responderPregunta(answerSelected);
-            }   
-            if((e.getKeyChar() == 18) && (e.getKeyChar()==67))
-            {
-                tpPestanas.setEnabledAt(0, true);  
-                tpPestanas.setSelectedIndex(0);
-                tpPestanas.setEnabledAt(1,false);
-                ControladorCliente.enviarBloqueada(getNumPreg(), false);
-            } 
-
-            if(e.getKeyChar()==79)
-            {
-                tpPestanas.setEnabledAt(1, true);
-                tpPestanas.setSelectedIndex(1);
-                tpPestanas.setEnabledAt(0, false);
-                ControladorCliente.enviarBloqueada(getNumPreg(), true);
-            }
-            if(e.getKeyChar()==65)
+            if(e.getKeyCode()==KeyEvent.VK_A)
             {
                 rbOpcA.setSelected(true);
             }
-            if(e.getKeyChar()==66)
+            if(e.getKeyCode()==KeyEvent.VK_B)
             {
                 rbOpcB.setSelected(true);
             }
-            if(e.getKeyChar()==67)
+            if(e.getKeyCode()==KeyEvent.VK_C)
             {
                 rbOpcC.setSelected(true);
             }
-            if(e.getKeyChar()==68)
+            if(e.getKeyCode()==KeyEvent.VK_D)
             {
                 rbOpcD.setSelected(true);
-            }*/
+            }
         }
 
         @Override

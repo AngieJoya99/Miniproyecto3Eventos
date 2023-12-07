@@ -31,6 +31,7 @@ public class HiloCliente extends Thread
     boolean coneccion;
     
 
+
     /**
      * Constructor de la clase HiloServidor
      * @param socket
@@ -68,7 +69,8 @@ public class HiloCliente extends Thread
 
     public void obtenerFlujos()
     {
-        try {
+        try 
+        {
             salida = new ObjectOutputStream(socket.getOutputStream());
             salida.flush();
             entrada = new ObjectInputStream(socket.getInputStream());

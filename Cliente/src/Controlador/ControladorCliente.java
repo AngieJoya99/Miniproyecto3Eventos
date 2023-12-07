@@ -94,8 +94,9 @@ public class ControladorCliente
      */
     public static void crearInforme(String informe)
     {
-       String[] entradaCadena = informe.trim().split("//");
-        examen.setInforme(entradaCadena[0]);
+        System.out.println("Entró a la funcon crear Informe");
+       //String[] entradaCadena = informe.trim().split("//");
+        examen.setInforme(informe);
     }
 
     /**
@@ -104,6 +105,7 @@ public class ControladorCliente
      */
     public static void obtenerInforme()
     {
+        System.out.println("entro a la funcion obtener informe");
         gui.areaInforme(examen.getInforme());
     }
 

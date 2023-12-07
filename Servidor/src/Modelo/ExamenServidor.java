@@ -31,6 +31,7 @@ public class ExamenServidor
         generarPreguntas();
         this.correctas=0;
         this.incorrectas=0;
+        this.informe="El examen no ha sido respondido\nNo es posible generar un informe";
     }
 
     public String examenEnviar()
@@ -49,9 +50,14 @@ public class ExamenServidor
         }
     }
 
-    public void setInforme(String texto)
+    public void iniciarInforme(String texto)
     {
         this.informe = texto;
+    }
+
+    public void setInforme(String texto)
+    {
+        this.informe += texto;
     }
 
     /**
